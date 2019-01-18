@@ -6,10 +6,11 @@
 #include "entity.h"
 #include "constants.h"
 #include <vector>
-#include"ship.h"
+//#include"ship.h"
 
 #include "Projectile.h"
 #include "Movement_Component.h"
+#include "Attack_Hitbox.h"
 
 namespace PlayerNS
 {
@@ -30,12 +31,16 @@ private:
 	float moveDelay = 0;
 	
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
-	std::vector<Projectile*> projectilelist;
+	//std::vector<Projectile*> projectilelist;
 	bool canJump;
 	
 public:
-	Projectile *newprojectile;
+	Projectile *newprojectile;		// not sure if this should be done
+	std::vector<Projectile*> projectilelist;
 
+	// hitbox_attack components stuff
+	std::vector<Attack_Hitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
+	Attack_Hitbox *newhitbox;		// this should be placed in a hitbox_attack
 
 	Player();
 
@@ -53,16 +58,24 @@ public:
 
 	void update(float frameTime);
 
-	void shoot(Game*gamePtr,int x_target, int y_target,TextureManager*textureM);
-
 	void setCollisionType(entityNS::COLLISION_TYPE coltype);
 
 
-	// Components stuff
+	// Components and added stuff
 	Movement_Component* getMovementComponent() { return movement_component; }
 	bool iscanJump() { return canJump; }
 	void setJump(bool canjump);
 
+	// should consider placing this somewhere projectile related
+	void shoot(Game*gamePtr, int x_target, int y_target, TextureManager*textureM);
+	void updateProjectiles(float frameTime);
+	std::vector<Projectile*>::iterator deleteProjectile(std::vector<Projectile*>::iterator it);
+
+	// melee/hitbox attack prototype
+	void punch(Game*gamePtr, TextureManager*textureM);
+	void drawHitboxes();
+	void updateHitboxes(float frameTime);
+	void deleteHitbox();
 
 };
 

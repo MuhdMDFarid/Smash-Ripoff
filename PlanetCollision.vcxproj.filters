@@ -75,6 +75,9 @@
     <ClCompile Include="Movement_Component.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Attack_Hitbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Movement_Component.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack_Hitbox.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

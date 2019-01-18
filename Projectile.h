@@ -16,6 +16,7 @@ private:
 
 public:
 	Projectile();
+	~Projectile();
 	
 	virtual void draw();
 

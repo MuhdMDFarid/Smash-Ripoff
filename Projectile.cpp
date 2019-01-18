@@ -11,6 +11,10 @@ Projectile::Projectile() : Entity()
 
 }
 
+Projectile::~Projectile()
+{
+}
+
 void Projectile::draw()
 {
 	Entity::draw();

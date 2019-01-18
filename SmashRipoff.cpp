@@ -83,6 +83,14 @@ void SmashRipoff::initialize(HWND hwnd)
 //=============================================================================
 void SmashRipoff::update()
 {
+	// GRAVITY SIMULATION
+	player.getMovementComponent()->setY_Velocity(player.getMovementComponent()->getY_Velocity() + GRAVITY * frameTime);
+
+	if (input->isKeyDown(E_KEY))
+	{
+		player.deleteHitbox();
+	}
+
 	if (input->getMouseLButton())
 	{
 		player.shoot(this, input->getMouseX(), input->getMouseY(),&projectileTexture);
@@ -98,7 +106,6 @@ void SmashRipoff::update()
 		//p.draw();
 		//graphics->spriteEnd();
 		//projectilevec.push_back(p);
-		
 /*
 		player.setX(input->getMouseX());
 		player.setY(input->getMouseY());*/
@@ -106,13 +113,10 @@ void SmashRipoff::update()
 	}
 
 
-	// GRAVITY SIMULATION
-	player.getMovementComponent()->setY_Velocity(player.getMovementComponent()->getY_Velocity()+GRAVITY * frameTime);
-
 
 	if (input->isKeyDown(VK_SPACE))
 	{
-		player.getMovementComponent()->setX_Velocity(100);
+		player.punch(this, &projectileTexture);
 	}
 
 	if (input->isKeyDown(W_KEY))	//jump
@@ -244,7 +248,9 @@ void SmashRipoff::render()
 	{
 
 		// Print message
-		//_snprintf_s(buffer, BUF_SIZE, "test %d ", (int)fps);
+		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "fps %d", (int)fps);
+		dxFont.printC(gameNS::buffer, GAME_WIDTH / 5, GAME_HEIGHT / 8);
+
 		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "X-Vel: %d", (int)player.getMovementComponent()->getX_Velocity());
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, GAME_HEIGHT / 5);
 
@@ -257,8 +263,8 @@ void SmashRipoff::render()
 		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Force: %d", (int)player.getMovementComponent()->getY_Force());
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 4 * GAME_HEIGHT / 5);
 
-		//_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)player.projectilelist.size());
-		//dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
+		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)player.projectilelist.size());
+		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
 		
 		
 

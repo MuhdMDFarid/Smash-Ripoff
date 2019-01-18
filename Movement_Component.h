@@ -18,6 +18,7 @@ private:
 	float Y_Force = 0;
 	float X_Velocity = 0;
 	float Y_Velocity = 0;
+	float Mass = 1;
 public:
 	Movement_Component();
 
