@@ -1,10 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Draw animated spaceships with collision and shield
-// Chapter 6 SmashRipoff.cpp v1.0
-// This class is the core of the game
-
 #include "SmashRipoff.h"
 
 //=============================================================================
@@ -30,7 +23,7 @@ void SmashRipoff::initialize(HWND hwnd)
     Game::initialize(hwnd); // throws GameError
 
     // nebula texture
-    if (!nebulaTexture.initialize(graphics,NEBULA_IMAGE))
+    if (!nebulaTexture.initialize(graphics,STAGE_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
 
     // main game textures
@@ -407,4 +400,3 @@ void SmashRipoff::resetAll()
     Game::resetAll();
     return;
 }
-

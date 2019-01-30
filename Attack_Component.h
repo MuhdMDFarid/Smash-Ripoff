@@ -4,15 +4,23 @@
 
 #include "Component.h"
 
-class Attack_Component: public Component
+class Attack_Component : public Component
 {
-private:
-	
+
 public:
+
+	// Constructor
 	Attack_Component();
+
+	// Destructor
 	~Attack_Component();
+
+	// ======================
+	// Functions
+	// ======================
 	virtual void receive(int message);
 	virtual void execute()=0;
+
 };
 
-#endif
+#endif // _ATTACK_COMPONENT_H

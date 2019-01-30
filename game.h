@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 game.h v1.0
-
 #ifndef _GAME_H                 // Prevent multiple definitions if this 
 #define _GAME_H                 // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -17,8 +12,8 @@
 
 namespace gameNS
 {
-	const char FONT[] = "Comic Sans MS";	// font
-	const int POINT_SIZE = 60;				// point size
+	const char FONT[] = "Comic Sans MS";								// font
+	const int POINT_SIZE = 60;											// point size
 	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);	// white
 	const int BUF_SIZE = 30;
 	static char buffer[BUF_SIZE];
@@ -26,8 +21,10 @@ namespace gameNS
 
 class Game
 {
+
 protected:
-    // common game properties
+
+    // Common game properties
     Graphics *graphics;         // pointer to Graphics
     Input   *input;             // pointer to Input
     HWND    hwnd;               // window handle
@@ -45,6 +42,7 @@ protected:
 	TextDX dxFont;				// DirectX font for fps
 
 public:
+
     // Constructor
     Game();
     // Destructor
@@ -110,4 +108,4 @@ public:
     virtual void render() = 0;
 };
 
-#endif
+#endif // _GAME_H

@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// image.h v1.2
-
 #ifndef _IMAGE_H                // Prevent multiple definitions if this 
 #define _IMAGE_H                // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -12,8 +7,10 @@
 
 class Image
 {
+
     // Image properties
   protected:
+
     Graphics *graphics;     // pointer to graphics
     TextureManager *textureManager; // pointer to texture manager
     // spriteData contains the data required to draw the image by Graphics::drawSprite()
@@ -32,6 +29,7 @@ class Image
     bool    animComplete;   // true when loop is false and endFrame has finished displaying
 
   public:
+
     // Constructor
     Image();
     // Destructor
@@ -177,5 +175,4 @@ class Image
     virtual void update(float frameTime);
 };
 
-#endif
-
+#endif // _IMAGE_H

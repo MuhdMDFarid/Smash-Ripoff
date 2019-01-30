@@ -155,9 +155,6 @@
     <ClInclude Include="Movement_Component.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Attack_Hitbox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -169,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="AirborneState.h">
       <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="attackHitbox.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

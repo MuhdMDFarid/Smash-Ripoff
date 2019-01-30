@@ -1,7 +1,6 @@
 #include "Platform.h"
 
 
-
 Platform::Platform():Entity()
 {
 	collisionType = entityNS::BOX;

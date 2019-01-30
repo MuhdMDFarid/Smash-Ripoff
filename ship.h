@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 ship.h v1.0
-
 #ifndef _SHIP_H                 // Prevent multiple definitions if this 
 #define _SHIP_H                 // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -34,9 +29,12 @@ namespace shipNS
 class Ship : public Entity
 {
 private:
+
     bool    shieldOn;
     Image   shield;
+
 public:
+
     // constructor
     Ship();
 
@@ -46,6 +44,7 @@ public:
                             TextureManager *textureM);
     void update(float frameTime);
     //void damage(WEAPON);
-};
-#endif
 
+};
+
+#endif // _SHIP_H

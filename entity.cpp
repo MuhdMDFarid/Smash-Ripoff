@@ -1,12 +1,7 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 entity.cpp v1.3
-
 #include "entity.h"
 
 //=============================================================================
-// constructor
+// Constructor
 //=============================================================================
 Entity::Entity() : Image()
 {
@@ -24,7 +19,7 @@ Entity::Entity() : Image()
     rotatedBoxReady = false;
     collisionType = entityNS::CIRCLE;
     health = 100;
-    gravity = entityNS::GRAVITY;
+    // gravity = entityNS::GRAVITY;
 }
 
 //=============================================================================
@@ -427,22 +422,22 @@ void Entity::bounce(VECTOR2 &collisionVector, Entity &ent)
 //=============================================================================
 void Entity::gravityForce(Entity *ent, float frameTime)
 {
-    // if either entity is not active then no gravity effect
-    if (!active || !ent->getActive())
-        return ;
+	// if either entity is not active then no gravity effect
+	if (!active || !ent->getActive())
+		return;
 
-    rr = pow((ent->getCenterX() - getCenterX()),2) + 
-            pow((ent->getCenterY() - getCenterY()),2);
-    force = gravity * ent->getMass() * mass/rr;
+	rr = pow((ent->getCenterX() - getCenterX()), 2) +
+		pow((ent->getCenterY() - getCenterY()), 2);
+	force = gravity * ent->getMass() * mass / rr;
 
-    // --- Using vector math to create gravity vector ---
-    // Create vector between entities
-    VECTOR2 gravityV(ent->getCenterX() - getCenterX(),
-                        ent->getCenterY() - getCenterY());
-    // Normalize the vector
-    Graphics::Vector2Normalize(&gravityV);
-    // Multipy by force of gravity to create gravity vector
-    gravityV *= force * frameTime;
-    // Add gravity vector to moving velocity vector to change direction
-    velocity += gravityV;
+	// --- Using vector math to create gravity vector ---
+	// Create vector between entities
+	VECTOR2 gravityV(ent->getCenterX() - getCenterX(),
+		ent->getCenterY() - getCenterY());
+	// Normalize the vector
+	Graphics::Vector2Normalize(&gravityV);
+	// Multipy by force of gravity to create gravity vector
+	gravityV *= force * frameTime;
+	// Add gravity vector to moving velocity vector to change direction
+	velocity += gravityV;
 }

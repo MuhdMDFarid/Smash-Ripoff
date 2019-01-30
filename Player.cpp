@@ -176,7 +176,6 @@ void Player::updateProjectiles(float frameTime)
 	// delete projectiles that are out of boundary can be placed in projectile.update()
 	for (std::vector<Projectile*>::iterator it = projectilelist.begin(); it != projectilelist.end(); )
 	{
-
 		if ((*it)->getX() > GAME_WIDTH || (*it)->getX() < -(*it)->getWidth()/2 || (*it)->getY() > GAME_HEIGHT || (*it)->getY() < -(*it)->getHeight())
 		{
 			it = deleteProjectile(it);
@@ -201,7 +200,6 @@ std::vector<Projectile*>::iterator Player::deleteProjectile(std::vector<Projecti
 {
 	SAFE_DELETE(*it);
 	return projectilelist.erase(it);
-
 }
 
 void Player::setJump(bool canjump)
@@ -211,7 +209,7 @@ void Player::setJump(bool canjump)
 
 void Player::punch(Game * gamePtr, TextureManager * textureM)
 {
-	newhitbox = new Attack_Hitbox();
+	newhitbox = new attackHitbox();
 
 	// create hitbox
 	if (!newhitbox->initialize(gamePtr, 32, 32, 1, textureM))
@@ -257,7 +255,7 @@ void Player::deleteHitbox()		// deletes all hitboxes for now
 {
 	if (!hitboxlist.empty())
 	{
-		for (std::vector<Attack_Hitbox*>::iterator it = hitboxlist.begin(); it != hitboxlist.end(); )
+		for (std::vector<attackHitbox*>::iterator it = hitboxlist.begin(); it != hitboxlist.end(); )
 		{
 			SAFE_DELETE(*it);
 			it=hitboxlist.erase(it);
@@ -272,6 +270,3 @@ void Player::deleteHitbox()		// deletes all hitboxes for now
 		}
 	}
 }
-
-
-

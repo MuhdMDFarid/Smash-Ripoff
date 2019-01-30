@@ -9,7 +9,7 @@
 
 #include "Projectile.h"
 #include "Movement_Component.h"
-#include "Attack_Hitbox.h"
+#include "attackHitbox.h"
 #include "PlayerState.h"
 #include "AirborneState.h"
 #include "GroundedState.h"
@@ -19,26 +19,43 @@ namespace PlayerNS
 	//int WIDTH = 64;
 	//int HEIGHT = 64;
 	const int TEXTURE_COLS = 4;
-
 	const float PLAYER_MOVE_DELAY = 0.2f;
 	
-
 }
 
 class Player : public Entity
 {
 private:
+
 	float speed;
 	float viewAngleOffset;
 	float moveDelay = 0;
 	
-	// Added things below V
-
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
 	//std::vector<Projectile*> projectilelist;
 	bool canJump;
 	
 public:
+
+	// Constructor
+	Player();
+
+	// Destructor
+	~Player();
+
+	// ======================
+	// Functions
+	// ======================
+	virtual bool initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM);
+	float getSpeed() { return speed; }
+	void move(int x_force, int y_force);	// change the forces on the char for movement
+	virtual void draw();
+	void drawProjectiles();
+	void update(float frameTime);
+
+	//void setCollisionType(entityNS::COLLISION_TYPE coltype);
+
+	// Components and added stuff
 	bool grounded;		// replaced to a state in future
 	//AirborneState* airborne;
 
@@ -46,30 +63,9 @@ public:
 	std::vector<Projectile*> projectilelist;
 
 	// hitbox_attack components stuff
-	std::vector<Attack_Hitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
-	Attack_Hitbox *newhitbox;		// this should be placed in a hitbox_attack
+	std::vector<attackHitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
+	attackHitbox *newhitbox;		// this should be placed in a hitbox_attack
 
-
-	Player();
-
-	~Player();
-
-	virtual bool initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM);
-
-	float getSpeed() { return speed; }
-
-	void move(int x_force, int y_force);	// change the forces on the char for movement
-
-	virtual void draw();
-	
-	void drawProjectiles();
-
-	void update(float frameTime);
-
-	//void setCollisionType(entityNS::COLLISION_TYPE coltype);
-
-
-	// Components and added stuff
 	Movement_Component* getMovementComponent() { return movement_component; }
 	bool iscanJump() { return canJump; }
 	void setJump(bool canjump);
@@ -87,4 +83,4 @@ public:
 
 };
 
-#endif
+#endif // _PLAYER_H

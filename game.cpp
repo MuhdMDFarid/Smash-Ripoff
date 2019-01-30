@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 game.cpp v1.0
-
 #include "game.h"
 
 // The primary class should inherit from Game class
@@ -263,8 +258,8 @@ void Game::run(HWND hwnd)
         setDisplayMode(graphicsNS::TOGGLE); // toggle fullscreen/window
 
     // if Esc key, set window mode
-    if (input->isKeyDown(ESC_KEY))
-        setDisplayMode(graphicsNS::WINDOW); // set window mode
+    //if (input->isKeyDown(ESC_KEY))
+    //    setDisplayMode(graphicsNS::WINDOW); // set window mode
 
     // Clear input
     // Call this after all key checks are done

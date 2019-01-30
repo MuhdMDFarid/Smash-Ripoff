@@ -1,12 +1,13 @@
 #include "Inventory.h"
 
+
 Inventory::Inventory()
 {
-
 }
 
 void Inventory::addItem()
-{}
+{
+}
 
 InventoryItem* Inventory::getItem(int itemNo)
 {

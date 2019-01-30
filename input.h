@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011,2012 by: 
-// Charles Kelly
-// input.h v1.1
-
 #ifndef _INPUT_H                // Prevent multiple definitions if this 
 #define _INPUT_H                // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -15,7 +10,6 @@ class Input;
 #include <XInput.h>
 #include "constants.h"
 #include "gameError.h"
-
 
 // for high-definition mouse
 #ifndef HID_USAGE_PAGE_GENERIC
@@ -397,5 +391,4 @@ public:
     void vibrateControllers(float frameTime);
 };
 
-#endif
-
+#endif // _INPUT_H

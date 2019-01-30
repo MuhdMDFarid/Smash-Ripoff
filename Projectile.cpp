@@ -1,4 +1,3 @@
-
 #include "Projectile.h"
 
 Projectile::Projectile() : Entity()
@@ -63,13 +62,13 @@ void Projectile::update(float frameTime)
 	spriteData.x = spriteData.x + movement_component->getX_Velocity()*frameTime;
 	spriteData.y = spriteData.y + movement_component->getY_Velocity()*frameTime;
 
-	//
 }
+
 void Projectile::remove()
 {
 	//SAFE_DELETE(this);
 }
-//
+
 //void Projectile::damage(WEAPON weapon)
 //{
 //

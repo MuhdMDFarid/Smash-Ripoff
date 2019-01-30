@@ -1,32 +1,30 @@
-#include "Attack_Hitbox.h"
+#include "attackHitbox.h"
 
 
-
-Attack_Hitbox::Attack_Hitbox()
+attackHitbox::attackHitbox()
 {
 }
 
-
-Attack_Hitbox::~Attack_Hitbox()
+attackHitbox::~attackHitbox()
 {
 }
 
-bool Attack_Hitbox::initialize(Game * gamePtr, int width, int height, int ncols, TextureManager * textureM)
+bool attackHitbox::initialize(Game * gamePtr, int width, int height, int ncols, TextureManager * textureM)
 {
 	return (Entity::initialize(gamePtr, width, height, ncols, textureM));
 }
 
-void Attack_Hitbox::draw()
+void attackHitbox::draw()
 {
 	Entity::draw();
 }
 
-void Attack_Hitbox::remove()
+void attackHitbox::remove()
 {
 	//SAFE_DELETE(this);
 }
 
-void Attack_Hitbox::update(float frameTime)
+void attackHitbox::update(float frameTime)
 {
 	// Hitbox_Attacks should move based on the player
 	Entity::update(frameTime);

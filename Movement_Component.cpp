@@ -1,12 +1,9 @@
 #include "Movement_Component.h"
 
 
-
-
 Movement_Component::Movement_Component()
 {
 }
-
 
 Movement_Component::~Movement_Component()
 {
@@ -14,12 +11,10 @@ Movement_Component::~Movement_Component()
 
 void Movement_Component::receive(int message)
 {
-
 }
 
 void Movement_Component::execute()
 {
-
 }
 
 void Movement_Component::setX_Force(float x_force)
@@ -69,4 +64,3 @@ void Movement_Component::addY_Force(float y_force)
 	}
 	//setY_Force(Y_Force + y_force);
 }
-

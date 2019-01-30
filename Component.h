@@ -4,11 +4,21 @@
 
 class Component
 {
+
 public:
+
+	// Constructor
 	Component();
+
+	// Destructor
 	~Component();
+
+	// ======================
+	// Functions
+	// ======================
 	virtual void receive(int message) = 0;
 	//virtual void execute() = 0;
+
 };
 
-#endif
+#endif // _COMPONENT_H

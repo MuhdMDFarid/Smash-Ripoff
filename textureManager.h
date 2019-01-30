@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// textureManager.h v1.0
-
 #ifndef _TEXTUREMANAGER_H       // Prevent multiple definitions if this 
 #define _TEXTUREMANAGER_H       // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -14,6 +9,7 @@ class TextureManager
 {
     // TextureManager properties
   private:
+
     UINT       width;       // width of texture in pixels
     UINT       height;      // height of texture in pixels
     LP_TEXTURE texture;     // pointer to texture
@@ -23,6 +19,7 @@ class TextureManager
     HRESULT hr;             // standard return type
 
   public:
+
     // Constructor
     TextureManager();
 
@@ -51,5 +48,4 @@ class TextureManager
     virtual void onResetDevice();
 };
 
-#endif
-
+#endif // _TEXTUREMANAGER_H

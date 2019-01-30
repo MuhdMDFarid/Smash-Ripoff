@@ -1,12 +1,7 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 version 1.0
-
 #include "planet.h"
 
 //=============================================================================
-// default constructor
+// Default Constructor
 //=============================================================================
 Planet::Planet() : Entity()
 {

@@ -11,14 +11,20 @@ class Platform:public Entity
 private:
 	//std::vector<Hitbox*> hitboxlist;		// for multiple collisionboxes
 public:
+
+	// Constructor
 	Platform();
+
+	// Destructor
 	~Platform();
+
+	// ======================
+	// Functions
+	// ======================
 	bool initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM);
 	virtual void draw();
 	void update(float frameTime);
 
-	//void update(float frameTime);		// might not need update platforms
-
 };
 
-#endif
+#endif // _PLATFORM_H

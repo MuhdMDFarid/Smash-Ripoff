@@ -1,16 +1,15 @@
-#pragma once
-
-#ifndef _InventoryItem_H
-#define _InventoryItem_H
+#ifndef _INVENTORYITEM_H
+#define _INVENTORYITEM_H
 #define WIN32_LEAN_AND_MEAN
 
-
 #include <iostream>
+
 using namespace std;
 
 class InventoryItem
 {
 private:
+
 	int itemNo;
 	string name;
 	int quantity;
@@ -18,23 +17,21 @@ private:
 	bool usable;
 
 public:
+
+	// Constructor
 	InventoryItem();
 
+	// ======================
+	// Functions
+	// ======================
 	void addItem();
-
 	bool useItem();
-
 	string getName() { return name; }
-	
 	int getQuantity() { return quantity; }
-
 	string getDescription() { return description; }
-
 	int getItemNo() { return itemNo; }
-
 	bool getUsable() { return usable; }
-
 
 };
 
-#endif
+#endif // _INVENTORYITEM_H

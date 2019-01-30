@@ -10,51 +10,50 @@ namespace MovementNS
 	const int MAX_VELOCITY = 300;
 }
 
-class Movement_Component :public Component
+class Movement_Component : public Component
 {
+
 private:
+
 	// !! ENTITY CLASS HAS SOMESORT OF VARIABLE RELATED TO FORCE AND GRAVITY
 	float X_Force = 0;
 	float Y_Force = 0;
 	float X_Velocity = 0;
 	float Y_Velocity = 0;
 	float Mass = 1;
+
 public:
+
+	// Constructor
 	Movement_Component();
 
+	// Destructor
 	~Movement_Component();
 
+	// ======================
+	// Functions
+	// ======================
 	void receive(int message);
-
 	void execute();
 
-	// Get functions
+	// GET
 	float getX_Force() { return X_Force; }
-
 	float getY_Force() { return Y_Force; }
-
 	float getX_Velocity() { return X_Velocity; }
-
 	float getY_Velocity() { return Y_Velocity; }
-	//
 
-	// Set functins
-	void setX_Force(float x_force);
-	
+	// SET
+	void setX_Force(float x_force);	
 	void setY_Force(float y_force);
-
 	void setX_Velocity(float x_velocity);
-
 	void setY_Velocity(float y_velocity);
-	//
 
+	// ADD
 	void addX_Force(float x_force);
-
 	void addY_Force(float y_force);
 
 	//void update(float frametime)
 
-
 };
 
-#endif
+#endif // _MOVEMENT_COMPONENT_H
