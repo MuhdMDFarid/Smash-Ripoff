@@ -18,8 +18,14 @@ Player::Player() : Entity()
 	//	TEMP code while component implementation is not taught
 	movement_component = new Movement_Component();
 	canJump = true;
+	grounded = false;
 
 	// END OF TEMP COMPONENT code
+
+	edge.top = -TILE_SIZE/2;
+	edge.bottom = TILE_SIZE / 2;
+	edge.left = -TILE_SIZE / 2;
+	edge.right = TILE_SIZE / 2;
 }
 
 Player::~Player()
@@ -50,12 +56,28 @@ void Player::drawProjectiles()
 
 bool Player::initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM)
 {
-	setFrameDelay(0.3f);
-	return (Entity::initialize(gamePtr, width, height, ncols, textureM));
+	if (Entity::initialize(gamePtr, width, height, ncols, textureM))
+	{
+		setCollisionType(entityNS::BOX);
+		// set the hit box for the player
+		edge.top = -height/2;
+		edge.bottom = height/2;
+		edge.left = -width/2;
+		edge.right = width/2;
+
+		return true;
+	}
+	return false;
 }
 
 void Player::update(float frameTime) 
 {	
+	// GRAVITY SIMULATION
+	//if (!grounded)	//grounded is the state if the player is not airborne
+	//{
+		movement_component->setY_Velocity(movement_component->getY_Velocity() + GRAVITY * frameTime);
+	//}
+	//airborne->update(*this,frameTime);
 	//	Handling the movement
 
 	// using MOVEMENT_COMPONENT
@@ -89,7 +111,7 @@ void Player::update(float frameTime)
 	}
 	else if (getX() < -getWidth()*getScale())
 	{
-		setX(GAME_WIDTH/2);
+		setX(GAME_WIDTH);
 	}
 
 	if (getY() > GAME_HEIGHT-getHeight()*getScale())
@@ -144,7 +166,7 @@ void Player::shoot(Game*gamePtr,int x_target, int y_target, TextureManager *text
 			500*cos(angle/* - 90 * PI / 180*/),		// x vel
 			500*sin(angle/* - 90 * PI / 180*/)		// y vel
 		);
-
+	
 	projectilelist.push_back(newprojectile);
 
 }
@@ -180,11 +202,6 @@ std::vector<Projectile*>::iterator Player::deleteProjectile(std::vector<Projecti
 	SAFE_DELETE(*it);
 	return projectilelist.erase(it);
 
-}
-
-void Player::setCollisionType(entityNS::COLLISION_TYPE coltype)
-{
-	collisionType = coltype;
 }
 
 void Player::setJump(bool canjump)

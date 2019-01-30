@@ -14,6 +14,7 @@
 #include "ship.h"
 #include "Player.h"
 #include "Projectile.h"
+#include "Platform.h"
 #include <vector>
 
 //=============================================================================
@@ -33,6 +34,8 @@ private:
 
 	// new stuff
 	TextureManager projectileTexture;
+	TextureManager platformTexture;
+	Platform platform;
 	//bool shootable = true;
 
 public:

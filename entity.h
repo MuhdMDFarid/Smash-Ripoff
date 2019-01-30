@@ -141,6 +141,10 @@ class Entity : public Image
     // Set radius of collision circle.
     virtual void setCollisionRadius(float r)    {radius = r;}
 
+	// Set collision Type of entity
+	virtual void setCollisionType(entityNS::COLLISION_TYPE coltype) { collisionType = coltype; }
+
+
     ////////////////////////////////////////
     //         Other functions            //
     ////////////////////////////////////////

@@ -88,19 +88,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AirborneState.cpp" />
     <ClCompile Include="Attack_Component.cpp" />
     <ClCompile Include="Attack_Hitbox.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="GroundedState.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="Movement_Component.cpp" />
     <ClCompile Include="planet.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
@@ -109,6 +113,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AirborneState.h" />
     <ClInclude Include="Attack_Component.h" />
     <ClInclude Include="Attack_Hitbox.h" />
     <ClInclude Include="Component.h" />
@@ -117,13 +122,16 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="GroundedState.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="Movement_Component.h" />
     <ClInclude Include="planet.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="SmashRipoff.h" />

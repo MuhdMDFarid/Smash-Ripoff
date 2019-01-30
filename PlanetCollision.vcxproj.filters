@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{8dba5a05-b4ff-4266-b01c-91e5cd610f00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{8cd4f949-d4d8-4be9-a1c2-edfc7af28da7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{8d60f9e9-9a4b-40b2-83ca-184b2f3e9100}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -77,6 +83,18 @@
     </ClCompile>
     <ClCompile Include="Attack_Hitbox.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundedState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="AirborneState.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +157,18 @@
     </ClInclude>
     <ClInclude Include="Attack_Hitbox.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundedState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="AirborneState.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -57,6 +57,7 @@ const char NEBULA_IMAGE[] =   "pictures\\orion.jpg";     // photo source NASA/co
 const char TEXTURES_IMAGE[] = "pictures\\textures.png";  // game textures
 const char SQUARE_TEXTURE[] = "pictures\\Square.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
+const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
 
 // key mappings
 // In this game simple constants are used for key mappings. If variables were used

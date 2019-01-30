@@ -1,4 +1,3 @@
-#pragma once
 #ifndef _Player_H
 #define _Player_H
 #define WIN32_LEAN_AND_MEAN
@@ -11,6 +10,9 @@
 #include "Projectile.h"
 #include "Movement_Component.h"
 #include "Attack_Hitbox.h"
+#include "PlayerState.h"
+#include "AirborneState.h"
+#include "GroundedState.h"
 
 namespace PlayerNS
 {
@@ -30,17 +32,23 @@ private:
 	float viewAngleOffset;
 	float moveDelay = 0;
 	
+	// Added things below V
+
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
 	//std::vector<Projectile*> projectilelist;
 	bool canJump;
 	
 public:
+	bool grounded;		// replaced to a state in future
+	//AirborneState* airborne;
+
 	Projectile *newprojectile;		// not sure if this should be done
 	std::vector<Projectile*> projectilelist;
 
 	// hitbox_attack components stuff
 	std::vector<Attack_Hitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
 	Attack_Hitbox *newhitbox;		// this should be placed in a hitbox_attack
+
 
 	Player();
 
@@ -58,7 +66,7 @@ public:
 
 	void update(float frameTime);
 
-	void setCollisionType(entityNS::COLLISION_TYPE coltype);
+	//void setCollisionType(entityNS::COLLISION_TYPE coltype);
 
 
 	// Components and added stuff
