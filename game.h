@@ -9,6 +9,7 @@
 #include "constants.h"
 #include "gameError.h"
 #include "textDX.h"
+#include <vector>
 
 namespace gameNS
 {
@@ -19,6 +20,7 @@ namespace gameNS
 	static char buffer[BUF_SIZE];
 }
 
+class GameState;
 class Game
 {
 
@@ -33,23 +35,23 @@ protected:
     LARGE_INTEGER timeEnd;      // Performance Counter end value
     LARGE_INTEGER timerFreq;    // Performance Counter frequency
     float   frameTime;          // time required for last frame
-    float   fps=100;                // frames per second
+    float   fps=100;            // frames per second
     DWORD   sleepTime;          // number of milli-seconds to sleep between frames
-    bool    paused;             // true if game is paused
     bool    initialized;
 
 	// Additions
-	TextDX dxFont;				// DirectX font for fps
+	TextDX dxFont;					// DirectX font for fps
+	std::vector<GameState*> states;	// a list to store the states(?)
 
 public:
 
     // Constructor
     Game();
+
     // Destructor
     virtual ~Game();
 
     // Member functions
-
     // Window message handler
     LRESULT messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
@@ -87,6 +89,14 @@ public:
 
     // Exit the game
     void exitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
+
+	// Functions for game states
+	void pushState(GameState* state);
+	void popState();
+	void deleteState();
+
+	// Gets the current state
+	GameState* getCurrentState();
 
     // Pure virtual function declarations
     // These functions MUST be written in any class that inherits from Game

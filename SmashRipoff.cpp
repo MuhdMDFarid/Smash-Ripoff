@@ -4,14 +4,16 @@
 // Constructor
 //=============================================================================
 SmashRipoff::SmashRipoff()
-{}
+{
+}
 
 //=============================================================================
 // Destructor
 //=============================================================================
 SmashRipoff::~SmashRipoff()
 {
-    releaseAll();           // call onLostDevice() for every graphics item
+	// Call onLostDevice() for every graphics item
+    releaseAll();
 }
 
 //=============================================================================
@@ -40,24 +42,24 @@ void SmashRipoff::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
 
     // ship
-    if (!ship1.initialize(this, shipNS::WIDTH, shipNS::HEIGHT, shipNS::TEXTURE_COLS, &gameTextures))
-        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship1"));
-    ship1.setFrames(shipNS::SHIP1_START_FRAME, shipNS::SHIP1_END_FRAME);
-    ship1.setCurrentFrame(shipNS::SHIP1_START_FRAME);
-    ship1.setX(GAME_WIDTH/4);
-    ship1.setY(GAME_HEIGHT/4);
-    ship1.setVelocity(VECTOR2(shipNS::SPEED,-shipNS::SPEED)); // VECTOR2(X, Y)
-    // ship2
-    if (!ship2.initialize(this, shipNS::WIDTH, shipNS::HEIGHT, shipNS::TEXTURE_COLS, &gameTextures))
-        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship2"));
-    ship2.setFrames(shipNS::SHIP2_START_FRAME, shipNS::SHIP2_END_FRAME);
-    ship2.setCurrentFrame(shipNS::SHIP2_START_FRAME);
-    ship2.setX(GAME_WIDTH - GAME_WIDTH/4);
-    ship2.setY(GAME_HEIGHT/4);
-    ship2.setVelocity(VECTOR2(-shipNS::SPEED,-shipNS::SPEED)); // VECTOR2(X, Y)
+    //if (!ship1.initialize(this, shipNS::WIDTH, shipNS::HEIGHT, shipNS::TEXTURE_COLS, &gameTextures))
+    //    throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship1"));
+    //ship1.setFrames(shipNS::SHIP1_START_FRAME, shipNS::SHIP1_END_FRAME);
+    //ship1.setCurrentFrame(shipNS::SHIP1_START_FRAME);
+    //ship1.setX(GAME_WIDTH/4);
+    //ship1.setY(GAME_HEIGHT/4);
+    //ship1.setVelocity(VECTOR2(shipNS::SPEED,-shipNS::SPEED)); // VECTOR2(X, Y)
+    //// ship2
+    //if (!ship2.initialize(this, shipNS::WIDTH, shipNS::HEIGHT, shipNS::TEXTURE_COLS, &gameTextures))
+    //    throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship2"));
+    //ship2.setFrames(shipNS::SHIP2_START_FRAME, shipNS::SHIP2_END_FRAME);
+    //ship2.setCurrentFrame(shipNS::SHIP2_START_FRAME);
+    //ship2.setX(GAME_WIDTH - GAME_WIDTH/4);
+    //ship2.setY(GAME_HEIGHT/4);
+    //ship2.setVelocity(VECTOR2(-shipNS::SPEED,-shipNS::SPEED)); // VECTOR2(X, Y)
 
 
-															   // main game textures
+	// main game textures
 	if (!playerTextures.initialize(graphics, SQUARE_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 
@@ -77,7 +79,7 @@ void SmashRipoff::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	platform.setX(GAME_WIDTH/2);
 	platform.setY(GAME_HEIGHT - 200);
-	//
+
     return;
 }
 
@@ -95,25 +97,7 @@ void SmashRipoff::update()
 	if (input->getMouseLButton())
 	{
 		player.shoot(this, input->getMouseX(), input->getMouseY(),&projectileTexture);
-		//shootable = false;
-		//Projectile p;
-		//	if (!p.initialize(this, 32, 32, shipNS::TEXTURE_COLS, &gameTextures))
-		//		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));
-		//p.setFrames(40, 43);
-		//p.setCurrentFrame(40);
-		//p.setY(player.getY());
-		//p.setX(player.getX());
-		//graphics->spriteBegin();
-		//p.draw();
-		//graphics->spriteEnd();
-		//projectilevec.push_back(p);
-/*
-		player.setX(input->getMouseX());
-		player.setY(input->getMouseY());*/
-		//player.shoot((input->getMouseX()-player.getX()),(input->getMouseY()-player.getY()));
 	}
-
-
 
 	if (input->isKeyDown(VK_SPACE))
 	{
@@ -176,8 +160,6 @@ void SmashRipoff::update()
 	player.update(frameTime);
 
 	platform.update(frameTime);	// should this even have update since platforms dont really move
-
-	//update every bullet
 	
 }
 
@@ -334,7 +316,6 @@ void SmashRipoff::collisions()
 //=============================================================================
 void SmashRipoff::render()
 {
-    graphics->spriteBegin();                // begin drawing sprites
 
     nebula.draw();                          // add the orion nebula to the scene
     planet.draw();                          // add the planet to the scene
@@ -350,8 +331,8 @@ void SmashRipoff::render()
 	{
 
 		// Print message
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "fps %d", (int)fps);
-		dxFont.printC(gameNS::buffer, GAME_WIDTH / 5, GAME_HEIGHT / 8);
+		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "fps %d, Press ESC to pause", (int)fps);
+		dxFont.printC(gameNS::buffer, GAME_WIDTH / 3, GAME_HEIGHT / 8);
 
 		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "X-Vel: %d", (int)player.getMovementComponent()->getX_Velocity());
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, GAME_HEIGHT / 5);
@@ -366,14 +347,9 @@ void SmashRipoff::render()
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 4 * GAME_HEIGHT / 5);
 
 		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)player.projectilelist.size());
-		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
-		
-		
+		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);	
 
 	}
-
-    graphics->spriteEnd();                  // end drawing sprites
-
 
 }
 

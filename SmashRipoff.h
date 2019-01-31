@@ -10,7 +10,6 @@
 #include "Player.h"
 #include "Projectile.h"
 #include "Platform.h"
-#include <vector>
 
 //=============================================================================
 // This class is the core of the game
@@ -24,8 +23,8 @@ private:
     TextureManager gameTextures;    // game texture
 	TextureManager playerTextures;
     Ship    ship1, ship2;           // spaceships
-    Planet  planet;         // the planet
-    Image   nebula;         // backdrop image
+    Planet  planet;					// the planet
+    Image   nebula;					// backdrop image
 	Player  player;
 
 	// new stuff
@@ -40,7 +39,7 @@ public:
     SmashRipoff();
 
     // Destructor
-    virtual ~SmashRipoff();
+    ~SmashRipoff();
 
     // Initialize the game
     void initialize(HWND hwnd);

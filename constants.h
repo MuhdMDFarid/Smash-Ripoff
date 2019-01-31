@@ -54,8 +54,9 @@ const int TILE_SIZE = 32;
 // const int GRID_HEIGHT = GAME_HEIGHT / TILE_SIZE;
 
 // Graphics images
-const char STAGE_IMAGE[] =   "pictures\\background\\spaceStage.jpg";
-const char TEXTURES_IMAGE[] = "pictures\\textures.png";
+const char STAGE_IMAGE[] =		"pictures\\background\\spaceStage.jpg";
+const char TEST_IMAGE[] =		"pictures\\background\\test2.jpg";
+const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
 
 const char SQUARE_TEXTURE[] = "pictures\\Square.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
@@ -66,9 +67,9 @@ const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
 // it would be possible to save and restore key mappings from a data file.
 
 // Menu-related stuff (?)
-const UCHAR ESC_KEY      = VK_ESCAPE;       // 'ESC' key
-const UCHAR ALT_KEY      = VK_MENU;         // 'alt' key
-const UCHAR ENTER_KEY    = VK_RETURN;       // 'enter' key
+const UCHAR ESC_KEY      = VK_ESCAPE;       // ESC key
+const UCHAR ALT_KEY      = VK_MENU;         // alt key
+const UCHAR ENTER_KEY    = VK_RETURN;       // enter key
 
 // Player One (Bounty Hunter)
 const UCHAR W_KEY = 0x57;			// W key (Jump)
