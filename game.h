@@ -41,7 +41,7 @@ protected:
 
 	// Additions
 	TextDX dxFont;					// DirectX font for fps
-	std::vector<GameState*> states;	// a list to store the states(?)
+	std::vector<GameState*> states;	// a list to store the states
 
 public:
 

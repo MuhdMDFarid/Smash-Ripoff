@@ -1,31 +1,29 @@
-#ifndef _PAUSE_STATE_H
-#define _PAUSE_STATE_H
+#ifndef _OPTION_STATE_H
+#define _OPTION_STATE_H
 #define WIN32_LEAN_AND_MEAN
 
 #include "GameState.h"
 
 // Makes it public so that we can derive the functions from this class
-class PauseState : public GameState
+class OptionState : public GameState
 {
 private:
 
-	// Changes the state to "PlayState"
-	void unpauseGame();
 	// Changes the state to "MenuState"
-	void exitGame();
+	void exitOption();
 
 	// Variables
-	TextureManager pauseBackgroundTexture;
-	Image pauseBackground;
-	TextDX pauseFont;
+	TextureManager optionBackgroundTexture;
+	Image optionBackground;
+	TextDX optionFont;
 
 public:
 
 	// Constructor
-	PauseState(Game* game);
+	OptionState(Game* game);
 
 	// Destructor
-	~PauseState();
+	~OptionState();
 
 	// ======================
 	// Functions (inherited from GameState)
@@ -38,4 +36,4 @@ public:
 	virtual void resetAll();
 };
 
-#endif // _PAUSE_STATE_H
+#endif // _OPTION_STATE_H

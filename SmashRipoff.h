@@ -47,6 +47,7 @@ public:
     void ai();          // "
     void collisions();  // "
     void render();      // "
+
     void releaseAll();
     void resetAll();
 };

@@ -9,19 +9,32 @@ class MenuState : public GameState
 private:
 
 	// Changes the state to "PlayState"
-	void startgame();
+	void startGame();
+	// Changes the state to "OptionState"
+	void optionsMenu();
+
+	// Variables
+	TextureManager menuBackgroundTexture;
+	Image menuBackground;
+	TextDX menuFont;
 
 public:
 	
 	// Constructor
-	MenuState(Game* game);    
+	MenuState(Game* game);
+
+	// Destructor
+	~MenuState();
 
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
-	virtual void draw(float frameTime);
+	virtual void draw();
 	virtual void update(float frameTime);
 	virtual void handleInput(Input* input);
+
+	virtual void releaseAll();
+	virtual void resetAll();
 };
 
 #endif // _MENU_STATE_H

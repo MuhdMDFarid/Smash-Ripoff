@@ -131,7 +131,7 @@ void Game::renderGame()
     {
 		graphics->spriteBegin();
 
-		getCurrentState()->draw(frameTime);
+		getCurrentState()->draw();
 
 		// stop rendering
 		graphics->spriteEnd();
@@ -191,7 +191,6 @@ void Game::run(HWND hwnd)
     if (graphics == NULL)            // if graphics not initialized
         return;
 
-	// 
     // calculate elapsed time of last frame, save in frameTime
     QueryPerformanceCounter(&timeEnd);
     frameTime = (float)(timeEnd.QuadPart - timeStart.QuadPart ) / (float)timerFreq.QuadPart;
@@ -240,9 +239,9 @@ void Game::run(HWND hwnd)
     // input->vibrateControllers(frameTime); // handle controller vibration
 	// input->readControllers();       // read state of controllers
 
-    // Clear input
-    // Call this after all key checks are done
-    input->clear(inputNS::KEYS_PRESSED);
+	// Clear input
+	// Call this after all key checks are done
+	// input->clear(inputNS::KEYS_PRESSED);
 }
 
 //=============================================================================

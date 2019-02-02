@@ -102,6 +102,7 @@
     <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Movement_Component.cpp" />
+    <ClCompile Include="OptionState.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="planet.cpp" />
     <ClCompile Include="Platform.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Movement_Component.h" />
+    <ClInclude Include="OptionState.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="planet.h" />
     <ClInclude Include="Platform.h" />

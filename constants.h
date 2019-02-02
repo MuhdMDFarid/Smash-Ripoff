@@ -55,7 +55,10 @@ const int TILE_SIZE = 32;
 
 // Graphics images
 const char STAGE_IMAGE[] =		"pictures\\background\\spaceStage.jpg";
-const char TEST_IMAGE[] =		"pictures\\background\\test2.jpg";
+const char MENU_IMAGE[] =		"pictures\\background\\menuBackground.png";
+const char PAUSE_IMAGE[] =		"pictures\\background\\pauseBackground.png";
+const char OPTION_IMAGE[] =		"pictures\\background\\optionBackground.png";
+// const char OPTIONS_IMAGE[] =	
 const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
 
 const char SQUARE_TEXTURE[] = "pictures\\Square.png";

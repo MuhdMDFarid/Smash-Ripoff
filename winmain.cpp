@@ -36,12 +36,13 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     if (!CreateMainWindow(hwnd, hInstance, nCmdShow))
         return 1;
 
-	// The game needs to open with the menu screen
-	game->pushState(new MenuState(game));
-
     try
 	{
-        game->initialize(hwnd);     // throws GameError
+		// throws GameError
+        game->initialize(hwnd);
+
+		// The game needs to open with the menu screen
+		game->pushState(new MenuState(game));
 
         // main message loop
         int done = 0;

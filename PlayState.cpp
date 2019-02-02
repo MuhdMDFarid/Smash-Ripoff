@@ -1,6 +1,4 @@
 #include <iostream>
-#include "GameState.h"
-#include "MenuState.h"
 #include "PlayState.h"
 #include "PauseState.h"
 
@@ -10,18 +8,23 @@ PlayState::PlayState(Game* game)
 	this->game = game;
 }
 
-void PlayState::pausegame()
+PlayState::~PlayState()
+{
+	// Isn't needed because it got released in SmashRipoff.cpp
+}
+
+void PlayState::pauseGame()
 {
 	// Transitions from "PlayState" to "PauseState"
 	game->pushState(new PauseState(game));
 }
 
-void PlayState::draw(float frameTime)
+void PlayState::draw()
 {
-	game->update();					// update all game items
-	game->ai();						// aritifical intelligence (A.I.)
-	game->collisions();				// handle collisions
-	game->render();					// draw all game items
+	game->update();					// Update all game items
+	game->ai();						// Aritifical Intelligence (A.I.)
+	game->collisions();				// Handle collisions
+	game->render();					// Draw all game items
 }
 
 void PlayState::update(float frameTime)
@@ -31,7 +34,20 @@ void PlayState::update(float frameTime)
 
 void PlayState::handleInput(Input* input)
 {
+	// Keyboard
 	// The game should pause when "ESC" is pressed
-	if (input->wasKeyPressed(ESC_KEY))
-		pausegame();
+	if (input->isKeyDown(ESC_KEY))
+		pauseGame();
+
+	// Mouse
+}
+
+void PlayState::releaseAll()
+{
+	// Isn't needed because it got released in SmashRipoff.cpp
+}
+
+void PlayState::resetAll()
+{
+	// Isn't needed because it got released in SmashRipoff.cpp
 }
