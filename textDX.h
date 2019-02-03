@@ -1,9 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// textDX.h v1.0
-// DirectX font
-
 #ifndef _TEXTDX_H               // Prevent multiple definitions if this 
 #define _TEXTDX_H               // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -15,6 +9,7 @@
 class TextDX
 {
 private:
+
     Graphics    *graphics;
     COLOR_ARGB  color;          // font color (a,r,g,b)
     LP_DXFONT   dxFont;
@@ -24,6 +19,7 @@ private:
     float       angle;          // rotation angle of text in radians
 
 public:
+
     // Constructor (sprite text)
     TextDX();
 
@@ -82,5 +78,4 @@ public:
     virtual void onResetDevice();
 };
 
-#endif
-
+#endif // _TEXTDX_H

@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 entity.h v1.0
-
 #ifndef _ENTITY_H               // Prevent multiple definitions if this 
 #define _ENTITY_H               // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -14,13 +9,14 @@
 namespace entityNS
 {
     enum COLLISION_TYPE {NONE, CIRCLE, BOX, ROTATED_BOX};
-    const float GRAVITY = 6.67428e-11f;         // gravitational constant
+    // const float GRAVITY = 6.67428e-11f;         // gravitational constant
 }
 
 class Entity : public Image
 {
     // Entity properties
   protected:
+
     entityNS::COLLISION_TYPE collisionType;
     VECTOR2 center;         // center of entity
     float   radius;         // radius of collision circle
@@ -68,6 +64,7 @@ class Entity : public Image
     bool collideCornerCircle(VECTOR2 corner, Entity &ent, VECTOR2 &collisionVector);
 
   public:
+
     // Constructor
     Entity();
     // Destructor
@@ -182,6 +179,7 @@ class Entity : public Image
 
     // Adds the gravitational force to the velocity vector of this entity
     void gravityForce(Entity *other, float frameTime);
+
 };
 
-#endif
+#endif // _ENTITY_H

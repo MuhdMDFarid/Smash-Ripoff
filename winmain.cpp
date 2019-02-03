@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by:
-// Charles Kelly
-// Space War winmain.cpp v1.0
-
 #define _CRTDBG_MAP_ALLOC       // for detecting memory leaks
 #define WIN32_LEAN_AND_MEAN
 
@@ -10,6 +5,7 @@
 #include <stdlib.h>             // for detecting memory leaks
 #include <crtdbg.h>             // for detecting memory leaks
 #include "SmashRipoff.h"
+#include "MenuState.h"
 
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
@@ -40,24 +36,34 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     if (!CreateMainWindow(hwnd, hInstance, nCmdShow))
         return 1;
 
-    try{
-        game->initialize(hwnd);     // throws GameError
+    try
+	{
+		// throws GameError
+        game->initialize(hwnd);
+
+		// The game needs to open with the menu screen
+		game->pushState(new MenuState(game));
 
         // main message loop
         int done = 0;
         while (!done)
         {
-            if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) 
-            {
-                // look for quit message
-                if (msg.message == WM_QUIT)
-                    done = 1;
+			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+			{
+				// look for quit message
+				if (msg.message == WM_QUIT)
+					done = 1;
 
-                // decode and pass messages on to WinProc
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            } else
-                game->run(hwnd);    // run the game loop
+				// decode and pass messages on to WinProc
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+
+			else
+			{
+				// Run the game loop
+				game->run(hwnd);
+			}
         }
         SAFE_DELETE (game);     // free memory before exit
         return msg.wParam;
@@ -158,5 +164,3 @@ bool CreateMainWindow(HWND &hwnd, HINSTANCE hInstance, int nCmdShow)
 
     return true;
 }
-
-

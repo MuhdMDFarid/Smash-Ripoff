@@ -1,9 +1,5 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 game.cpp v1.0
-
 #include "game.h"
+#include "GameState.h"
 
 // The primary class should inherit from Game class
 
@@ -14,7 +10,6 @@ Game::Game()
 {
     input = new Input();        // initialize keyboard input immediately
     // additional initialization is handled in later call to input->initialize()
-    paused = false;             // game is not paused
     graphics = NULL;
     initialized = false;
 }
@@ -24,6 +19,10 @@ Game::Game()
 //=============================================================================
 Game::~Game()
 {
+	// Deletes everything in the vector once the game ends (prevents memory leak)
+	while (!states.empty())
+		popState();
+
     deleteAll();                // free all reserved memory
     ShowCursor(true);           // show cursor
 }
@@ -113,7 +112,7 @@ void Game::initialize(HWND hw)
 
     QueryPerformanceCounter(&timeStart);        // get starting time
 
-		// initialize DirectX font
+	// initialize DirectX font
 	if (dxFont.initialize(graphics, gameNS::POINT_SIZE, false, false, gameNS::FONT) == false)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 
@@ -127,14 +126,18 @@ void Game::initialize(HWND hw)
 //=============================================================================
 void Game::renderGame()
 {
-    //start rendering
+    // start rendering
     if (SUCCEEDED(graphics->beginScene()))
     {
-        render();           // call render() in derived object
+		graphics->spriteBegin();
 
-        //stop rendering
+		getCurrentState()->draw();
+
+		// stop rendering
+		graphics->spriteEnd();
         graphics->endScene();
     }
+
     handleLostGraphicsDevice();
 
     //display the back buffer on the screen
@@ -185,7 +188,7 @@ void Game::setDisplayMode(graphicsNS::DISPLAY_MODE mode)
 //=============================================================================
 void Game::run(HWND hwnd)
 {
-    if(graphics == NULL)            // if graphics not initialized
+    if (graphics == NULL)            // if graphics not initialized
         return;
 
     // calculate elapsed time of last frame, save in frameTime
@@ -209,66 +212,36 @@ void Game::run(HWND hwnd)
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
     timeStart = timeEnd;
 
-	//if (true)
-	//{
+	// if the state is a nullptr
+	if (getCurrentState() == nullptr)
+		return;
 
-	//	//const int BUF_SIZE = 30;
-	//	//static char buffer[BUF_SIZE];
-	//	if (SUCCEEDED(graphics->beginScene()))
-	//	{
-	//		//render();           // call render() in derived object
+	// gets user input for the current state
+	getCurrentState()->handleInput(input);
 
-	//		graphics->spriteBegin();	// begin drawing sprites
-	//		if (true)           // if fps display requested
-	//		{
-	//			// Print message
-	//			//_snprintf_s(buffer, BUF_SIZE, "test %d ", (int)fps);
-	//			_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "<Press space to start>");
-	//			dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, GAME_HEIGHT / 2);
+	// updates anything necessary
+	getCurrentState()->update(frameTime);
 
-	//			_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "My Haunted Mansion");
-	//			dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, GAME_HEIGHT / 4);
+	// draws anything in the current state (moved into renderGame())
+	// getCurrentState()->draw(frameTime);
 
-	//		}
-	//		graphics->spriteEnd();		// end drawing sprites
+	// draw all game items
+	renderGame();
 
-	//		//stop rendering
-	//		graphics->endScene();
-	//	}
-	//	handleLostGraphicsDevice();
-
-	//	//display the back buffer on the screen
-	//	graphics->showBackbuffer();
-	//	//if(input->)
-	//	if (input->wasKeyPressed(VK_ESCAPE))
-	//		PostQuitMessage(0);
-	//}
-
-
-
+	// This should be moved to "PlayState"
+	// ===============================================
     // update(), ai(), and collisions() are pure virtual functions.
     // These functions must be provided in the class that inherits from Game.
-    if (!paused)                    // if not paused
-    {
-        update();                   // update all game items
-        ai();                       // artificial intelligence
-        collisions();               // handle collisions
-        input->vibrateControllers(frameTime); // handle controller vibration
-    }
-    renderGame();                   // draw all game items
-    input->readControllers();       // read state of controllers
+    // update();                   // update all game items
+    // ai();                       // artificial intelligence
+    // collisions();               // handle collisions
+	// render();				   // draw all game items
+    // input->vibrateControllers(frameTime); // handle controller vibration
+	// input->readControllers();       // read state of controllers
 
-    // if Alt+Enter toggle fullscreen/window
-    if (input->isKeyDown(ALT_KEY) && input->wasKeyPressed(ENTER_KEY))
-        setDisplayMode(graphicsNS::TOGGLE); // toggle fullscreen/window
-
-    // if Esc key, set window mode
-    if (input->isKeyDown(ESC_KEY))
-        setDisplayMode(graphicsNS::WINDOW); // set window mode
-
-    // Clear input
-    // Call this after all key checks are done
-    input->clear(inputNS::KEYS_PRESSED);
+	// Clear input
+	// Call this after all key checks are done
+	// input->clear(inputNS::KEYS_PRESSED);
 }
 
 //=============================================================================
@@ -293,4 +266,47 @@ void Game::deleteAll()
     SAFE_DELETE(graphics);
     SAFE_DELETE(input);
     initialized = false;
+}
+
+//=============================================================================
+// Adds the current state to the top of the vector (game loop goes to that state)
+//=============================================================================
+void Game::pushState(GameState* state)
+{
+	states.push_back(state);
+}
+
+//=============================================================================
+// Removes the current state from the top of the vector
+//=============================================================================
+void Game::popState()
+{
+	// Deletes the pointer pointing to it (?)
+	states.back();
+	delete states.back();
+
+	// Deletes the last element in the vector
+	states.pop_back();
+}
+
+//=============================================================================
+// Gets the current state (this is a pointer)
+//=============================================================================
+GameState* Game::getCurrentState()
+{
+	// If the vector is empty, return a nullptr
+	if (states.empty())
+		return nullptr;
+
+	// Else, return the last element in the vector
+	else
+		return states.back();
+}
+
+//=============================================================================
+// Removes everything from the vector
+//=============================================================================
+void Game::deleteState()
+{
+	states.clear();
 }

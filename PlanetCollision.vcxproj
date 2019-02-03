@@ -14,7 +14,7 @@
     <ProjectName>SmashRipoff</ProjectName>
     <ProjectGuid>{0259B800-2046-467E-94A2-D13B6F5210BC}</ProjectGuid>
     <RootNamespace>Destroyer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -102,11 +102,15 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Movement_Component.cpp" />
+    <ClCompile Include="OptionState.cpp" />
+    <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="planet.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
@@ -118,12 +122,13 @@
     <ClInclude Include="AirborneState.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="Attack_Component.h" />
-    <ClInclude Include="Attack_Hitbox.h" />
+    <ClInclude Include="attackHitbox.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="GroundedState.h" />
     <ClInclude Include="IdleState.h" />
@@ -131,11 +136,15 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryItem.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Movement_Component.h" />
+    <ClInclude Include="OptionState.h" />
+    <ClInclude Include="PauseState.h" />
     <ClInclude Include="planet.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="PlayState.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="SmashRipoff.h" />

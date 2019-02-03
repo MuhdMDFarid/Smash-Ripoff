@@ -205,7 +205,6 @@ void Player::updateProjectiles(float frameTime)
 	// delete projectiles that are out of boundary can be placed in projectile.update()
 	for (std::vector<Projectile*>::iterator it = projectilelist.begin(); it != projectilelist.end(); )
 	{
-
 		if ((*it)->getX() > GAME_WIDTH || (*it)->getX() < -(*it)->getWidth()/2 || (*it)->getY() > GAME_HEIGHT || (*it)->getY() < -(*it)->getHeight())
 		{
 			it = deleteProjectile(it);
@@ -230,7 +229,6 @@ std::vector<Projectile*>::iterator Player::deleteProjectile(std::vector<Projecti
 {
 	SAFE_DELETE(*it);
 	return projectilelist.erase(it);
-
 }
 
 void Player::setJump(bool canjump)

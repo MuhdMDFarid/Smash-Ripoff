@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by:
-// Charles Kelly
-// Chapter 6 graphics.h v1.0
-
 #ifndef _GRAPHICS_H             // Prevent multiple definitions if this 
 #define _GRAPHICS_H             // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -10,6 +5,7 @@
 #ifdef _DEBUG
 #define D3D_DEBUG_INFO
 #endif
+
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "constants.h"
@@ -55,7 +51,7 @@ namespace graphicsNS
     const COLOR_ARGB FILTER  = D3DCOLOR_ARGB(  0,  0,  0,  0);  // use to specify drawing with colorFilter
     const COLOR_ARGB ALPHA25 = D3DCOLOR_ARGB( 64,255,255,255);  // AND with color to get 25% alpha
     const COLOR_ARGB ALPHA50 = D3DCOLOR_ARGB(128,255,255,255);  // AND with color to get 50% alpha
-    const COLOR_ARGB BACK_COLOR = BLACK;                         // background color of game
+    const COLOR_ARGB BACK_COLOR = BLACK;                        // background color of game
 
     enum DISPLAY_MODE{TOGGLE, FULLSCREEN, WINDOW};
 }
@@ -77,7 +73,9 @@ struct SpriteData
 
 class Graphics
 {
+
 private:
+
     // DirectX pointers and stuff
     LP_3D       direct3d;
     LP_3DDEVICE device3d;
@@ -98,6 +96,7 @@ private:
     void    initD3Dpp();
 
 public:
+
     // Constructor
     Graphics();
 
@@ -227,5 +226,4 @@ public:
     }
 };
 
-#endif
-
+#endif // _GRAPHICS_H

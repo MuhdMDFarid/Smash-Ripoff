@@ -11,6 +11,7 @@ class Attack_Hitbox: public Entity
 	bool Expired;
 
 	// Damage_Component* damage_component;		// when the actual damage components get done
+
 public:
 	Attack_Hitbox();
 	~Attack_Hitbox();
@@ -24,4 +25,4 @@ public:
 
 };
 
-#endif
+#endif // _attackHitbox_H

@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 planet.h v1.0
-
 #ifndef _PLANET_H               // Prevent multiple definitions if this 
 #define _PLANET_H               // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -26,8 +21,10 @@ namespace planetNS
 class Planet : public Entity            // inherits from Entity class
 {
 public:
+
     // constructor
     Planet();
-};
-#endif
 
+};
+
+#endif // _PLANET_H

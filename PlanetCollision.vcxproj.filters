@@ -96,6 +96,18 @@
     <ClCompile Include="AirborneState.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
     <ClCompile Include="IdleState.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
@@ -161,9 +173,6 @@
     <ClInclude Include="Movement_Component.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Attack_Hitbox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -176,10 +185,22 @@
     <ClInclude Include="AirborneState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="IdleState.h">
+    <ClInclude Include="attackHitbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="AttackState.h">
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,12 +1,7 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Image.cpp v1.0
-
 #include "image.h"
 
 //=============================================================================
-// default constructor
+// Default Constructor
 //=============================================================================
 Image::Image()
 {
@@ -39,7 +34,7 @@ Image::Image()
 }
 
 //=============================================================================
-// destructor
+// Destructor
 //=============================================================================
 Image::~Image()
 {}
@@ -177,4 +172,3 @@ inline void Image::setRect()
     // bottom edge + 1
     spriteData.rect.bottom = spriteData.rect.top + spriteData.height;       
 }
-

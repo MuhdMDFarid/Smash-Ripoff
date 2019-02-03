@@ -27,7 +27,6 @@ namespace PlayerNS
 	//int WIDTH = 64;
 	//int HEIGHT = 64;
 	const int TEXTURE_COLS = 4;
-
 	const float PLAYER_MOVE_DELAY = 0.2f;
 	
 	const float JUMP_CD = 0.5f;
@@ -52,12 +51,11 @@ namespace PlayerNS
 class Player : public Entity
 {
 private:
+
 	float speed;
 	float viewAngleOffset;
 	float moveDelay = 0;
 	
-	// Added things below V
-
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
 	//std::vector<Projectile*> projectilelist;
 	
@@ -87,24 +85,22 @@ public:
 
 	Player();
 
+	// Destructor
 	~Player();
 
+	// ======================
+	// Functions
+	// ======================
 	virtual bool initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM);
-
 	float getSpeed() { return speed; }
-
 	void move(int x_force, int y_force);	// change the forces on the char for movement
-
 	virtual void draw();
-	
 	void drawProjectiles();
-
 	void update(float frameTime);
 
 	//void setCollisionType(entityNS::COLLISION_TYPE coltype);
 
 
-	// Components and added stuff
 	Movement_Component* getMovementComponent() { return movement_component; }
 	bool iscanJump() { return airJump; }
 	void setJump(bool canjump);
@@ -122,4 +118,4 @@ public:
 
 };
 
-#endif
+#endif // _PLAYER_H

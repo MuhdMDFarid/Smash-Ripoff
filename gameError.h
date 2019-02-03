@@ -1,9 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// gameError.h v1.0
-// Error class thrown by game engine.
-
 #ifndef _GAMEERROR_H            // Prevent multiple definitions if this 
 #define _GAMEERROR_H            // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
@@ -24,10 +18,14 @@ namespace gameErrorNS
 // Inherits from std::exception
 class GameError : public std::exception
 {
+
 private:
+
     int     errorCode;
     std::string message;
+
 public:
+
     // default constructor
     GameError() throw() :errorCode(gameErrorNS::FATAL_ERROR), message("Undefined Error in game.") {}
     // copy constructor
@@ -49,6 +47,7 @@ public:
 
     const char* getMessage() const throw() { return message.c_str(); }
     int getErrorCode() const throw() { return errorCode; }
+
 };
 
-#endif
+#endif // _GAMEERROR_H
