@@ -76,15 +76,20 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!projectileTexture.initialize(graphics, PROJECTILE_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing projectile texture"));
 
-	// platform texture
+	/// platform texture
 	if (!platformTexture.initialize(graphics, PLATFORM_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform texture"));
 
 	if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	platform.setX(GAME_WIDTH/2);
-	platform.setY(GAME_HEIGHT - 200);
-	//
+	platform.setY(GAME_HEIGHT);
+
+	if (!platform1.initialize(this, GAME_WIDTH, 32, 1, &platformTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+	platform1.setX(0);
+	platform1.setY(GAME_HEIGHT-platform1.getHeight());
+	///
     return;
 }
 
@@ -93,10 +98,16 @@ void SmashRipoff::initialize(HWND hwnd)
 //=============================================================================
 void SmashRipoff::update()
 {
+	player.update(frameTime);
+
+	//player.fall();
+	if (platform.getY() <= -platform.getHeight())
+		platform.setY(GAME_HEIGHT);
+	platform.setY(platform.getY() - TILE_SIZE*4*frameTime);
 
 	if (input->isKeyDown(E_KEY))
 	{
-		player.deleteHitbox();
+		//player.deleteHitbox();
 	}
 
 	if (input->getMouseLButton())
@@ -122,21 +133,22 @@ void SmashRipoff::update()
 
 
 
-	if (input->isKeyDown(VK_SPACE))
-	{
-		player.punch(this, &projectileTexture);
-	}
+	//if (input->isKeyDown(VK_SPACE))
+	//{
+		//player.punch(this, &projectileTexture);
+	//}
 
-	if (input->isKeyDown(W_KEY) || input->isKeyDown(VK_UP))	//jump
+	player.handleInput(input);
+	/*if (input->isKeyDown(W_KEY) || input->isKeyDown(VK_UP))	//jump
 	{
-		//player.move(0, -player.getSpeed());
-		if (player.iscanJump())
-		{
-			player.getMovementComponent()->setY_Velocity(-250);
-			player.setJump(false);
-		}
+		player.jump();
+		//if (player.iscanJump())
+		//{
+		//	player.getMovementComponent()->setY_Velocity(-250);
+		//	player.setJump(false);
+		//}
 	}
-	else if (input->isKeyDown(S_KEY)|| input->isKeyDown(VK_DOWN))	// dive down
+	else*/ if (input->isKeyDown(S_KEY)|| input->isKeyDown(VK_DOWN))	// dive down
 	{
 		player.move(0, player.getSpeed());
 		//player.getMovementComponent()->setY_Force(100);
@@ -180,12 +192,15 @@ void SmashRipoff::update()
 	planet.update(frameTime);
     ship1.update(frameTime);
     ship2.update(frameTime);
-	player.update(frameTime);
 
 	platform.update(frameTime);	// should this even have update since platforms dont really move
-
-	//update every bullet
-	
+	platform1.update(frameTime);
+	//update every bullet in player ithink
+	//
+	//if (player.airEnum != STATE_AIRBORNE)
+	//{
+	//	player.fall();
+	//}
 }
 
 //=============================================================================
@@ -199,34 +214,34 @@ void SmashRipoff::ai()
 //=============================================================================
 void SmashRipoff::collisions()
 {
-    VECTOR2 collisionVector;
-    // if collision between ship and planet
-    if(ship1.collidesWith(planet, collisionVector))
-    {
-        // bounce off planet
-        ship1.bounce(collisionVector, planet);
-        //ship1.damage(PLANET);
-    }
-    if(ship2.collidesWith(planet, collisionVector))
-    {
-        // bounce off planet
-        ship2.bounce(collisionVector, planet);
-        //ship2.damage(PLANET);
-    }
-    // if collision between ships
-    if(ship1.collidesWith(ship2, collisionVector))
-    {
-        // bounce off ship
-        ship1.bounce(collisionVector, ship2);
-        //ship1.damage(SHIP);
-        // change the direction of the collisionVector for ship2
-        ship2.bounce(collisionVector*-1, ship1);
-        //ship2.damage(SHIP);
-    }
+	VECTOR2 collisionVector;
+	// if collision between ship and planet
+	if (ship1.collidesWith(planet, collisionVector))
+	{
+		// bounce off planet
+		ship1.bounce(collisionVector, planet);
+		//ship1.damage(PLANET);
+	}
+	if (ship2.collidesWith(planet, collisionVector))
+	{
+		// bounce off planet
+		ship2.bounce(collisionVector, planet);
+		//ship2.damage(PLANET);
+	}
+	// if collision between ships
+	if (ship1.collidesWith(ship2, collisionVector))
+	{
+		// bounce off ship
+		ship1.bounce(collisionVector, ship2);
+		//ship1.damage(SHIP);
+		// change the direction of the collisionVector for ship2
+		ship2.bounce(collisionVector*-1, ship1);
+		//ship2.damage(SHIP);
+	}
 	if (player.collidesWith(ship1, collisionVector))
 	{
 		player.bounce(collisionVector, ship1);
-		
+
 		ship1.bounce(collisionVector*-1, player);
 		//ship1.damage(SHIP);
 	}
@@ -239,13 +254,13 @@ void SmashRipoff::collisions()
 	}
 
 	// platform collision
-	if (player.collidesWith(platform, collisionVector))
+	if(player.collidesWith(platform,collisionVector))
 	{
 		// PROTOTYPE COLLISION Detection
 
 		// collide with top of platform
 		if (player.getCenterY() + player.getEdge().bottom*player.getScale() >= platform.getCenterY() + platform.getEdge().top*platform.getScale()
-		&&  player.getCenterY() + player.getEdge().top*player.getScale() < platform.getCenterY() + platform.getEdge().top*platform.getScale())
+			&& player.getCenterY() + player.getEdge().top*player.getScale() < platform.getCenterY() + platform.getEdge().top*platform.getScale())
 		{
 			// player collides from the top of the platform
 			player.setY(platform.getCenterY() + platform.getEdge().top*platform.getScale()
@@ -256,24 +271,28 @@ void SmashRipoff::collisions()
 				player.getMovementComponent()->setY_Velocity(0);
 			}
 
-			player.setJump(true);
-			player.grounded = true;
+			//player.setJump(true);
+			//player.grounded = true;
+			if (player.airEnum != STATE_GROUNDED)
+			{
+				player.landed();
+			}
 		}
 
-		else if(player.getCenterX() + player.getEdge().right*player.getScale() >= platform.getCenterX() + platform.getEdge().left*platform.getScale() 
-		&& player.getCenterX() + player.getEdge().left*player.getScale() < platform.getCenterX() + platform.getEdge().left*platform.getScale())
+		else if (player.getCenterX() + player.getEdge().right*player.getScale() >= platform.getCenterX() + platform.getEdge().left*platform.getScale()
+			&& player.getCenterX() + player.getEdge().left*player.getScale() < platform.getCenterX() + platform.getEdge().left*platform.getScale())
 		{
 			// player collides from the left side of platform
-			player.setX(platform.getCenterX()+platform.getEdge().left*platform.getScale()
-				-player.getWidth());		// prevents player from moving past the right side of platform
+			player.setX(platform.getCenterX() + platform.getEdge().left*platform.getScale()
+				- player.getWidth());		// prevents player from moving past the right side of platform
 
-			if( player.getMovementComponent()->getX_Velocity()>0)		// if player is moving towards right it sets velocity to 0
+			if (player.getMovementComponent()->getX_Velocity() > 0)		// if player is moving towards right it sets velocity to 0
 			{
 				player.getMovementComponent()->setX_Velocity(0);
 			}
 		}
 
-		else if(player.getCenterX() + player.getEdge().left*player.getScale() <= platform.getCenterX() + platform.getEdge().right*platform.getScale()
+		else if (player.getCenterX() + player.getEdge().left*player.getScale() <= platform.getCenterX() + platform.getEdge().right*platform.getScale()
 			&& player.getCenterX() + player.getEdge().right*player.getScale() > platform.getCenterX() + platform.getEdge().right*platform.getScale())
 		{
 			// player collides from right side of platform
@@ -285,7 +304,7 @@ void SmashRipoff::collisions()
 			}
 		}
 
-		else if	(player.getCenterY() + player.getEdge().top*player.getScale() <= platform.getCenterY() + platform.getEdge().bottom*platform.getScale()
+		else if (player.getCenterY() + player.getEdge().top*player.getScale() <= platform.getCenterY() + platform.getEdge().bottom*platform.getScale()
 			&& player.getCenterY() + player.getEdge().bottom*player.getScale() > platform.getCenterY() + platform.getEdge().bottom*platform.getScale())
 		{
 			// player collides from the bottom of the platform
@@ -296,6 +315,69 @@ void SmashRipoff::collisions()
 				player.getMovementComponent()->setY_Velocity(0);
 			}
 		}
+	}
+	else if (player.collidesWith(platform1,collisionVector))
+	{
+		// PROTOTYPE COLLISION Detection
+
+		// collide with top of platform1
+		if (player.getCenterY() + player.getEdge().bottom*player.getScale() >= platform1.getCenterY() + platform1.getEdge().top*platform1.getScale()
+			&& player.getCenterY() + player.getEdge().top*player.getScale() < platform1.getCenterY() + platform1.getEdge().top*platform1.getScale())
+		{
+			// player collides from the top of the platform1
+			player.setY(platform1.getCenterY() + platform1.getEdge().top*platform1.getScale()
+				- player.getHeight());		// prevents player from moving past the left side of platform1
+
+			if (player.getMovementComponent()->getY_Velocity() > 0)		// if player is moving downwards it sets velocity to 0...
+			{	// this is to prevent reseting velocity when player is jumping from the side up wards
+				player.getMovementComponent()->setY_Velocity(0);
+			}
+
+			//player.setJump(true);
+			//player.grounded = true;
+			if (player.airEnum != STATE_GROUNDED)
+			{
+				player.landed();
+			}
+		}
+
+		else if (player.getCenterX() + player.getEdge().right*player.getScale() >= platform1.getCenterX() + platform1.getEdge().left*platform1.getScale()
+			&& player.getCenterX() + player.getEdge().left*player.getScale() < platform1.getCenterX() + platform1.getEdge().left*platform1.getScale())
+		{
+			// player collides from the left side of platform1
+			player.setX(platform1.getCenterX() + platform1.getEdge().left*platform1.getScale()
+				- player.getWidth());		// prevents player from moving past the right side of platform1
+
+			if (player.getMovementComponent()->getX_Velocity() > 0)		// if player is moving towards right it sets velocity to 0
+			{
+				player.getMovementComponent()->setX_Velocity(0);
+			}
+		}
+
+		else if (player.getCenterX() + player.getEdge().left*player.getScale() <= platform1.getCenterX() + platform1.getEdge().right*platform1.getScale()
+			&& player.getCenterX() + player.getEdge().right*player.getScale() > platform1.getCenterX() + platform1.getEdge().right*platform1.getScale())
+		{
+			// player collides from right side of platform1
+			player.setX(platform1.getCenterX() + platform1.getEdge().right*platform1.getScale());		// prevents player from moving past the left side of platform1
+
+			if (player.getMovementComponent()->getX_Velocity() < 0)		// if player is moving towards left it sets velocity to 0
+			{
+				player.getMovementComponent()->setX_Velocity(0);
+			}
+		}
+
+		else if (player.getCenterY() + player.getEdge().top*player.getScale() <= platform1.getCenterY() + platform1.getEdge().bottom*platform1.getScale()
+			&& player.getCenterY() + player.getEdge().bottom*player.getScale() > platform1.getCenterY() + platform1.getEdge().bottom*platform1.getScale())
+		{
+			// player collides from the bottom of the platform1
+			player.setY(platform1.getCenterY() + platform1.getEdge().bottom*platform1.getScale());
+
+			if (player.getMovementComponent()->getY_Velocity() < 0)		// if player is moving upwards it sets velocity to 0...
+			{	// this is to prevent player from keeping upwards velocity when hitting the bottom of plat
+				player.getMovementComponent()->setY_Velocity(0);
+			}
+		}
+	
 
 		// end of PROTOTYPE COLLISION DETECTION
 
@@ -311,7 +393,7 @@ void SmashRipoff::collisions()
 		//LOOK AT BOUNCE TO SEE HOW TO STOP VIBRATIONS AND HOW TO HANDLE COLLISIONS
 		// doesn't test which if statement is for which side of collision
 		/*if(player.getCenterX() + player.getEdge().right*player.getScale() < platform.getCenterX() + platform.getEdge().left*platform.getScale())
-		{ 
+		{
 			// player collides from the left side of platform
 			player.setX(player.getX() - 100);
 		}
@@ -329,11 +411,18 @@ void SmashRipoff::collisions()
 
 		}
 		else if	(player.getCenterY() + player.getEdge().top*player.getScale() > platform.getCenterY() + platform.getEdge().bottom*platform.getScale())
-		{ 
+		{
 			// player collides from the bottom of the platform
 		}*/
 	}
-	else { player.grounded = false; }
+	else			// If not colliding with platforms 
+	{
+		if (player.airEnum != STATE_AIRBORNE)
+		{
+			player.fall();
+		}
+
+	}
 }
 
 //=============================================================================
@@ -350,7 +439,7 @@ void SmashRipoff::render()
 	player.draw();
 
 	platform.draw();
-
+	platform1.draw();
 	// draw every bullet put inside player
 
 	if (true)
@@ -372,7 +461,7 @@ void SmashRipoff::render()
 		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Force: %d", (int)player.getMovementComponent()->getY_Force());
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 4 * GAME_HEIGHT / 5);
 
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)player.projectilelist.size());
+		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", /*(int)player.projectilelist.size()*/(int)player.jumpcooldown);
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
 		
 		

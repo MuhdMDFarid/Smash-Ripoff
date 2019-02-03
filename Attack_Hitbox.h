@@ -8,6 +8,8 @@
 class Attack_Hitbox: public Entity
 {
 	float Lifetime;		// how long the Hitbox lasts
+	bool Expired;
+
 	// Damage_Component* damage_component;		// when the actual damage components get done
 public:
 	Attack_Hitbox();
@@ -16,6 +18,8 @@ public:
 	virtual void draw();
 	void remove();
 	void update(float frameTime);
+
+	bool isExpired() { return Expired; }
 
 
 };

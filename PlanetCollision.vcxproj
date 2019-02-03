@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AirborneState.cpp" />
+    <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="Attack_Component.cpp" />
     <ClCompile Include="Attack_Hitbox.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="GroundedState.cpp" />
+    <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -114,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirborneState.h" />
+    <ClInclude Include="AttackState.h" />
     <ClInclude Include="Attack_Component.h" />
     <ClInclude Include="Attack_Hitbox.h" />
     <ClInclude Include="Component.h" />
@@ -123,6 +126,7 @@
     <ClInclude Include="gameError.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="GroundedState.h" />
+    <ClInclude Include="IdleState.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Inventory.h" />

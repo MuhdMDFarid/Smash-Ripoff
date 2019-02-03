@@ -96,6 +96,12 @@
     <ClCompile Include="AirborneState.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -168,6 +174,12 @@
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="AirborneState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>

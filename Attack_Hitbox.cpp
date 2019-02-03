@@ -4,6 +4,8 @@
 
 Attack_Hitbox::Attack_Hitbox()
 {
+	Lifetime = 0.1f;
+	Expired = false;
 }
 
 
@@ -30,4 +32,11 @@ void Attack_Hitbox::update(float frameTime)
 {
 	// Hitbox_Attacks should move based on the player
 	Entity::update(frameTime);
+
+	Lifetime -= frameTime;
+	if (Lifetime <= 0)
+	{
+		// delete
+		Expired = true;
+	}
 }

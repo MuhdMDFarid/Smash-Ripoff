@@ -10,9 +10,17 @@
 #include "Projectile.h"
 #include "Movement_Component.h"
 #include "Attack_Hitbox.h"
-#include "PlayerState.h"
-#include "AirborneState.h"
-#include "GroundedState.h"
+
+enum State
+{
+	STATE_GROUNDED,
+	STATE_AIRBORNE,
+	STATE_STAGGERED,
+	STATE_ATTACK,
+	STATE_IDLE
+};
+
+class PlayerState;		// forward declaration
 
 namespace PlayerNS
 {
@@ -22,7 +30,23 @@ namespace PlayerNS
 
 	const float PLAYER_MOVE_DELAY = 0.2f;
 	
+	const float JUMP_CD = 0.5f;
+	const int JUMP_VELOCITY = 500;
 
+	// Player 1 Frames
+	const int P1_IDLE_START = 0;
+	const int P1_IDLE_END = 3;
+
+	const int P1_MOVE_START = 4;
+	const int P1_MOVE_END = 7;
+
+	const int P1_ATTACK_START = 8;
+	const int P1_ATTACK_END = 11;
+
+	const int P1_AIRBORNE_START = 12;
+	const int P1_AIRBORNE_END = 15;
+
+	
 }
 
 class Player : public Entity
@@ -36,11 +60,22 @@ private:
 
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
 	//std::vector<Projectile*> projectilelist;
-	bool canJump;
 	
 public:
-	bool grounded;		// replaced to a state in future
-	//AirborneState* airborne;
+	//bool grounded;		// replaced to a state in future
+	void landed();
+	void fall();
+	void jump();
+	State airEnum;
+	PlayerState* airborne;
+	State actionEnum;
+	PlayerState* action;
+	float jumpcooldown;
+	bool airJump;
+	bool canjump;
+
+	void handleInput(Input* input);
+
 
 	Projectile *newprojectile;		// not sure if this should be done
 	std::vector<Projectile*> projectilelist;
@@ -71,7 +106,7 @@ public:
 
 	// Components and added stuff
 	Movement_Component* getMovementComponent() { return movement_component; }
-	bool iscanJump() { return canJump; }
+	bool iscanJump() { return airJump; }
 	void setJump(bool canjump);
 
 	// should consider placing this somewhere projectile related

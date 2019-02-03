@@ -36,6 +36,7 @@ private:
 	TextureManager projectileTexture;
 	TextureManager platformTexture;
 	Platform platform;
+	Platform platform1;
 	//bool shootable = true;
 
 public:

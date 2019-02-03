@@ -45,7 +45,7 @@ const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calcul
 //const float GRAVITY = 6.67428e-11f;             // gravitational constant
 const float MASS_PLANET = 1.0e14f;
 const float MASS_SHIP = 5.0f;
-const float GRAVITY = 150;             // gravitational constant
+const float GRAVITY = 1000;             // gravitational constant
 
 
 const int TILE_SIZE = 32;

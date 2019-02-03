@@ -8,6 +8,8 @@ namespace MovementNS
 {
 	const int MAX_FORCE = 200;
 	const int MAX_VELOCITY = 300;
+	const float FRICTION = 0.8;
+	const float FRICTION_CONST = 200;
 }
 
 class Movement_Component :public Component
