@@ -47,8 +47,8 @@ void PauseState::draw()
 	pauseBackground.draw();
 
 	pauseFont.printC("PAUSED", GAME_WIDTH / 2, GAME_HEIGHT / 4);
-	pauseFont.printC("Press X to resume", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 2);
-	pauseFont.printC("Press B to exit", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 3);
+	pauseFont.printC("Press ESC to resume", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 2);
+	pauseFont.printC("Press ENTER to exit", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 3);
 }
 
 void PauseState::update(float frameTime)
@@ -60,12 +60,20 @@ void PauseState::handleInput(Input* input)
 {
 	// Keyboard
 	// Unpauses the game
-	if (input->isKeyDown(X_KEY))
+	if (input->isKeyDown(ESC_KEY))
+	{
+		// Ensures that the key doesn't register more than once
+		input->keyUp(ESC_KEY);
 		unpauseGame();
+	}
 
 	// Exits the game (Main menu)
-	else if (input->isKeyDown(B_KEY))
+	else if (input->isKeyDown(ENTER_KEY))
+	{
+		// Ensures that the key doesn't register more than once
+		input->keyUp(ENTER_KEY);
 		exitGame();
+	}
 
 	// Mouse
 }

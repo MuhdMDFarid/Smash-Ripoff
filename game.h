@@ -21,6 +21,7 @@ namespace gameNS
 }
 
 class GameState;
+
 class Game
 {
 
@@ -42,6 +43,9 @@ protected:
 	// Additions
 	TextDX dxFont;					// DirectX font for fps
 	std::vector<GameState*> states;	// a list to store the states
+
+	bool hunterDeath = false; 
+	bool priestessDeath = false;
 
 public:
 

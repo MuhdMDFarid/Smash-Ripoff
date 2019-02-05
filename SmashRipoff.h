@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Projectile.h"
 #include "Platform.h"
+#include "heart.h"
 
 //=============================================================================
 // This class is the core of the game
@@ -18,7 +19,7 @@ class SmashRipoff : public Game
 {
 private:
 
-    // game items
+    // old stuff that should be removed(?)
     TextureManager nebulaTexture;   // nebula texture
     TextureManager gameTextures;    // game texture
 	TextureManager playerTextures;
@@ -33,6 +34,19 @@ private:
 	Platform platform;
 	Platform platform1;
 	//bool shootable = true;
+
+	// -Hearts-
+	static const int MAX_HEALTH = 3;
+	TextureManager heartTexture;
+	Image heart;
+
+	// Players' Health
+	Heart hunterHealth[MAX_HEALTH];
+	Heart priestessHealth[MAX_HEALTH];
+	// List starts from 0
+	int hunterHP = 2;
+	int priestessHP = 2;
+	// Players' Knockback
 
 public:
 

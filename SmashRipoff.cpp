@@ -84,8 +84,36 @@ void SmashRipoff::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	platform1.setX(0);
 	platform1.setY(GAME_HEIGHT-platform1.getHeight());
-	///
-    return;
+
+	// Hearts
+	if (!heartTexture.initialize(graphics, HEART_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing heart texture"));
+
+	for (int i = 0; i < MAX_HEALTH; i++)
+	{
+		if (!hunterHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
+		// Makes the image bigger
+		hunterHealth[i].setScale(2);
+		// Sets it to the left of the screen (player 1)
+		hunterHealth[i].setX(heartNS::WIDTH * i);			
+		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
+		hunterHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * hunterHealth[i].getScale()));
+	}
+
+	for (int i = 0; i < MAX_HEALTH; i++)
+	{
+		if (!priestessHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
+		// Makes the image bigger
+		priestessHealth[i].setScale(2);
+		// Sets it to the right of the screen (player 2)
+		priestessHealth[i].setX(GAME_WIDTH - ((heartNS::WIDTH * (i + 1)) + heartNS::WIDTH));
+		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
+		priestessHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * priestessHealth[i].getScale()));
+	}
+
+	return;
 }
 
 //=============================================================================
@@ -94,6 +122,41 @@ void SmashRipoff::initialize(HWND hwnd)
 void SmashRipoff::update()
 {
 	player.update(frameTime);
+
+	// --Hearts-- (replace in Collision, Muhamiddo)
+	// Hunter
+	if (input->isKeyDown(O_KEY))
+	{
+		input->keyUp(O_KEY);
+
+		if (hunterHP > 0)
+		{
+			hunterHealth[hunterHP].setActive(false);
+			hunterHP--;
+		}
+
+		else
+		{
+			hunterDeath = true;
+		}
+	}
+
+	// Priestess
+	if (input->isKeyDown(P_KEY))
+	{
+		input->keyUp(P_KEY);
+
+		if (priestessHP > 0)
+		{
+			priestessHealth[priestessHP].setActive(false);
+			priestessHP--;
+		}
+
+		else
+		{
+			priestessDeath = true;
+		}
+	}
 
 	//player.fall();
 	if (platform.getY() <= -platform.getHeight())
@@ -412,14 +475,26 @@ void SmashRipoff::render()
 
     nebula.draw();                          // add the orion nebula to the scene
     planet.draw();                          // add the planet to the scene
-    ship1.draw();                           // add the spaceship to the scene
-    ship2.draw();                           // add the spaceship to the scene
 	player.draw();
 
 	platform.draw();
 	platform1.draw();
 	// draw every bullet put inside player
 
+	for (int i = 0; i < MAX_HEALTH; i++)	// Add Players' Health
+	{
+		if (hunterHealth[i].getActive())	// Checks to see if the heart is active (if it isn't, don't draw it)
+		{
+			hunterHealth[i].draw();
+		}
+
+		if (priestessHealth[i].getActive())
+		{
+			priestessHealth[i].draw();
+		}
+	}
+
+	/*
 	if (true)
 	{
 
@@ -439,13 +514,12 @@ void SmashRipoff::render()
 		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Force: %d", (int)player.getMovementComponent()->getY_Force());
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 4 * GAME_HEIGHT / 5);
 
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", /*(int)player.projectilelist.size()*/(int)player.jumpcooldown);
+		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)player.jumpcooldown);
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
 		
 		
 
-	}
-
+	} */
 }
 
 //=============================================================================

@@ -60,17 +60,29 @@ void MenuState::update(float frameTime)
 void MenuState::handleInput(Input* input)
 {
 	// Keyboard
-	// The game is exited if "ESC" is pressed
+	// Exits the game
 	if (input->isKeyDown(ESC_KEY))
+	{
+		// Ensures that the key doesn't register more than once
+		input->keyUp(ESC_KEY);
 		game->exitGame();
 
-	// The game starts if "ENTER" is pressed
-	else if (input->isKeyDown(ENTER_KEY))
-		startGame();
+	}
 
-	// The game moves to the options if "V" is pressed
+	// Starts the game
+	else if (input->isKeyDown(ENTER_KEY))
+	{
+		// Ensures that the key doesn't register more than once
+		input->keyUp(ENTER_KEY);
+		startGame();
+	}
+
+	// Opens up the options menu
 	else if (input->isKeyDown(V_KEY))
+	{
 		optionsMenu();
+	}
+	
 	// Mouse
 }
 

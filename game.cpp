@@ -216,6 +216,11 @@ void Game::run(HWND hwnd)
 	if (getCurrentState() == nullptr)
 		return;
 
+	if (hunterDeath || priestessDeath)
+	{
+		PostQuitMessage(0);
+	}
+
 	// gets user input for the current state
 	getCurrentState()->handleInput(input);
 
@@ -241,7 +246,7 @@ void Game::run(HWND hwnd)
 
 	// Clear input
 	// Call this after all key checks are done
-	// input->clear(inputNS::KEYS_PRESSED);
+	input->clear(inputNS::KEYS_PRESSED);
 }
 
 //=============================================================================
@@ -281,7 +286,7 @@ void Game::pushState(GameState* state)
 //=============================================================================
 void Game::popState()
 {
-	// Deletes the pointer pointing to it (?)
+	// Delete the pointer pointing to the last element
 	states.back();
 	delete states.back();
 

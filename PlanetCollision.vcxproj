@@ -97,6 +97,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="GroundedState.cpp" />
+    <ClCompile Include="heart.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
@@ -122,7 +123,7 @@
     <ClInclude Include="AirborneState.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="Attack_Component.h" />
-    <ClInclude Include="attackHitbox.h" />
+    <ClInclude Include="Attack_Hitbox.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="entity.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="GroundedState.h" />
+    <ClInclude Include="heart.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />

@@ -185,9 +185,6 @@
     <ClInclude Include="AirborneState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="attackHitbox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
@@ -202,6 +199,15 @@
     </ClInclude>
     <ClInclude Include="OptionState.h">
       <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack_Hitbox.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

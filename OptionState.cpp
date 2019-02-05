@@ -38,7 +38,7 @@ void OptionState::draw()
 	// Draws all the necessary assets
 	optionBackground.draw();
 
-	optionFont.printC("Press N to leave", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 2);
+	optionFont.printC("Press ESC to leave", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 2);
 }
 
 void OptionState::update(float frameTime)
@@ -49,9 +49,13 @@ void OptionState::update(float frameTime)
 void OptionState::handleInput(Input* input)
 {
 	// Keyboard
-	// Press "N" to leave the option menu
-	if (input->isKeyDown(N_KEY))
+	// Leaves the option menu
+	if (input->isKeyDown(ESC_KEY))
+	{
+		// Ensures that the key doesn't register more than once
+		input->keyUp(ESC_KEY);
 		exitOption();
+	}
 
 	// Mouse
 }

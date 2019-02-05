@@ -28,7 +28,7 @@ namespace PlayerNS
 	//int HEIGHT = 64;
 	const int TEXTURE_COLS = 4;
 	const float PLAYER_MOVE_DELAY = 0.2f;
-	
+
 	const float JUMP_CD = 0.5f;
 	const int JUMP_VELOCITY = 500;
 
@@ -44,8 +44,6 @@ namespace PlayerNS
 
 	const int P1_AIRBORNE_START = 12;
 	const int P1_AIRBORNE_END = 15;
-
-	
 }
 
 class Player : public Entity
