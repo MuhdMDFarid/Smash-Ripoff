@@ -17,7 +17,7 @@ PlayerState* GroundedState::handleInput(Player& player, Input* input)
 	{
 		if (player.actionEnum != STATE_ATTACK && player.actionEnum != STATE_STAGGERED)
 		{
-			player.getMovementComponent()->setY_Velocity(-PlayerNS::JUMP_VELOCITY);
+			player.getMovementComponent()->setY_Velocity(-PlayerNS::JUMP_VELOCITY*player.speedmultiplier);
 			player.jumpcooldown = PlayerNS::JUMP_CD;
 			player.canjump = false;
 		}

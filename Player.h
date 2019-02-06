@@ -21,6 +21,7 @@ enum State
 };
 
 class PlayerState;		// forward declaration
+class Skill;
 
 namespace PlayerNS
 {
@@ -45,6 +46,8 @@ namespace PlayerNS
 	const int P1_AIRBORNE_START = 12;
 	const int P1_AIRBORNE_END = 15;
 
+	const int P1_SLAM_START = 20;
+	const int P1_SLAM_END = 23;
 	
 }
 
@@ -64,6 +67,7 @@ public:
 	void landed();
 	void fall();
 	void jump();
+	void interrupt();
 	State airEnum;
 	PlayerState* airborne;
 	State actionEnum;
@@ -71,6 +75,12 @@ public:
 	float jumpcooldown;
 	bool airJump;
 	bool canjump;
+
+	int playerface;
+
+	// GHETTO
+	Game* game = nullptr;
+	TextureManager* getTextureManager() { return textureManager; }
 
 	void handleInput(Input* input);
 
@@ -81,7 +91,12 @@ public:
 	// hitbox_attack components stuff
 	std::vector<Attack_Hitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
 	Attack_Hitbox *newhitbox;		// this should be placed in a hitbox_attack
+	
+	Skill* skill;
 
+	// TEMP potion effect
+	float speedmultiplier = 1;
+	float agilityduration = 0;
 
 	Player();
 
@@ -111,7 +126,7 @@ public:
 	std::vector<Projectile*>::iterator deleteProjectile(std::vector<Projectile*>::iterator it);
 
 	// melee/hitbox attack prototype
-	void punch(Game*gamePtr, TextureManager*textureM);
+	void punch(/*Game*gamePtr, TextureManager*textureM*/);
 	void drawHitboxes();
 	void updateHitboxes(float frameTime);
 	void deleteHitbox();

@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Projectile.h"
 #include "Platform.h"
+#include "SpeedPotion.h"
 
 //=============================================================================
 // This class is the core of the game
@@ -22,7 +23,7 @@ private:
     TextureManager nebulaTexture;   // nebula texture
     TextureManager gameTextures;    // game texture
 	TextureManager playerTextures;
-    Ship    ship1, ship2;           // spaceships
+    //Ship    ship1, ship2;           // spaceships
     Planet  planet;					// the planet
     Image   nebula;					// backdrop image
 	Player  player;
@@ -32,6 +33,8 @@ private:
 	TextureManager platformTexture;
 	Platform platform;
 	Platform platform1;
+	TextureManager potionTexture;
+	SpeedPotion potion;
 	//bool shootable = true;
 
 public:

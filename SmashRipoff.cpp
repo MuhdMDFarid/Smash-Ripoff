@@ -60,7 +60,7 @@ void SmashRipoff::initialize(HWND hwnd)
 
 
 	// main game textures
-	if (!playerTextures.initialize(graphics, SQUARE_TEXTURE))
+	if (!playerTextures.initialize(graphics, PLAYER_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 
 	if (!player.initialize(this, 32, 32,PlayerNS::TEXTURE_COLS, &playerTextures))
@@ -85,6 +85,18 @@ void SmashRipoff::initialize(HWND hwnd)
 	platform1.setX(0);
 	platform1.setY(GAME_HEIGHT-platform1.getHeight());
 	///
+
+	// TEMP POTION texture
+	if (!potionTexture.initialize(graphics, SPEEDPOTION_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SPD POT textures"));
+
+	if (!potion.initialize(this, 113, 113, 1, &potionTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
+	potion.setScale(0.5);
+	potion.setX(GAME_WIDTH - TILE_SIZE);
+	potion.setY(GAME_HEIGHT - 2*TILE_SIZE);
+
+
     return;
 }
 
@@ -112,10 +124,11 @@ void SmashRipoff::update()
 
 
 
-	//if (input->isKeyDown(VK_SPACE))
-	//{
-		//player.punch(this, &projectileTexture);
-	//}
+	if (input->isKeyDown(VK_SPACE))
+	{
+		//player.interrupt();
+		player.punch(/*this, &playerTextures*/);
+	}
 
 	player.handleInput(input);
 	/*if (input->isKeyDown(W_KEY) || input->isKeyDown(VK_UP))	//jump
@@ -129,7 +142,7 @@ void SmashRipoff::update()
 	}
 	else*/ if (input->isKeyDown(S_KEY)|| input->isKeyDown(VK_DOWN))	// dive down
 	{
-		player.move(0, player.getSpeed());
+		player.move(0, player.getSpeed()*player.speedmultiplier);
 		//player.getMovementComponent()->setY_Force(100);
 	}
 	else
@@ -140,12 +153,14 @@ void SmashRipoff::update()
 	if (input->isKeyDown(A_KEY) || input->isKeyDown(VK_LEFT))	// move left
 	{
 		//player.move(-player.getSpeed(), 0);
-		player.getMovementComponent()->setX_Force(-player.getSpeed());
+		player.playerface = -1;
+		player.getMovementComponent()->setX_Force(-player.getSpeed()*player.speedmultiplier);
 	}
 	else if (input->isKeyDown(D_KEY) || input->isKeyDown(VK_RIGHT))	// move right
 	{
 		//player.move(player.getSpeed(), 0);
-		player.getMovementComponent()->setX_Force(player.getSpeed());
+		player.playerface = 1;
+		player.getMovementComponent()->setX_Force(player.getSpeed()*player.speedmultiplier);
 	}
 	else { player.getMovementComponent()->setX_Force(0); }
 	
@@ -169,11 +184,11 @@ void SmashRipoff::update()
 	}*/
 
 	planet.update(frameTime);
-    ship1.update(frameTime);
-    ship2.update(frameTime);
 
 	platform.update(frameTime);	// should this even have update since platforms dont really move
 	platform1.update(frameTime);
+
+	potion.update(frameTime);
 	//update every bullet in player ithink
 	//
 	//if (player.airEnum != STATE_AIRBORNE)
@@ -194,44 +209,6 @@ void SmashRipoff::ai()
 void SmashRipoff::collisions()
 {
 	VECTOR2 collisionVector;
-	// if collision between ship and planet
-	if (ship1.collidesWith(planet, collisionVector))
-	{
-		// bounce off planet
-		ship1.bounce(collisionVector, planet);
-		//ship1.damage(PLANET);
-	}
-	if (ship2.collidesWith(planet, collisionVector))
-	{
-		// bounce off planet
-		ship2.bounce(collisionVector, planet);
-		//ship2.damage(PLANET);
-	}
-	// if collision between ships
-	if (ship1.collidesWith(ship2, collisionVector))
-	{
-		// bounce off ship
-		ship1.bounce(collisionVector, ship2);
-		//ship1.damage(SHIP);
-		// change the direction of the collisionVector for ship2
-		ship2.bounce(collisionVector*-1, ship1);
-		//ship2.damage(SHIP);
-	}
-	if (player.collidesWith(ship1, collisionVector))
-	{
-		player.bounce(collisionVector, ship1);
-
-		ship1.bounce(collisionVector*-1, player);
-		//ship1.damage(SHIP);
-	}
-	if (player.collidesWith(ship2, collisionVector))
-	{
-		player.bounce(collisionVector, ship2);
-
-		ship2.bounce(collisionVector*-1, player);
-		//ship2.damage(SHIP);
-	}
-
 	// platform collision
 	if(player.collidesWith(platform,collisionVector))
 	{
@@ -402,6 +379,15 @@ void SmashRipoff::collisions()
 		}
 
 	}
+
+	// TEMP Potion collision
+	if (player.collidesWith(potion, collisionVector))
+	{
+		// bounce off planet
+		potion.apply(&player);
+		potion.setVisible(false);
+		//ship2.damage(PLANET);
+	}
 }
 
 //=============================================================================
@@ -412,12 +398,12 @@ void SmashRipoff::render()
 
     nebula.draw();                          // add the orion nebula to the scene
     planet.draw();                          // add the planet to the scene
-    ship1.draw();                           // add the spaceship to the scene
-    ship2.draw();                           // add the spaceship to the scene
+
 	player.draw();
 
 	platform.draw();
 	platform1.draw();
+	potion.draw();
 	// draw every bullet put inside player
 
 	if (true)

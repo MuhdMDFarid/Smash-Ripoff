@@ -7,6 +7,7 @@
 // This is the object generated when a melee/hitbox attack is used
 class Attack_Hitbox: public Entity
 {
+	//float Lag;			// how long before the Hitbox spawns?
 	float Lifetime;		// how long the Hitbox lasts
 	bool Expired;
 
@@ -19,6 +20,7 @@ public:
 	virtual void draw();
 	void remove();
 	void update(float frameTime);
+	void collided();
 
 	bool isExpired() { return Expired; }
 

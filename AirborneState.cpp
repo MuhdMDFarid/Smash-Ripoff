@@ -19,7 +19,7 @@ PlayerState* AirborneState::handleInput(Player& player, Input* input)
 		{
 			if (player.airJump)
 			{
-				player.getMovementComponent()->setY_Velocity(-PlayerNS::JUMP_VELOCITY);
+				player.getMovementComponent()->setY_Velocity(-PlayerNS::JUMP_VELOCITY*player.speedmultiplier);
 				player.airJump = false;
 				player.jumpcooldown = PlayerNS::JUMP_CD;
 				player.canjump = false;

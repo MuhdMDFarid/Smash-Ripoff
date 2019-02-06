@@ -24,10 +24,10 @@ void AttackState::update(Player& player, float frameTime)
 
 	// when Attack is Completed SHOULDN'T BE BASED ON ANIMATION
 	// Some animation shouldn't be cancelled like attack animations
-	if (/*player.getAnimationComplete()*/player.getCurrentFrame()==player.getEndFrame())
-	{
+	if (player.getAnimationComplete()||player.getCurrentFrame()<player.getStartFrame()/*when moveset is ended*/)
+	{// if condition should be based on moveset rather than animation i think
 		exit(player);
-		player.action = new IdleState();
+		player.action = new IdleState(); 
 		player.action->enter(player);
 		//player.actionEnum = STATE_IDLE;
 		//player.action = new IdleState();
@@ -40,15 +40,34 @@ void AttackState::enter(Player& player)
 	player.actionEnum = STATE_ATTACK;
 
 	player.setAnimationComplete(false);
-	player.setFrames(PlayerNS::P1_ATTACK_START, PlayerNS::P1_ATTACK_END);
-	player.setCurrentFrame(PlayerNS::P1_ATTACK_START);
 	player.setLoop(false);
+	//player.setFrames(PlayerNS::P1_ATTACK_START, PlayerNS::P1_ATTACK_END);
+	player.setCurrentFrame(player.getStartFrame());
 
 	// the actual attack may not be here
 	//player.punch(&projecti)
+	///////////////
+	//player.newhitbox = new Attack_Hitbox();
+
+	//// create hitbox
+	//if (!player.newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
+	//player.newhitbox->setScale(5);
+
+	//// set hitbox position
+	//player.newhitbox->setX(player.getX() + player.getWidth());
+	//player.newhitbox->setY(player.getY() + (player.getHeight() - player.newhitbox->getHeight()*player.newhitbox->getScale()) / 2);		//centers the Y coords of hitbox to player
+
+
+	//player.hitboxlist.push_back(player.newhitbox);
 }
 
 void AttackState::exit(Player& player)
 {
 	
+}
+
+void AttackState::interrupt(Player& player)
+{
+	PlayerState::interrupt(player);		// temporary interrupt code
 }

@@ -62,9 +62,10 @@ const char OPTION_IMAGE[] =		"pictures\\background\\optionBackground.png";
 const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
 
 const char NEBULA_IMAGE[] = "pictures\\orion.jpg";
-const char SQUARE_TEXTURE[] = "pictures\\Square.png";
+const char PLAYER_TEXTURE[] = "pictures\\Square1.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
 const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
+const char SPEEDPOTION_TEXTURE[] = "pictures\\speedpotion.png";
 
 // Key mappings
 // In this game simple constants are used for key mappings. If variables were used

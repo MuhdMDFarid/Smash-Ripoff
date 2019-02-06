@@ -7,7 +7,7 @@
 #include "AttackState.h"
 
 //#include "StaggeredState"
-
+#include "Skill.h"
 //#include <cstdlib>	// for random
 
 Player::Player() : Entity()
@@ -21,7 +21,7 @@ Player::Player() : Entity()
 
 	//
 	speed = 1000;
-
+	playerface = 1;
 	
 	//	TEMP code while component implementation is not taught
 	movement_component = new Movement_Component();
@@ -31,6 +31,7 @@ Player::Player() : Entity()
 
 	airEnum = STATE_AIRBORNE;
 	airborne = new AirborneState();
+	airborne->enter(*this);
 
 	actionEnum = STATE_IDLE;
 	action = new IdleState();
@@ -40,6 +41,9 @@ Player::Player() : Entity()
 	edge.bottom = TILE_SIZE / 2;
 	edge.left = -TILE_SIZE / 2;
 	edge.right = TILE_SIZE / 2;
+
+	skill = new Skill();
+	
 }
 
 Player::~Player()
@@ -53,6 +57,7 @@ void Player::draw()
 	// hitbox_component draw() method-ish
 	drawHitboxes();
 
+	skill->draw();
 
 	Entity::draw();
 }
@@ -70,6 +75,9 @@ void Player::drawProjectiles()
 
 bool Player::initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM)
 {
+	// GHETTO
+	game = gamePtr;
+
 	if (Entity::initialize(gamePtr, width, height, ncols, textureM))
 	{
 		setCollisionType(entityNS::BOX);
@@ -84,8 +92,17 @@ bool Player::initialize(Game*gamePtr, int width, int height, int ncols, TextureM
 	return false;
 }
 
-void Player::update(float frameTime) 
-{	
+void Player::update(float frameTime)
+{
+	// TEMP AGILITY POTION THINGY
+	if (agilityduration > 0)
+	{
+		agilityduration -= frameTime;
+	}
+	else
+	{
+		speedmultiplier = 1;
+	}
 	// GRAVITY SIMULATION
 	//if (!grounded)	//grounded is the state if the player is not airborne
 	//{
@@ -94,19 +111,16 @@ void Player::update(float frameTime)
 	//	Handling the movement
 
 	// using MOVEMENT_COMPONENT
-	movement_component->setX_Velocity(movement_component->getX_Velocity() + movement_component->getX_Force()*frameTime);
 	movement_component->setY_Velocity(movement_component->getY_Velocity() + movement_component->getY_Force()*frameTime);
-	
-
 	/// If the player moving over limit, do not add force. (move to a function)
 	// limit maximum velocity
-	if (movement_component->getX_Velocity() > MovementNS::MAX_VELOCITY)		// if X velocity reached max towards the right 
+	if (movement_component->getX_Velocity() < MovementNS::MAX_VELOCITY*speedmultiplier && movement_component->getX_Force()>=0)		// if X velocity reached max towards the right 
 	{
-		movement_component->setX_Velocity(MovementNS::MAX_VELOCITY);
+		movement_component->setX_Velocity(movement_component->getX_Velocity() + movement_component->getX_Force()*frameTime);
 	}
-	else if (movement_component->getX_Velocity() < -MovementNS::MAX_VELOCITY)		// if X velocity reached max towards the left
+	else if (movement_component->getX_Velocity() > -MovementNS::MAX_VELOCITY*speedmultiplier && movement_component->getX_Force()<=0)		// if X velocity reached max towards the left
 	{
-		movement_component->setX_Velocity(-MovementNS::MAX_VELOCITY);
+		movement_component->setX_Velocity(movement_component->getX_Velocity() + movement_component->getX_Force()*frameTime);
 	}
 	///
 
@@ -131,9 +145,9 @@ void Player::update(float frameTime)
 		setX(GAME_WIDTH);
 	}
 
-	if (getY() > GAME_HEIGHT-getHeight()*getScale())
+	if (getY() > GAME_HEIGHT - getHeight()*getScale())
 	{
-		setY(GAME_HEIGHT-getHeight()*getScale()+1);
+		setY(GAME_HEIGHT - getHeight()*getScale() + 1);
 		movement_component->setY_Velocity(0);
 		//airJump = true;		// reset the jump to enable jump
 		landed();
@@ -144,15 +158,19 @@ void Player::update(float frameTime)
 		movement_component->setY_Velocity(0);
 	}
 	//////////////////////////
-	
+
 	// State updating
 	airborne->update(*this, frameTime);
 	action->update(*this, frameTime);
 
-	jumpcooldown -= frameTime;
-
-	if(jumpcooldown<=0)
+	if (jumpcooldown > 0)
+	{
+		jumpcooldown -= frameTime;
+	}
+	else if (jumpcooldown <= 0)		// Replace with else only
+	{
 		canjump = true;
+	}
 
 
 	Entity::update(frameTime);
@@ -161,6 +179,13 @@ void Player::update(float frameTime)
 	updateProjectiles(frameTime);
 	updateHitboxes(frameTime);
 
+	try {
+		skill->update(*this, frameTime);
+	}
+	catch (const std::exception e)
+	{
+		setActive(false);
+	}
 }
 
 void Player::move(int x_force,int y_force)		// change the force on the char for movement
@@ -236,25 +261,33 @@ void Player::setJump(bool canjump)
 	airJump = canjump;
 }
 
-void Player::punch(Game * gamePtr, TextureManager * textureM)
+void Player::punch(/*Game * gamePtr, TextureManager * textureM*/)
 {
+	// Attack Prototype
+	//skill.excecute(*this);
+	
+	//skill = new Skill();
+	skill->execute(*this);
+
+	//
+
 	////state thing
 	//action = new AttackState();
 	//action->enter(*this);
 	////
-	newhitbox = new Attack_Hitbox();
+	//newhitbox = new Attack_Hitbox();
+	//
+	//// create hitbox
+	//if (!newhitbox->initialize(gamePtr, 32, 32, 1, textureM))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
+	//newhitbox->setScale(5);
 
-	// create hitbox
-	if (!newhitbox->initialize(gamePtr, 32, 32, 1, textureM))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
-	newhitbox->setScale(5);
-
-	// set hitbox position
-	newhitbox->setX(getX() + getWidth());
-	newhitbox->setY(getY() + (getHeight() - newhitbox->getHeight()*newhitbox->getScale()) / 2);		//centers the Y coords of hitbox to player
+	//// set hitbox position
+	//newhitbox->setX(getX() + getWidth());
+	//newhitbox->setY(getY() + (getHeight() - newhitbox->getHeight()*newhitbox->getScale()) / 2);		//centers the Y coords of hitbox to player
 
 
-	hitboxlist.push_back(newhitbox);
+	//hitboxlist.push_back(newhitbox);
 }
 
 void Player::drawHitboxes()
@@ -377,3 +410,8 @@ void Player::handleInput(Input* input)
 	}
 }
 
+void Player::interrupt()
+{
+	action->interrupt(*this);
+	action->enter(*this);
+}
