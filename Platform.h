@@ -24,7 +24,8 @@ public:
 	bool initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM);
 	virtual void draw();
 	void update(float frameTime);
-
+	void updateUp(float frameTime);
+	void updateDown(float frameTime);
 };
 
 #endif // _PLATFORM_H

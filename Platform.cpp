@@ -49,3 +49,29 @@ void Platform::update(float frameTime)
 {
 	Entity::update(frameTime);
 }
+
+void Platform::updateUp(float frameTime)
+{
+	Entity::update(frameTime);
+
+	//hk
+	spriteData.y += frameTime * velocity.y;
+	spriteData.x += frameTime * velocity.x;
+	if (spriteData.y + TILE_SIZE < 0)
+	{
+		spriteData.y = GAME_HEIGHT;
+	}
+}
+
+void Platform::updateDown(float frameTime)
+{
+	Entity::update(frameTime);
+
+	//hk
+	spriteData.y += frameTime * velocity.y;
+	spriteData.x += frameTime * velocity.x;
+	if (spriteData.y > GAME_HEIGHT)
+	{
+		spriteData.y = -TILE_SIZE;
+	}
+}
