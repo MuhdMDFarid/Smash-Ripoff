@@ -126,4 +126,7 @@ const UCHAR Z_KEY = 0x5A;		// Z key
 
 // enum WEAPON {TORPEDO, SHIP, PLANET};
 
+//List declaration
+const int   NO_PLATFORMS = 2; //number of platforms
+
 #endif // _CONSTANTS_H

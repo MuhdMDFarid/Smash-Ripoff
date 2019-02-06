@@ -33,6 +33,8 @@ private:
 	TextureManager platformTexture;
 	Platform platform;
 	Platform platform1;
+	Platform platformUpList[NO_PLATFORMS];
+	Platform platformDownList[NO_PLATFORMS];
 	//bool shootable = true;
 
 	// -Hearts-
@@ -64,6 +66,7 @@ public:
     void render();      // "
     void releaseAll();
     void resetAll();
+	float YVelocity = -TILE_SIZE * 4;
 };
 
 #endif // _SMASHRIPOFF_H
