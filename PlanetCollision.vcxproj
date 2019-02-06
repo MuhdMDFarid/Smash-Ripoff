@@ -98,6 +98,7 @@
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="GroundedState.cpp" />
     <ClCompile Include="heart.cpp" />
+    <ClCompile Include="HunterDeathState.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
@@ -112,6 +113,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="PriestessDeathState.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
@@ -133,6 +135,7 @@
     <ClInclude Include="graphics.h" />
     <ClInclude Include="GroundedState.h" />
     <ClInclude Include="heart.h" />
+    <ClInclude Include="HunterDeathState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
@@ -147,6 +150,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="PriestessDeathState.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="SmashRipoff.h" />

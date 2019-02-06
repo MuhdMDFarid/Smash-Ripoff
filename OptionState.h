@@ -22,18 +22,12 @@ public:
 	// Constructor
 	OptionState(Game* game);
 
-	// Destructor
-	~OptionState();
-
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
 	virtual void update(float frameTime);
 	virtual void handleInput(Input* input);
-
-	virtual void releaseAll();
-	virtual void resetAll();
 };
 
 #endif // _OPTION_STATE_H

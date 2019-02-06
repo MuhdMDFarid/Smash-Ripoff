@@ -1,5 +1,7 @@
 #include "game.h"
 #include "GameState.h"
+#include "HunterDeathState.h"
+#include "PriestessDeathState.h"
 
 // The primary class should inherit from Game class
 
@@ -140,7 +142,7 @@ void Game::renderGame()
 
     handleLostGraphicsDevice();
 
-    //display the back buffer on the screen
+    // display the back buffer on the screen
     graphics->showBackbuffer();
 }
 
@@ -216,9 +218,16 @@ void Game::run(HWND hwnd)
 	if (getCurrentState() == nullptr)
 		return;
 
-	if (hunterDeath || priestessDeath)
+	if (hunterDeath)
 	{
-		PostQuitMessage(0);
+		this->pushState(new HunterDeathState(this));
+		hunterDeath = false;
+	}
+
+	if (priestessDeath)
+	{
+		this->pushState(new PriestessDeathState(this));
+		priestessDeath = false;
 	}
 
 	// gets user input for the current state

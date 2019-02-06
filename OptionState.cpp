@@ -21,12 +21,6 @@ OptionState::OptionState(Game* game)
 	optionFont.setFontColor(gameNS::FONT_COLOR);
 }
 
-OptionState::~OptionState()
-{
-	// Call onLostDevice for all graphic items
-	releaseAll();
-}
-
 void OptionState::exitOption()
 {
 	// Transitions from "OptionState" to "MenuState"
@@ -58,18 +52,4 @@ void OptionState::handleInput(Input* input)
 	}
 
 	// Mouse
-}
-
-void OptionState::releaseAll()
-{
-	optionBackgroundTexture.onLostDevice();
-	game->releaseAll();
-	return;
-}
-
-void OptionState::resetAll()
-{
-	optionBackgroundTexture.onResetDevice();
-	game->resetAll();
-	return;
 }

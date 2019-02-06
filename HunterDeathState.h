@@ -1,27 +1,26 @@
-#ifndef _MENU_STATE_H
-#define _MENU_STATE_H
+#ifndef _HUNTER_DEATH_STATE
+#define _HUNTER_DEATH_STATE
 #define WIN32_LEAN_AND_MEAN
+
 #include "GameState.h"
 
 // Makes it public so that we can derive the functions from this class
-class MenuState : public GameState
+class HunterDeathState : public GameState
 {
 private:
 
-	// Changes the state to "PlayState"
-	void startGame();
-	// Changes the state to "OptionState"
-	void optionsMenu();
+	// Changes the state to "MenuState"
+	void mainMenu();
 
 	// Variables
-	TextureManager menuBackgroundTexture;
-	Image menuBackground;
-	TextDX menuFont;
+	TextureManager hunterDeathTexture;
+	Image hunterBackground;
+	TextDX hunterFont;
 
 public:
-	
+
 	// Constructor
-	MenuState(Game* game);
+	HunterDeathState(Game* game);
 
 	// ======================
 	// Functions (inherited from GameState)
@@ -31,4 +30,4 @@ public:
 	virtual void handleInput(Input* input);
 };
 
-#endif // _MENU_STATE_H
+#endif // _HUNTER_DEATH_STATE

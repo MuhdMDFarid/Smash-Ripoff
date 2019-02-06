@@ -21,8 +21,8 @@ private:
 
     // old stuff that should be removed(?)
     TextureManager nebulaTexture;   // nebula texture
-    TextureManager gameTextures;    // game texture
-	TextureManager playerTextures;
+    TextureManager gameTexture;    // game texture
+	TextureManager playerTexture;
     Ship    ship1, ship2;           // spaceships
     Planet  planet;					// the planet
     Image   nebula;					// backdrop image
@@ -62,7 +62,6 @@ public:
     void ai();          // "
     void collisions();  // "
     void render();      // "
-
     void releaseAll();
     void resetAll();
 };

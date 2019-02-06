@@ -29,7 +29,7 @@ void SmashRipoff::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
 
     // main game textures
-    if (!gameTextures.initialize(graphics,TEXTURES_IMAGE))
+    if (!gameTexture.initialize(graphics,TEXTURES_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 
     // nebula image
@@ -38,7 +38,7 @@ void SmashRipoff::initialize(HWND hwnd)
 	nebula.setScale(5);
 
     // planet
-    if (!planet.initialize(this, planetNS::WIDTH, planetNS::HEIGHT, 2, &gameTextures))
+    if (!planet.initialize(this, planetNS::WIDTH, planetNS::HEIGHT, 2, &gameTexture))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
 
     // ship
@@ -60,10 +60,10 @@ void SmashRipoff::initialize(HWND hwnd)
 
 
 	// main game textures
-	if (!playerTextures.initialize(graphics, SQUARE_TEXTURE))
+	if (!playerTexture.initialize(graphics, SQUARE_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 
-	if (!player.initialize(this, 32, 32,PlayerNS::TEXTURE_COLS, &playerTextures))
+	if (!player.initialize(this, 32, 32,PlayerNS::TEXTURE_COLS, &playerTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));	
 
 
@@ -122,7 +122,6 @@ void SmashRipoff::initialize(HWND hwnd)
 void SmashRipoff::update()
 {
 	player.update(frameTime);
-
 	// --Hearts-- (replace in Collision, Muhamiddo)
 	// Hunter
 	if (input->isKeyDown(O_KEY))
@@ -529,8 +528,13 @@ void SmashRipoff::render()
 void SmashRipoff::releaseAll()
 {
     nebulaTexture.onLostDevice();
-    gameTextures.onLostDevice();
-    Game::releaseAll();
+    gameTexture.onLostDevice();
+	playerTexture.onLostDevice();
+	projectileTexture.onLostDevice();
+	platformTexture.onLostDevice();
+	heartTexture.onLostDevice();
+
+	Game::releaseAll();
     return;
 }
 
@@ -540,8 +544,13 @@ void SmashRipoff::releaseAll()
 //=============================================================================
 void SmashRipoff::resetAll()
 {
-    gameTextures.onResetDevice();
+    gameTexture.onResetDevice();
     nebulaTexture.onResetDevice();
-    Game::resetAll();
+	playerTexture.onResetDevice();
+	projectileTexture.onResetDevice();
+	platformTexture.onResetDevice();
+	heartTexture.onResetDevice();
+
+	Game::resetAll();
     return;
 }

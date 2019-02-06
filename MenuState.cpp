@@ -23,12 +23,6 @@ MenuState::MenuState(Game* game)
 	menuFont.setFontColor(gameNS::FONT_COLOR);
 }
 
-MenuState::~MenuState()
-{
-	// Call onLostDevice for all graphic items
-	releaseAll();
-}
-
 void MenuState::startGame()
 {
 	// Transitions from "MenuState" to "PlayState"
@@ -84,18 +78,4 @@ void MenuState::handleInput(Input* input)
 	}
 	
 	// Mouse
-}
-
-void MenuState::releaseAll()
-{
-	menuBackgroundTexture.onLostDevice();
-	game->releaseAll();
-	return;
-}
-
-void MenuState::resetAll()
-{
-	menuBackgroundTexture.onResetDevice();
-	game->resetAll();
-	return;
 }
