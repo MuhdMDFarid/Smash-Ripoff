@@ -13,7 +13,7 @@
 #include "SpeedPotion.h"
 #include "heart.h"
 #include "Skill.h"
-#include <vector>
+//#include <vector>
 
 //=============================================================================
 // This class is the core of the game
@@ -30,21 +30,20 @@ private:
 	TextureManager gameTexture;
 	TextureManager playerTexture;
 
-	/*
-	Planet  planet;					// the planet
-	Image   nebula;					// backdrop image
-	Player  player; */
+ //   Planet  planet;					// the planet
+ //   Image   nebula;					// backdrop image
+	//Player  player;
 
 	// new stuff
 	TextureManager projectileTexture;
 	TextureManager platformTexture;
-	//Platform platform;
+	////Platform platform;
 	//Platform platform1;
 	//Platform platformUpList[NO_PLATFORMS];
 	//Platform platformDownList[NO_PLATFORMS];
 	TextureManager potionTexture;
 	//SpeedPotion potion;
-	//bool shootable = true;
+	////bool shootable = true;
 
 	//// -Hearts-
 	//static const int MAX_HEALTH = 3;

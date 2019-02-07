@@ -41,7 +41,7 @@ protected:
 	TextDX dxFont;					// DirectX font for fps
 
 public:
-	float getfps() { return fps; }
+
     // Constructor
     Game();
 

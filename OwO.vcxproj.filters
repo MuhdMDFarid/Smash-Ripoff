@@ -42,7 +42,6 @@
       <Filter>Skills</Filter>
     </ClCompile>
     <ClCompile Include="Damage_Component.cpp" />
-    <ClCompile Include="button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirborneState.h" />
@@ -88,7 +87,6 @@
       <Filter>Skills</Filter>
     </ClInclude>
     <ClInclude Include="Damage_Component.h" />
-    <ClInclude Include="button.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Skills">

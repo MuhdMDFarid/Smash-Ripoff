@@ -118,7 +118,7 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!projectileTexture.initialize(graphics, PROJECTILE_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing projectile texture"));
 
-	// platform texture
+	/// platform texture
 	if (!platformTexture.initialize(graphics, PLATFORM_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform texture"));
 
@@ -213,9 +213,8 @@ void SmashRipoff::ai()
 //=============================================================================
 void SmashRipoff::collisions()
 {
-	//VECTOR2 collisionVector;
-	this->getCurrentState()->collisions();
-	/*
+	VECTOR2 collisionVector;
+
 	// HITBOX collision
 	if (!player.skill->Hitboxlist.empty())
 	{
@@ -234,10 +233,9 @@ void SmashRipoff::collisions()
 
 		}
 	}
-	*/
+
 	// END OF HITBOX COLLISION
 
-	/*
 	// platform collision
 	if(player.collidesWith(platform1,collisionVector))
 	{
@@ -262,7 +260,9 @@ void SmashRipoff::collisions()
 			{
 				player.landed();
 			}
-		}/*
+		}
+	this->getCurrentState()->collisions();
+}
 
 		else if (player.getCenterX() + player.getEdge().right*player.getScale() >= platform1.getCenterX() + platform1.getEdge().left*platform1.getScale()
 			&& player.getCenterX() + player.getEdge().left*player.getScale() < platform1.getCenterX() + platform1.getEdge().left*platform1.getScale())
@@ -334,7 +334,7 @@ void SmashRipoff::collisions()
 		else if	(player.getCenterY() + player.getEdge().top*player.getScale() > platform.getCenterY() + platform.getEdge().bottom*platform.getScale())
 		{
 			// player collides from the bottom of the platform
-		}
+		}*/
 	}
 	else			// If not colliding with platforms 
 	{
@@ -402,7 +402,7 @@ void SmashRipoff::collisions()
 	if (player.collidesWith(potion, collisionVector))
 	{
 		potion.apply(&player);
-	}*/
+	}
 }
 
 //=============================================================================
@@ -443,7 +443,7 @@ void SmashRipoff::render()
 	//{
 
 	//	// Print message
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "fps %d, Press ESC to pause", (int)fps);
+	//	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "fps %d, Press ESC to pause", (int)fps);
 	//	dxFont.printC(gameNS::buffer, GAME_WIDTH / 3, GAME_HEIGHT / 8);
 
 	//	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "X-Vel: %d", (int)player.getMovementComponent()->getX_Velocity());
