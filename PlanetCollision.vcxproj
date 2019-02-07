@@ -103,6 +103,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
+    <ClCompile Include="Landmine.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Movement_Component.cpp" />
     <ClCompile Include="OptionState.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryItem.h" />
+    <ClInclude Include="Landmine.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Movement_Component.h" />
     <ClInclude Include="OptionState.h" />

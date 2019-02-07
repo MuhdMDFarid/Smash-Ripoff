@@ -11,6 +11,7 @@
 #include "Projectile.h"
 #include "Platform.h"
 #include "heart.h"
+#include "Landmine.h";
 
 //=============================================================================
 // This class is the core of the game
@@ -49,6 +50,10 @@ private:
 	int hunterHP = 2;
 	int priestessHP = 2;
 	// Players' Knockback
+
+	// Landmine
+	Landmine landmine;
+	TextureManager landmineTexture;
 
 public:
 

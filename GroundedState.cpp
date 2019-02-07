@@ -26,6 +26,7 @@ PlayerState* GroundedState::handleInput(Player& player, Input* input)
 
 }
 
+
 void GroundedState::update(Player & player, float frameTime)
 {
 	// use forces for friction
@@ -43,8 +44,6 @@ void GroundedState::update(Player & player, float frameTime)
 			player.getMovementComponent()->setX_Velocity(player.getMovementComponent()->getX_Velocity() + MovementNS::FRICTION_CONST*frameTime);
 		}
 	}
-
-
 }
 
 void GroundedState::enter(Player & player)

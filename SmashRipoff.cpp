@@ -1,4 +1,5 @@
 #include "SmashRipoff.h"
+#include <ctime>
 
 //=============================================================================
 // Constructor
@@ -24,6 +25,7 @@ void SmashRipoff::initialize(HWND hwnd)
 {
     Game::initialize(hwnd); // throws GameError
 
+	srand(time(NULL));
     // nebula texture
     if (!nebulaTexture.initialize(graphics,STAGE_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
@@ -65,6 +67,8 @@ void SmashRipoff::initialize(HWND hwnd)
 
 	if (!player.initialize(this, 32, 32,PlayerNS::TEXTURE_COLS, &playerTextures))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));	
+	player.setX(GAME_WIDTH / 2);
+	player.setY(GAME_HEIGHT / 2);
 
 
 	// projectile texture
@@ -80,10 +84,10 @@ void SmashRipoff::initialize(HWND hwnd)
 	platform.setX(GAME_WIDTH/2);
 	platform.setY(GAME_HEIGHT);*/
 
-	if (!platform1.initialize(this, GAME_WIDTH, 32, 1, &platformTexture))	// 1 since texture has only one image
+	if (!platform1.initialize(this, GAME_WIDTH*4/6.5, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
-	platform1.setX(0);
-	platform1.setY(GAME_HEIGHT-platform1.getHeight());
+	platform1.setX(GAME_WIDTH * 1/5);
+	platform1.setY(GAME_HEIGHT*2/3-platform1.getHeight());
 
 	// Hearts
 	if (!heartTexture.initialize(graphics, HEART_IMAGE))
@@ -100,6 +104,7 @@ void SmashRipoff::initialize(HWND hwnd)
 		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
 		hunterHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * hunterHealth[i].getScale()));
 	}
+
 
 	for (int i = 0; i < MAX_HEALTH; i++)
 	{
@@ -120,18 +125,26 @@ void SmashRipoff::initialize(HWND hwnd)
 		if (!platformUpList[i].initialize(this, 160, 32, 1, &platformTexture))	// 1 since texture has only one image
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 		platformUpList[i].setDegrees(0);
-		platformUpList[i].setX(3 * GAME_WIDTH / 5);
+		platformUpList[i].setX(8*GAME_WIDTH/10);
 		platformUpList[i].setY(GAME_HEIGHT / 2 * (NO_PLATFORMS - i));
 		platformUpList[i].setVelocity(VECTOR2(0, -TILE_SIZE * 4));
 
 		if (!platformDownList[i].initialize(this, 160, 32, 1, &platformTexture))	// 1 since texture has only one image
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 		platformDownList[i].setDegrees(0);
-		platformDownList[i].setX(GAME_WIDTH / 5);
+		platformDownList[i].setX(1 * GAME_WIDTH / 10);
 		platformDownList[i].setY(GAME_HEIGHT / 2 * (NO_PLATFORMS - i));
 		platformDownList[i].setVelocity(VECTOR2(0, TILE_SIZE * 4));
 	}
 
+	// landmine textures
+	if (!landmineTexture.initialize(graphics, LANDMINE_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
+
+	if (!landmine.initialize(this, 60, 30, 1, &landmineTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+	landmine.setX(rand () % int (platform1.getWidth()));
+	landmine.setY(platform1.getY() - LANDMINE_SIZE);
 	return;
 }
 
@@ -263,6 +276,8 @@ void SmashRipoff::update()
 		platformUpList[i].updateUp(frameTime);
 		platformDownList[i].updateDown(frameTime);
 	}
+
+	landmine.update(frameTime);
 	//update every bullet in player ithink
 	//
 	//if (player.airEnum != STATE_AIRBORNE)
@@ -406,6 +421,7 @@ void SmashRipoff::collisions()
 					// player collides from the top of the platformUpList[i]
 					player.setY(platformUpList[i].getCenterY() + platformUpList[i].getEdge().top*platformUpList[i].getScale()
 						- player.getHeight());		// prevents player from moving past the left side of platformUpList[i]
+					//platformUpList[i].setVelocity(-platformUpList[i].getVelocity());
 				}
 
 				if (player.airEnum != STATE_GROUNDED)
@@ -443,6 +459,13 @@ void SmashRipoff::collisions()
 			// end of PROTOTYPE COLLISION DETECTION
 		}
 	}
+	if (player.collidesWith(landmine, collisionVector))
+	{
+		player.getMovementComponent()->setY_Velocity(-player.getMovementComponent()->getY_Velocity() * 2);
+		player.getMovementComponent()->setX_Velocity(-player.getMovementComponent()->getX_Velocity() * 2);
+		//landmine.setScale(0);
+		//landmine.setActive(false);
+	}
 }
 
 //=============================================================================
@@ -464,6 +487,8 @@ void SmashRipoff::render()
 		platformUpList[i].draw();
 		platformDownList[i].draw();
 	}
+
+	landmine.draw();
 	// draw every bullet put inside player
 
 	for (int i = 0; i < MAX_HEALTH; i++)	// Add Players' Health
