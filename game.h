@@ -105,6 +105,8 @@ public:
     // Call graphics->spriteEnd();
     //   draw non-sprites
     virtual void render() = 0;
+
+	float getfps() { return fps; }
 };
 
 #endif // _GAME_H

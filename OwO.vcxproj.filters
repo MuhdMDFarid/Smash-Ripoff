@@ -29,7 +29,6 @@
     <ClCompile Include="PriestessDeathState.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="ship.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
     <ClCompile Include="SpeedPotion.cpp" />
     <ClCompile Include="textDX.cpp" />
@@ -42,6 +41,7 @@
       <Filter>Skills</Filter>
     </ClCompile>
     <ClCompile Include="Damage_Component.cpp" />
+    <ClCompile Include="button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirborneState.h" />
@@ -75,7 +75,6 @@
     <ClInclude Include="PriestessDeathState.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="Projectile.h" />
-    <ClInclude Include="ship.h" />
     <ClInclude Include="SmashRipoff.h" />
     <ClInclude Include="SpeedPotion.h" />
     <ClInclude Include="textDX.h" />
@@ -87,6 +86,7 @@
       <Filter>Skills</Filter>
     </ClInclude>
     <ClInclude Include="Damage_Component.h" />
+    <ClInclude Include="button.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Skills">

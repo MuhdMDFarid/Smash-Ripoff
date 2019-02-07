@@ -6,7 +6,7 @@
 #include "textureManager.h"
 #include "image.h"
 #include "planet.h"
-#include "ship.h"
+//#include "ship.h"
 #include "Player.h"
 #include "Projectile.h"
 #include "Platform.h"
