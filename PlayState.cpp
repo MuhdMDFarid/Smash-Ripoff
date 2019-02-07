@@ -55,6 +55,26 @@ void PlayState::draw()
 		game->pushState(new PriestessDeathState(game));
 		game->priestessDeath = false;
 	}
+
+	// Print message
+	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "fps %d, Press ESC to pause", (int)game->getfps());
+	game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 3, GAME_HEIGHT / 8);
+
+	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "X-Vel: %d", (int)game->player.getMovementComponent()->getX_Velocity());
+	game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, GAME_HEIGHT / 5);
+
+	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Vel: %d", (int)game->player.getMovementComponent()->getY_Velocity());
+	game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 2 * GAME_HEIGHT / 5);
+
+	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "X-Force: %d", (int)game->player.getMovementComponent()->getX_Force());
+	game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 3 * GAME_HEIGHT / 5);
+
+	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Force: %d", (int)game->player.getMovementComponent()->getY_Force());
+	game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 4 * GAME_HEIGHT / 5);
+
+	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)game->player.jumpcooldown);
+	game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
+
 }
 
 void PlayState::update(float frameTime)
@@ -89,23 +109,23 @@ void PlayState::collisions()
 	VECTOR2 collisionVector;
 
 	// HITBOX collision
-	//if (!game->player.skill->Hitboxlist.empty())
-	//{
-	//	for (std::vector<SkillHitbox*>::iterator it = player.skill->Hitboxlist.begin(); it != player.skill->Hitboxlist.end(); )
-	//	{
+	if (!game->player.skill->Hitboxlist.empty())
+	{
+		for (std::vector<SkillHitbox*>::iterator it = game->player.skill->Hitboxlist.begin(); it != game->player.skill->Hitboxlist.end(); )
+		{
 
-	//		if (platformUpList[1].collidesWith(*(*it)->hitbox, collisionVector))
-	//		{
-	//			player.getMovementComponent()->setX_Velocity(player.playerface*(*it)->hitbox->getKnockback().x);
-	//			player.getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
+			if (game->platformUpList[1].collidesWith(*(*it)->hitbox, collisionVector))
+			{
+				game->player.getMovementComponent()->setX_Velocity(game->player.playerface*(*it)->hitbox->getKnockback().x);
+				game->player.getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
 
-	//			//player.knockback((*it)->hitbox->getKnockback());
+				//player.knockback((*it)->hitbox->getKnockback());
 
-	//		}
-	//		it++;
+			}
+			it++;
 
-	//	}
-	//}
+		}
+	}
 
 	// END OF HITBOX COLLISION
 
