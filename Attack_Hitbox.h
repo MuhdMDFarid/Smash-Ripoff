@@ -3,15 +3,16 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include "Entity.h"
+#include "Damage_Component.h"
 
 // This is the object generated when a melee/hitbox attack is used
-class Attack_Hitbox: public Entity
+class Attack_Hitbox : public Entity
 {
 	//float Lag;			// how long before the Hitbox spawns?
 	float Lifetime;		// how long the Hitbox lasts
 	bool Expired;
 
-	// Damage_Component* damage_component;		// when the actual damage components get done
+	Damage_Component* damage_component;		// when the actual damage components get done
 
 public:
 	Attack_Hitbox();
@@ -24,6 +25,11 @@ public:
 
 	bool isExpired() { return Expired; }
 
+	D3DXVECTOR2 getKnockback() { return damage_component->calculateVector(); }
+	void setDamage(float dmg) { damage_component->setDamage(dmg); }
+	void setKnockbackAngle(float ang) { damage_component->setAngle(ang); }
+	void setKnockbackForce(float N) { damage_component->setForce(N); }
+	//Damage_Component* getDamage() { return damage_component; }
 
 };
 

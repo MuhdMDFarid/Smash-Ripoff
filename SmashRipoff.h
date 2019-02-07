@@ -12,6 +12,7 @@
 #include "Platform.h"
 #include "SpeedPotion.h"
 #include "heart.h"
+#include "Skill.h"
 
 //=============================================================================
 // This class is the core of the game

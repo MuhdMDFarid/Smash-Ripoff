@@ -277,6 +277,28 @@ void SmashRipoff::ai()
 void SmashRipoff::collisions()
 {
 	VECTOR2 collisionVector;
+
+	// HITBOX collision
+	if (!player.skill->Hitboxlist.empty())
+	{
+		for (std::vector<SkillHitbox*>::iterator it = player.skill->Hitboxlist.begin(); it != player.skill->Hitboxlist.end(); )
+		{
+
+				if (platformUpList[1].collidesWith(*(*it)->hitbox, collisionVector))
+				{
+					player.getMovementComponent()->setX_Velocity(player.playerface*(*it)->hitbox->getKnockback().x);
+					player.getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
+
+					//player.knockback((*it)->hitbox->getKnockback());
+
+				}
+				it++;
+
+		}
+	}
+
+	// END OF HITBOX COLLISION
+
 	// platform collision
 	if(player.collidesWith(platform1,collisionVector))
 	{

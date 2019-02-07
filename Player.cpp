@@ -152,9 +152,10 @@ void Player::update(float frameTime)
 		//airJump = true;		// reset the jump to enable jump
 		landed();
 	}
-	else if (getY() < 0)
+	else if (getY() < -(int)GAME_HEIGHT/5)
 	{
-		setY(0);
+		setY(-(int)GAME_HEIGHT/5);
+	//	setY(0-GAME_HEIGHT*0);
 		movement_component->setY_Velocity(0);
 	}
 	//////////////////////////

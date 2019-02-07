@@ -7,12 +7,13 @@
 Skill::Skill()
 {
 	//std::vector<SkillHitbox*> Hitboxlist;
+
 	finished = false;
 	SkillHitbox* newskillhitbox = new SkillHitbox();
 	newskillhitbox->spawndelay = 1;
 	newskillhitbox->hitbox = new Attack_Hitbox();
-	//newskillhitbox->hitbox->get
 	Hitboxlist.push_back(newskillhitbox);
+
 	//newskillhitbox = NULL;
 	//newskillhitbox->hitbox = nullptr;
 	//newskillhitbox->spawndelay = 0;
@@ -45,6 +46,10 @@ void Skill::execute(Player& player)
 	newhitbox->setFrames(28, 31);
 	newhitbox->setCurrentFrame(28);
 
+	newhitbox->setDamage(50);
+	newhitbox->setKnockbackAngle(35+90);
+	newhitbox->setKnockbackForce(500);
+
 	// How to push the spawn delay and the hitbox into vector
 	SkillHitbox* newskillhitbox = new SkillHitbox();
 	newskillhitbox->hitbox = newhitbox;
@@ -62,6 +67,10 @@ void Skill::execute(Player& player)
 	newhitbox->setFrameDelay(0.05);
 	newhitbox->setFrames(28, 31);
 	newhitbox->setCurrentFrame(28);
+
+	newhitbox->setDamage(10);
+	newhitbox->setKnockbackAngle(90);
+	newhitbox->setKnockbackForce(1000);
 
 	// How to push the spawn delay and the hitbox into vector
 	newskillhitbox = new SkillHitbox();

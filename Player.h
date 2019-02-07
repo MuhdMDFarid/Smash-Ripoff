@@ -11,6 +11,7 @@
 #include "Movement_Component.h"
 #include "Attack_Hitbox.h"
 
+
 enum State
 {
 	STATE_GROUNDED,
@@ -22,6 +23,7 @@ enum State
 
 class PlayerState;		// forward declaration
 class Skill;
+//class SkillHitbox;
 
 namespace PlayerNS
 {
@@ -93,6 +95,7 @@ public:
 	Attack_Hitbox *newhitbox;		// this should be placed in a hitbox_attack
 	
 	Skill* skill;
+	//std::vector<SkillHitbox*> getskillhitbox() { return skill->Hitboxlist; }
 
 	// TEMP potion effect
 	float speedmultiplier = 1;

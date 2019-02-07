@@ -6,6 +6,13 @@ Attack_Hitbox::Attack_Hitbox()
 {
 	Lifetime = 0.1f;
 	Expired = false;
+	collisionType = entityNS::BOX;
+	edge.top = -TILE_SIZE / 2;
+	edge.bottom = TILE_SIZE / 2;
+	edge.left = -TILE_SIZE / 2;
+	edge.right = TILE_SIZE / 2;
+
+	damage_component = new Damage_Component();
 }
 
 

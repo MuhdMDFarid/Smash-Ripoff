@@ -3,6 +3,7 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
+#include <d3dx9math.h>
 //-----------------------------------------------
 // Useful macros
 //-----------------------------------------------
@@ -24,6 +25,8 @@
 
 // Transparent Colour (magenta)
 #define TRANSCOLOR  SETCOLOR_ARGB(0,255,0,255)
+
+#define VECTOR2     D3DXVECTOR2
 
 //-----------------------------------------------
 //                  Constants

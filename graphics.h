@@ -16,7 +16,7 @@
 #define LP_SPRITE   LPD3DXSPRITE
 #define LP_3DDEVICE LPDIRECT3DDEVICE9
 #define LP_3D       LPDIRECT3D9
-#define VECTOR2     D3DXVECTOR2
+//#define VECTOR2     D3DXVECTOR2
 #define LP_DXFONT	LPD3DXFONT	// font for textDX
 
 // Color defines
