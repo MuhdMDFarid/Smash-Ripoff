@@ -32,7 +32,6 @@ void PauseState::exitGame()
 {
 	// Pops everything from the list and creates a new "MenuState"
 	game->deleteState();
-	// Ideally, the game should restart here (SAFE_DELETE (game))?  
 	game->pushState(new MenuState(game));
 }
 

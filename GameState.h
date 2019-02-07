@@ -2,7 +2,7 @@
 #define _GAME_STATE_H
 #define WIN32_LEAN_AND_MEAN
 
-#include "game.h"
+#include "game.h"						// Game (SmashRipoff)
 #include "input.h"						// Inputs
 #include "textureManager.h"				// Textures
 #include "image.h"						// Images
