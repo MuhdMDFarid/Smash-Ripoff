@@ -13,7 +13,8 @@ void SpeedPotion::apply(Player * player)
 	//stuff
 	player->speedmultiplier=1.5;
 	player->agilityduration = 10;
-	//this->setActive(false);
+	this->setScale(0);
+	this->setActive(false);
 }
 
 void SpeedPotion::draw()

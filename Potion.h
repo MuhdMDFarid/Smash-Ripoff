@@ -7,9 +7,9 @@
 
 namespace PotionNS
 {
-	const int WIDTH = 30;
-	const int HEIGHT = 30;
-	const int COLLISION_RADIUS = 30 / 2;
+	const int WIDTH = 67;
+	const int HEIGHT = 67;
+	const int COLLISION_RADIUS = 67 / 2;
 	const float MASS = 50;
 
 }

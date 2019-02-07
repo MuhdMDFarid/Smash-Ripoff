@@ -135,7 +135,7 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!speedpotion.initialize(this, 113, 113, 1, &speedpotionTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
 
-	if (!healthpotion.initialize(this, 50, 50, 1, &healthpotionTexture))	// 1 since texture has only one image
+	if (!healthpotion.initialize(this, 113, 113, 1, &healthpotionTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
 	speedpotion.setScale(0.5);
 	speedpotion.setX(randomx1 - speedpotion.getScale()*speedpotion.getWidth());
