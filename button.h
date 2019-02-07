@@ -21,6 +21,10 @@ public:
 	// Constructor
 	Button();
 
+	// ======================
+	// Functions
+	// ======================
+	void mouseHover();
 };
 
 #endif // _BUTTON_H

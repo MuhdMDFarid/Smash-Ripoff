@@ -15,14 +15,17 @@ private:
 public:
 
 	// Constructor
-	PlayState(Game* game);
+	PlayState(SmashRipoff* game);
 
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
 	virtual void update(float frameTime);
+	virtual void ai();
+	virtual void collisions();
 	virtual void handleInput(Input* input);
+
 };
 
 #endif // _PLAY_STATE_H

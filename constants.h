@@ -129,6 +129,7 @@ const UCHAR Z_KEY = 0x5A;		// Z key
 // enum WEAPON {TORPEDO, SHIP, PLANET};
 
 //List declaration
-const int   NO_PLATFORMS = 2; //number of platforms
+const int   NO_PLATFORMS = 2;	// No. of platforms
+const int MAX_HEALTH = 3;		// Players' Health
 
 #endif // _CONSTANTS_H

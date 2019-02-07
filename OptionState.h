@@ -12,22 +12,20 @@ private:
 	// Changes the state to "MenuState"
 	void exitOption();
 
-	// Variables
-	TextureManager optionBackgroundTexture;
-	Image optionBackground;
-	TextDX optionFont;
-
 public:
 
 	// Constructor
-	OptionState(Game* game);
+	OptionState(SmashRipoff* game);
 
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
 	virtual void update(float frameTime);
+	virtual void ai();
+	virtual void collisions();
 	virtual void handleInput(Input* input);
+
 };
 
 #endif // _OPTION_STATE_H

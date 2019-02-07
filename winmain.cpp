@@ -5,7 +5,6 @@
 #include <stdlib.h>             // for detecting memory leaks
 #include <crtdbg.h>             // for detecting memory leaks
 #include "SmashRipoff.h"
-#include "MenuState.h"
 
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
@@ -40,9 +39,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	{
 		// throws GameError
         game->initialize(hwnd);
-
-		// The game needs to open with the menu screen
-		game->pushState(new MenuState(game));
 
         // main message loop
         int done = 0;

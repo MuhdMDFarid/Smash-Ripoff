@@ -12,22 +12,20 @@ private:
 	// Changes the state to "MenuState"
 	void mainMenu();
 
-	// Variables
-	TextureManager priestessDeathTexture;
-	Image priestessBackground;
-	TextDX priestessFont;
-
 public:
 
 	// Constructor
-	PriestessDeathState(Game* game);
+	PriestessDeathState(SmashRipoff* game);
 
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
 	virtual void update(float frameTime);
+	virtual void ai();
+	virtual void collisions();
 	virtual void handleInput(Input* input);
+
 };
 
 #endif // _PRIESTESS_DEATH_STATE

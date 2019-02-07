@@ -9,7 +9,6 @@
 #include "constants.h"
 #include "gameError.h"
 #include "textDX.h"
-#include <vector>
 
 namespace gameNS
 {
@@ -19,8 +18,6 @@ namespace gameNS
 	const int BUF_SIZE = 30;
 	static char buffer[BUF_SIZE];
 }
-
-class GameState;
 
 class Game
 {
@@ -42,9 +39,6 @@ protected:
 
 	// Additions
 	TextDX dxFont;					// DirectX font for fps
-	std::vector<GameState*> states;	// A vector to store game states
-	bool hunterDeath = false;
-	bool priestessDeath = false;
 
 public:
 
@@ -92,14 +86,6 @@ public:
 
     // Exit the game
     void exitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
-
-	// Functions for game states
-	void pushState(GameState* state);
-	void popState();
-	void deleteState();
-	
-	// Gets the current state
-	GameState* getCurrentState();
 
     // Pure virtual function declarations
     // These functions MUST be written in any class that inherits from Game
