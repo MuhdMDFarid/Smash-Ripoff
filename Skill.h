@@ -5,6 +5,7 @@
 #include <vector>
 #include "Player.h"
 #include "Attack_Hitbox.h"
+#include "SkillState.h"
 
 struct SkillHitbox 
 {
@@ -12,14 +13,23 @@ struct SkillHitbox
 	Attack_Hitbox* hitbox;
 };
 
+enum S_State
+{
+	STATE_ACTIVE,
+	STATE_FINISHED
+};
+
+class SkillState;
+
 // the actual move 
 class Skill
 {
+private:
+	SkillState* state;
+	bool finished;
 public:
 	std::vector<SkillHitbox*> Hitboxlist;
-	std::vector<Attack_Hitbox*> AHitboxlist;
 	Attack_Hitbox* newhitbox;
-	//SkillHitbox* newskillhitbox;
 	// 
 
 //public:
@@ -28,6 +38,7 @@ public:
 	void execute(Player& player);
 	void update(Player& player,float frameTime);		// maybe don't need
 	void cancel();
+	bool isFinished() { return finished; }
 	void draw();
 };
 

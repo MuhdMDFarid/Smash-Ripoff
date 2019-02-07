@@ -43,8 +43,13 @@ PlayerState* IdleState::handleInput(Player& player, Input* input)
 			player.punch();
 
 		}
-		//return NULL;	// return NULL
 		return new AttackState();
+	}
+	
+	if (input->isKeyDown(VK_RIGHT) || input->isKeyDown(D_KEY))
+	{
+		player.playerface = 1;
+		player.getMovementComponent()->setX_Force(player.getSpeed()*player.speedmultiplier);
 	}
 	return NULL;	// return NULL
 

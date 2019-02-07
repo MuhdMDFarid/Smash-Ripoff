@@ -3,6 +3,7 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include "PlayerState.h"
+#include "Skill.h"
 class AttackState :	public PlayerState
 {
 public:

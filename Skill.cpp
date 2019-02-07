@@ -1,12 +1,15 @@
 #include "Skill.h"
 
-
+//#include "ActiveState.h"
+//#include "CompletedState.h"
+//#include "InactiveState.h"
 
 Skill::Skill()
 {
 	//std::vector<SkillHitbox*> Hitboxlist;
+	finished = false;
 	SkillHitbox* newskillhitbox = new SkillHitbox();
-	newskillhitbox->spawndelay = 10;
+	newskillhitbox->spawndelay = 1;
 	newskillhitbox->hitbox = new Attack_Hitbox();
 	//newskillhitbox->hitbox->get
 	Hitboxlist.push_back(newskillhitbox);
@@ -22,6 +25,13 @@ Skill::~Skill()
 
 void Skill::execute(Player& player)
 {
+	// State version of skill
+	///
+	/*
+	state = new ActiveState();
+	state->enter();*/
+	///
+	finished = false;
 	// initialize all the hitboxes and adds to the vector
 	newhitbox = new Attack_Hitbox();
 
@@ -107,11 +117,21 @@ void Skill::update(Player& player, float frameTime)
 			*/
 		}
 	}
+	else
+	{
+		finished = true;
+	}
 }
 
 void Skill::cancel()
 {
+	// delete all Hitboxes from list
+	// end skill
 }
+
+//void Skill::completed()
+//{
+//}
 
 void Skill::draw()
 {

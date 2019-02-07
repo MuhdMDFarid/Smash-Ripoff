@@ -116,6 +116,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
     <ClCompile Include="SpeedPotion.cpp" />
     <ClCompile Include="textDX.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillState.h" />
     <ClInclude Include="SmashRipoff.h" />
     <ClInclude Include="SpeedPotion.h" />
     <ClInclude Include="textDX.h" />

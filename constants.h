@@ -72,7 +72,7 @@ const char TEST_HEART_IMAGE[]	= "pictures\\lives\\1life.png";
 const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
 
 const char NEBULA_IMAGE[] = "pictures\\orion.jpg";
-const char PLAYER_TEXTURE[] = "pictures\\Square1.png";
+const char PLAYER_TEXTURE[] = "pictures\\Square.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
 const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
 const char SPEEDPOTION_TEXTURE[] = "pictures\\speedpotion.png";

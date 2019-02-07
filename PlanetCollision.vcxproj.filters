@@ -1,29 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="Attack_Component.cpp" />
+    <ClCompile Include="Attack_Hitbox.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="heart.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="Movement_Component.cpp" />
     <ClCompile Include="OptionState.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="planet.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ship.cpp" />
+    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
+    <ClCompile Include="SpeedPotion.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="winmain.cpp" />
-    <ClCompile Include="Potion.cpp" />
-    <ClCompile Include="SpeedPotion.cpp" />
     <ClCompile Include="AirborneState.cpp">
       <Filter>States</Filter>
     </ClCompile>
@@ -33,56 +38,19 @@
     <ClCompile Include="GroundedState.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
     <ClCompile Include="IdleState.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="Attack_Component.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Movement_Component.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack_Hitbox.cpp">
-      <Filter>Attack_Move thing</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerState.cpp">
-      <Filter>Source Files\States</Filter>
+      <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="GroundedState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="AirborneState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="PauseState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="OptionState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="IdleState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="heart.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="SkillState.cpp">
+      <Filter>States\SkillStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attack_Component.h" />
+    <ClInclude Include="Attack_Hitbox.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="entity.h" />
@@ -90,24 +58,27 @@
     <ClInclude Include="gameError.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="heart.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="Movement_Component.h" />
     <ClInclude Include="OptionState.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="planet.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="Potion.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ship.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="SmashRipoff.h" />
+    <ClInclude Include="SpeedPotion.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
-    <ClInclude Include="Potion.h" />
-    <ClInclude Include="SpeedPotion.h" />
     <ClInclude Include="AirborneState.h">
       <Filter>States</Filter>
     </ClInclude>
@@ -117,68 +88,22 @@
     <ClInclude Include="GroundedState.h">
       <Filter>States</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>States</Filter>
-    </ClInclude>
     <ClInclude Include="IdleState.h">
       <Filter>States</Filter>
     </ClInclude>
-    <ClInclude Include="Attack_Component.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Movement_Component.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerState.h">
-      <Filter>Header Files\States</Filter>
+      <Filter>States</Filter>
     </ClInclude>
-    <ClInclude Include="GroundedState.h">
-      <Filter>Header Files\States</Filter>
+    <ClInclude Include="SkillState.h">
+      <Filter>States\SkillStates</Filter>
     </ClInclude>
-    <ClInclude Include="AirborneState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="PauseState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack_Hitbox.h">
-      <Filter>Attack_Move thing</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="States">
-      <UniqueIdentifier>{b35cccbd-247f-4820-9c0e-d917e29b5f3f}</UniqueIdentifier>
+      <UniqueIdentifier>{c9aebb43-7c3f-4f22-b353-3624784dc21c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component">
-      <UniqueIdentifier>{b79b8a0d-00d0-4938-a948-eec1d8f787dd}</UniqueIdentifier>
+    <Filter Include="States\SkillStates">
+      <UniqueIdentifier>{03c9c85a-9846-4eff-885f-d7fa37d41092}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Attack_Move thing">
-      <UniqueIdentifier>{e4a3e8ba-e5c0-4119-bcfb-72839416e0c8}</UniqueIdentifier>
-    </Filter>
-    <ClInclude Include="AttackState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IdleState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack_Hitbox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="heart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

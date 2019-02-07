@@ -24,7 +24,8 @@ void AttackState::update(Player& player, float frameTime)
 
 	// when Attack is Completed SHOULDN'T BE BASED ON ANIMATION
 	// Some animation shouldn't be cancelled like attack animations
-	if (player.getAnimationComplete()||player.getCurrentFrame()<player.getStartFrame()/*when moveset is ended*/)
+	//if (player.getAnimationComplete()||player.getCurrentFrame()<player.getStartFrame()/*when moveset is ended*/)
+	if(player.skill->isFinished())
 	{// if condition should be based on moveset rather than animation i think
 		exit(player);
 		player.action = new IdleState(); 

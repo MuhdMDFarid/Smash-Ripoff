@@ -32,7 +32,7 @@ private:
 	// new stuff
 	TextureManager projectileTexture;
 	TextureManager platformTexture;
-	Platform platform;
+	//Platform platform;
 	Platform platform1;
 	Platform platformUpList[NO_PLATFORMS];
 	Platform platformDownList[NO_PLATFORMS];
