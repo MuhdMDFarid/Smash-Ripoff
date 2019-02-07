@@ -42,7 +42,7 @@ void SmashRipoff::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
 
 	// main game textures
-	if (!playerTextures.initialize(graphics, PLAYER_TEXTURE))
+	if (!playerTexture.initialize(graphics, PLAYER_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player textures"));
 
 	if (!player.initialize(this, 32, 32,PlayerNS::TEXTURE_COLS, &playerTexture))
@@ -120,8 +120,8 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!potion.initialize(this, 113, 113, 1, &potionTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
 	potion.setScale(0.5);
-	potion.setX(GAME_WIDTH - TILE_SIZE);
-	potion.setY(GAME_HEIGHT - 2*TILE_SIZE);
+	potion.setX(GAME_WIDTH/2 - potion.getScale()*potion.getWidth());
+	potion.setY(GAME_HEIGHT/2 - potion.getScale()*potion.getWidth());
 
 
     return;

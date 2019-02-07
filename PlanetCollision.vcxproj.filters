@@ -47,12 +47,8 @@
     <ClCompile Include="SkillState.cpp">
       <Filter>States\SkillStates</Filter>
     </ClCompile>
-    <ClCompile Include="HunterDeathState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="PriestessDeathState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
+    <ClCompile Include="HunterDeathState.cpp" />
+    <ClCompile Include="PriestessDeathState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack_Component.h" />
@@ -103,12 +99,8 @@
     <ClInclude Include="SkillState.h">
       <Filter>States\SkillStates</Filter>
     </ClInclude>
-    <ClInclude Include="HunterDeathState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="PriestessDeathState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
+    <ClInclude Include="HunterDeathState.h" />
+    <ClInclude Include="PriestessDeathState.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="States">
