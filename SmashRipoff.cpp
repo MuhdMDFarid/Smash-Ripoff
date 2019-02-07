@@ -75,15 +75,64 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!platformTexture.initialize(graphics, PLATFORM_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform texture"));
 
-	if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
+	/*if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	platform.setX(GAME_WIDTH/2);
-	platform.setY(GAME_HEIGHT);
+	platform.setY(GAME_HEIGHT);*/
 
 	if (!platform1.initialize(this, GAME_WIDTH, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	platform1.setX(0);
 	platform1.setY(GAME_HEIGHT-platform1.getHeight());
+
+	// Hearts
+	if (!heartTexture.initialize(graphics, HEART_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing heart texture"));
+
+	for (int i = 0; i < MAX_HEALTH; i++)
+	{
+		if (!hunterHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
+		// Makes the image bigger
+		hunterHealth[i].setScale(2);
+		// Sets it to the left of the screen (player 1)
+		hunterHealth[i].setX(heartNS::WIDTH * i);			
+		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
+		hunterHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * hunterHealth[i].getScale()));
+	}
+
+	for (int i = 0; i < MAX_HEALTH; i++)
+	{
+		if (!priestessHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
+		// Makes the image bigger
+		priestessHealth[i].setScale(2);
+		// Sets it to the right of the screen (player 2)
+		priestessHealth[i].setX(GAME_WIDTH - ((heartNS::WIDTH * (i + 1)) + heartNS::WIDTH));
+		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
+		priestessHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * priestessHealth[i].getScale()));
+	}
+
+	//hk
+	// for moving platforms
+	for (int i = 0; i < NO_PLATFORMS; i++)
+	{
+		if (!platformUpList[i].initialize(this, 160, 32, 1, &platformTexture))	// 1 since texture has only one image
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+		platformUpList[i].setDegrees(0);
+		platformUpList[i].setX(3 * GAME_WIDTH / 5);
+		platformUpList[i].setY(GAME_HEIGHT / 2 * (NO_PLATFORMS - i));
+		platformUpList[i].setVelocity(VECTOR2(0, -TILE_SIZE * 4));
+
+		if (!platformDownList[i].initialize(this, 160, 32, 1, &platformTexture))	// 1 since texture has only one image
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+		platformDownList[i].setDegrees(0);
+		platformDownList[i].setX(GAME_WIDTH / 5);
+		platformDownList[i].setY(GAME_HEIGHT / 2 * (NO_PLATFORMS - i));
+		platformDownList[i].setVelocity(VECTOR2(0, TILE_SIZE * 4));
+	}
+
+	return;
 	///
 
 	// TEMP POTION texture
@@ -106,6 +155,41 @@ void SmashRipoff::initialize(HWND hwnd)
 void SmashRipoff::update()
 {
 	player.update(frameTime);
+
+	// --Hearts-- (replace in Collision, Muhamiddo)
+	// Hunter
+	if (input->isKeyDown(O_KEY))
+	{
+		input->keyUp(O_KEY);
+
+		if (hunterHP > 0)
+		{
+			hunterHealth[hunterHP].setActive(false);
+			hunterHP--;
+		}
+
+		else
+		{
+			hunterDeath = true;
+		}
+	}
+
+	// Priestess
+	if (input->isKeyDown(P_KEY))
+	{
+		input->keyUp(P_KEY);
+
+		if (priestessHP > 0)
+		{
+			priestessHealth[priestessHP].setActive(false);
+			priestessHP--;
+		}
+
+		else
+		{
+			priestessDeath = true;
+		}
+	}
 
 	//player.fall();
 	if (platform.getY() <= -platform.getHeight())
@@ -188,7 +272,12 @@ void SmashRipoff::update()
 	platform.update(frameTime);	// should this even have update since platforms dont really move
 	platform1.update(frameTime);
 
-	potion.update(frameTime);
+	//hk
+	for (int i = 0; i < NO_PLATFORMS; i++)
+	{
+		platformUpList[i].updateUp(frameTime);
+		platformDownList[i].updateDown(frameTime);
+	}
 	//update every bullet in player ithink
 	//
 	//if (player.airEnum != STATE_AIRBORNE)
@@ -211,68 +300,6 @@ void SmashRipoff::collisions()
 	VECTOR2 collisionVector;
 	// platform collision
 	if(player.collidesWith(platform,collisionVector))
-	{
-		// PROTOTYPE COLLISION Detection
-
-		// collide with top of platform
-		if (player.getCenterY() + player.getEdge().bottom*player.getScale() >= platform.getCenterY() + platform.getEdge().top*platform.getScale()
-			&& player.getCenterY() + player.getEdge().top*player.getScale() < platform.getCenterY() + platform.getEdge().top*platform.getScale())
-		{
-			// player collides from the top of the platform
-			player.setY(platform.getCenterY() + platform.getEdge().top*platform.getScale()
-				- player.getHeight());		// prevents player from moving past the left side of platform
-
-			if (player.getMovementComponent()->getY_Velocity() > 0)		// if player is moving downwards it sets velocity to 0...
-			{	// this is to prevent reseting velocity when player is jumping from the side up wards
-				player.getMovementComponent()->setY_Velocity(0);
-			}
-
-			//player.setJump(true);
-			//player.grounded = true;
-			if (player.airEnum != STATE_GROUNDED)
-			{
-				player.landed();
-			}
-		}
-
-		else if (player.getCenterX() + player.getEdge().right*player.getScale() >= platform.getCenterX() + platform.getEdge().left*platform.getScale()
-			&& player.getCenterX() + player.getEdge().left*player.getScale() < platform.getCenterX() + platform.getEdge().left*platform.getScale())
-		{
-			// player collides from the left side of platform
-			player.setX(platform.getCenterX() + platform.getEdge().left*platform.getScale()
-				- player.getWidth());		// prevents player from moving past the right side of platform
-
-			if (player.getMovementComponent()->getX_Velocity() > 0)		// if player is moving towards right it sets velocity to 0
-			{
-				player.getMovementComponent()->setX_Velocity(0);
-			}
-		}
-
-		else if (player.getCenterX() + player.getEdge().left*player.getScale() <= platform.getCenterX() + platform.getEdge().right*platform.getScale()
-			&& player.getCenterX() + player.getEdge().right*player.getScale() > platform.getCenterX() + platform.getEdge().right*platform.getScale())
-		{
-			// player collides from right side of platform
-			player.setX(platform.getCenterX() + platform.getEdge().right*platform.getScale());		// prevents player from moving past the left side of platform
-
-			if (player.getMovementComponent()->getX_Velocity() < 0)		// if player is moving towards left it sets velocity to 0
-			{
-				player.getMovementComponent()->setX_Velocity(0);
-			}
-		}
-
-		else if (player.getCenterY() + player.getEdge().top*player.getScale() <= platform.getCenterY() + platform.getEdge().bottom*platform.getScale()
-			&& player.getCenterY() + player.getEdge().bottom*player.getScale() > platform.getCenterY() + platform.getEdge().bottom*platform.getScale())
-		{
-			// player collides from the bottom of the platform
-			player.setY(platform.getCenterY() + platform.getEdge().bottom*platform.getScale());
-
-			if (player.getMovementComponent()->getY_Velocity() < 0)		// if player is moving upwards it sets velocity to 0...
-			{	// this is to prevent player from keeping upwards velocity when hitting the bottom of plat
-				player.getMovementComponent()->setY_Velocity(0);
-			}
-		}
-	}
-	else if (player.collidesWith(platform1,collisionVector))
 	{
 		// PROTOTYPE COLLISION Detection
 
@@ -333,8 +360,6 @@ void SmashRipoff::collisions()
 				player.getMovementComponent()->setY_Velocity(0);
 			}
 		}
-	
-
 		// end of PROTOTYPE COLLISION DETECTION
 
 
@@ -379,14 +404,59 @@ void SmashRipoff::collisions()
 		}
 
 	}
-
-	// TEMP Potion collision
-	if (player.collidesWith(potion, collisionVector))
+	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
-		// bounce off planet
-		potion.apply(&player);
-		potion.setVisible(false);
-		//ship2.damage(PLANET);
+		if (player.collidesWith(platformUpList[i], collisionVector))
+		{
+			// PROTOTYPE COLLISION Detection
+
+			// collide with top of platformUpList[i]
+			if (player.getCenterY() + player.getEdge().bottom*player.getScale() >= platformUpList[i].getCenterY() + platformUpList[i].getEdge().top*platformUpList[i].getScale()
+				&& player.getCenterY() + player.getEdge().top*player.getScale() < platformUpList[i].getCenterY() + platformUpList[i].getEdge().top*platformUpList[i].getScale())
+			{
+
+				if (player.getMovementComponent()->getY_Velocity() >= 0)		// if player is moving downwards it sets velocity to 0...
+				{	// this is to prevent reseting velocity when player is jumping from the side up wards
+					player.getMovementComponent()->setY_Velocity(0);
+					// player collides from the top of the platformUpList[i]
+					player.setY(platformUpList[i].getCenterY() + platformUpList[i].getEdge().top*platformUpList[i].getScale()
+						- player.getHeight());		// prevents player from moving past the left side of platformUpList[i]
+				}
+
+				if (player.airEnum != STATE_GROUNDED)
+				{
+					player.landed();
+				}
+			}
+			// end of PROTOTYPE COLLISION DETECTION
+		}
+	}
+	for (int i = 0; i < NO_PLATFORMS; i++)
+	{
+		if (player.collidesWith(platformDownList[i], collisionVector))
+		{
+			// PROTOTYPE COLLISION Detection
+
+			// collide with top of platformDownList[i]
+			if (player.getCenterY() + player.getEdge().bottom*player.getScale() >= platformDownList[i].getCenterY() + platformDownList[i].getEdge().top*platformDownList[i].getScale()
+			&& player.getCenterY() + player.getEdge().top*player.getScale() < platformDownList[i].getCenterY() + platformDownList[i].getEdge().top*platformDownList[i].getScale())
+				//&& player.getCenterY() + player.getEdge().top*player.getScale() < platformDownList[i].getCenterY() + platformDownList[i].getEdge().top*platformDownList[i].getScale())
+			{
+				if (player.getMovementComponent()->getY_Velocity() > 0)		// if player is moving downwards it sets velocity to 0...
+				{	// this is to prevent reseting velocity when player is jumping from the side Down wards
+					player.getMovementComponent()->setY_Velocity(-YVelocity);
+					// player collides from the top of the platformDownList[i]
+					player.setY(platformDownList[i].getCenterY() + platformDownList[i].getEdge().top*platformDownList[i].getScale()
+						- player.getHeight());		// prevents player from moving past the left side of platformDownList[i]
+				}
+
+				if (player.airEnum != STATE_GROUNDED)
+				{
+					player.landed();
+				}
+			}
+			// end of PROTOTYPE COLLISION DETECTION
+		}
 	}
 }
 
@@ -398,14 +468,33 @@ void SmashRipoff::render()
 
     nebula.draw();                          // add the orion nebula to the scene
     planet.draw();                          // add the planet to the scene
-
 	player.draw();
 
 	platform.draw();
 	platform1.draw();
-	potion.draw();
+
+	
+	for (int i = 0; i < NO_PLATFORMS; i++)
+	{
+		platformUpList[i].draw();
+		platformDownList[i].draw();
+	}
 	// draw every bullet put inside player
 
+	for (int i = 0; i < MAX_HEALTH; i++)	// Add Players' Health
+	{
+		if (hunterHealth[i].getActive())	// Checks to see if the heart is active (if it isn't, don't draw it)
+		{
+			hunterHealth[i].draw();
+		}
+
+		if (priestessHealth[i].getActive())
+		{
+			priestessHealth[i].draw();
+		}
+	}
+
+	/*
 	if (true)
 	{
 
@@ -425,13 +514,12 @@ void SmashRipoff::render()
 		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Force: %d", (int)player.getMovementComponent()->getY_Force());
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 4 * GAME_HEIGHT / 5);
 
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", /*(int)player.projectilelist.size()*/(int)player.jumpcooldown);
+		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)player.jumpcooldown);
 		dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
 		
 		
 
-	}
-
+	} */
 }
 
 //=============================================================================

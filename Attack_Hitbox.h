@@ -27,4 +27,4 @@ public:
 
 };
 
-#endif // _attackHitbox_H
+#endif // _ATTACK_HITBOX_H

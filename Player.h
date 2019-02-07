@@ -29,7 +29,7 @@ namespace PlayerNS
 	//int HEIGHT = 64;
 	const int TEXTURE_COLS = 4;
 	const float PLAYER_MOVE_DELAY = 0.2f;
-	
+
 	const float JUMP_CD = 0.5f;
 	const int JUMP_VELOCITY = 500;
 

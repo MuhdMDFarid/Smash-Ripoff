@@ -54,11 +54,21 @@ const int TILE_SIZE = 32;
 // const int GRID_HEIGHT = GAME_HEIGHT / TILE_SIZE;
 
 // Graphics images
-const char STAGE_IMAGE[] =		"pictures\\background\\spaceStage.jpg";
-const char MENU_IMAGE[] =		"pictures\\background\\menuBackground.png";
-const char PAUSE_IMAGE[] =		"pictures\\background\\pauseBackground.png";
-const char OPTION_IMAGE[] =		"pictures\\background\\optionBackground.png";
-// const char OPTIONS_IMAGE[] =	
+// --MENU--
+const char STAGE_IMAGE[]	=	"pictures\\background\\spaceStage.jpg";
+const char MENU_IMAGE[]		=	"pictures\\background\\menuBackground.png";
+const char PAUSE_IMAGE[]	=	"pictures\\background\\pauseBackground.png";
+const char OPTION_IMAGE[]	=	"pictures\\background\\optionBackground.png";
+
+// --GUI--
+// Hearts, ver. 1
+const char HEART_IMAGE[]	= "pictures\\lives\\heartv2.png";
+// Hearts, ver. 2 (might have to collate into a sheet to use this version)
+const char TEST_HEART_IMAGE3[]	= "pictures\\lives\\3lives.png";
+const char TEST_HEART_IMAGE2[]	= "pictures\\lives\\2lives.png";
+const char TEST_HEART_IMAGE[]	= "pictures\\lives\\1life.png";
+
+// --GAME--
 const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
 
 const char NEBULA_IMAGE[] = "pictures\\orion.jpg";
@@ -115,5 +125,8 @@ const UCHAR Y_KEY = 0x59;		// Y key
 const UCHAR Z_KEY = 0x5A;		// Z key
 
 // enum WEAPON {TORPEDO, SHIP, PLANET};
+
+//List declaration
+const int   NO_PLATFORMS = 2; //number of platforms
 
 #endif // _CONSTANTS_H

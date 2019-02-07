@@ -21,23 +21,26 @@ void PlayState::pauseGame()
 
 void PlayState::draw()
 {
-	game->update();					// Update all game items
-	game->ai();						// Aritifical Intelligence (A.I.)
-	game->collisions();				// Handle collisions
 	game->render();					// Draw all game items
 }
 
 void PlayState::update(float frameTime)
 {
-
+	game->update();					// Update all game items
+	game->ai();						// Aritifical Intelligence (A.I.)
+	game->collisions();				// Handle collisions
 }
 
 void PlayState::handleInput(Input* input)
 {
 	// Keyboard
-	// The game should pause when "ESC" is pressed
+	// Pauses the game
 	if (input->isKeyDown(ESC_KEY))
+	{
+		// Ensures that the key doesn't register more than once
+		input->keyUp(ESC_KEY);
 		pauseGame();
+	}
 
 	// Mouse
 }
