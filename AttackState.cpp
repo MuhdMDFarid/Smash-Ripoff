@@ -27,9 +27,14 @@ void AttackState::update(Player& player, float frameTime)
 	//if (player.getAnimationComplete()||player.getCurrentFrame()<player.getStartFrame()/*when moveset is ended*/)
 	if(player.skill->isFinished())
 	{// if condition should be based on moveset rather than animation i think
-		exit(player);
-		player.action = new IdleState(); 
-		player.action->enter(player);
+		PlayerState* istate = new IdleState();
+		if (istate != NULL)
+		{
+			player.action->exit(player);
+			delete player.action;
+			player.action = istate;
+			player.action->enter(player);
+		}
 		//player.actionEnum = STATE_IDLE;
 		//player.action = new IdleState();
 		//player.action->enter(player);
@@ -45,6 +50,7 @@ void AttackState::enter(Player& player)
 	//player.setFrames(PlayerNS::P1_ATTACK_START, PlayerNS::P1_ATTACK_END);
 	player.setCurrentFrame(player.getStartFrame());
 
+	/*
 	// the actual attack may not be here
 	//player.punch(&projecti)
 	///////////////
@@ -61,6 +67,7 @@ void AttackState::enter(Player& player)
 
 
 	//player.hitboxlist.push_back(player.newhitbox);
+	*/
 }
 
 void AttackState::exit(Player& player)
@@ -68,7 +75,10 @@ void AttackState::exit(Player& player)
 	
 }
 
-void AttackState::interrupt(Player& player)
+PlayerState* AttackState::interrupt(Player& player,float stunduration)
 {
-	PlayerState::interrupt(player);		// temporary interrupt code
+	// code to cancel all attacks
+	//...
+	player.skill->cancel();
+	return PlayerState::interrupt(player,stunduration);		// temporary interrupt code
 }

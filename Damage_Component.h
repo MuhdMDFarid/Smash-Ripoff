@@ -16,6 +16,7 @@ private:
 	float damage;
 	float angle;
 	float force;
+	float stun;
 public:
 	Damage_Component();
 	~Damage_Component();
@@ -26,10 +27,12 @@ public:
 	float getDamage() { return damage; }
 	float getAngle() { return angle; }
 	float getForce() { return force; }
+	float getStun() { return stun; }
 
 	void setDamage(float dmg) { damage = dmg; }
 	void setAngle(float ang) { angle = ang; }
 	void setForce(float N) { force = N; }
+	void setStun(float stn) { stun = stn; }
 
 	D3DXVECTOR2 calculateVector();
 

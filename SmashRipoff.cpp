@@ -411,6 +411,7 @@ void SmashRipoff::collisions()
 //=============================================================================
 void SmashRipoff::render()
 {
+	/*
 	/// OLD draw
 	//nebula.draw();                          // add the orion nebula to the scene
 	//planet.draw();                          // add the planet to the scene
@@ -462,8 +463,9 @@ void SmashRipoff::render()
 	//	_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)player.jumpcooldown);
 	//	dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
 
-
 	///
+	*/
+
 	// --States--
 	this->getCurrentState()->draw();
 }

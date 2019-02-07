@@ -117,11 +117,11 @@ void PlayState::collisions()
 
 			if (game->platformUpList[1].collidesWith(*(*it)->hitbox, collisionVector))
 			{
-				game->player.getMovementComponent()->setX_Velocity(game->player.playerface*(*it)->hitbox->getKnockback().x);
-				game->player.getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
-
-				//player.knockback((*it)->hitbox->getKnockback());
-
+				//game->player.getMovementComponent()->setX_Velocity(game->player.playerface*(*it)->hitbox->getKnockback().x);
+				//game->player.getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
+				//game->player.interrupt(0.5);
+				game->player.knockedback((*it)->hitbox);
+				break;
 			}
 			it++;
 
@@ -371,29 +371,30 @@ void PlayState::handleInput(Input* input)
 		//	player.setJump(false);
 		//}
 	}
-	else*/ if (input->isKeyDown(S_KEY) || input->isKeyDown(VK_DOWN))	// dive down
-	{
-		game->player.move(0, game->player.getSpeed() * game->player.speedmultiplier);
-		//player.getMovementComponent()->setY_Force(100);
-	}
-	else
-	{
-		game->player.getMovementComponent()->setY_Force(0);
-	}
+	else*/ 
+	//if (input->isKeyDown(S_KEY) || input->isKeyDown(VK_DOWN))	// dive down
+	//{
+	//	game->player.move(0, game->player.getSpeed() * game->player.speedmultiplier);
+	//	//player.getMovementComponent()->setY_Force(100);
+	//}
+	//else
+	//{
+	//	game->player.getMovementComponent()->setY_Force(0);
+	//}
 
-	if (input->isKeyDown(A_KEY) || input->isKeyDown(VK_LEFT))	// move left
-	{
-		//player.move(-player.getSpeed(), 0);
-		game->player.playerface = -1;
-		game->player.getMovementComponent()->setX_Force(-game->player.getSpeed() * game->player.speedmultiplier);
-	}
-	else if (input->isKeyDown(D_KEY) || input->isKeyDown(VK_RIGHT))	// move right
-	{
-		//player.move(player.getSpeed(), 0);
-		game->player.playerface = 1;
-		game->player.getMovementComponent()->setX_Force(game->player.getSpeed() * game->player.speedmultiplier);
-	}
-	else { game->player.getMovementComponent()->setX_Force(0); }
+	//if (input->isKeyDown(A_KEY) || input->isKeyDown(VK_LEFT))	// move left
+	//{
+	//	//player.move(-player.getSpeed(), 0);
+	//	game->player.playerface = -1;
+	//	game->player.getMovementComponent()->setX_Force(-game->player.getSpeed() * game->player.speedmultiplier);
+	//}
+	//else if (input->isKeyDown(D_KEY) || input->isKeyDown(VK_RIGHT))	// move right
+	//{
+	//	//player.move(player.getSpeed(), 0);
+	//	game->player.playerface = 1;
+	//	game->player.getMovementComponent()->setX_Force(game->player.getSpeed() * game->player.speedmultiplier);
+	//}
+	//else { game->player.getMovementComponent()->setX_Force(0); }
 
 	/*//  to make the player loop back on screen
 	if (player.getX() > GAME_WIDTH)

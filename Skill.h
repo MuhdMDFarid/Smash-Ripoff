@@ -40,6 +40,7 @@ public:
 	void cancel();
 	bool isFinished() { return finished; }
 	void draw();
+	float finalangle(float alpha,int xdirection);
 };
 
 #endif

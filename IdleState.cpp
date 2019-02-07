@@ -46,11 +46,6 @@ PlayerState* IdleState::handleInput(Player& player, Input* input)
 		return new AttackState();
 	}
 	
-	if (input->isKeyDown(VK_RIGHT) || input->isKeyDown(D_KEY))
-	{
-		player.playerface = 1;
-		player.getMovementComponent()->setX_Force(player.getSpeed()*player.speedmultiplier);
-	}
 	return NULL;	// return NULL
 
 }
@@ -73,8 +68,7 @@ void IdleState::exit(Player& player)
 {
 }
 
-void IdleState::interrupt(Player& player)
+PlayerState* IdleState::interrupt(Player& player, float stunduration)
 {
-	PlayerState::interrupt(player);		// temporary interrupt code
-
+	return PlayerState::interrupt(player,stunduration);		// temporary interrupt code
 }

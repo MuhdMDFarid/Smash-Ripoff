@@ -22,6 +22,43 @@ PlayerState* GroundedState::handleInput(Player& player, Input* input)
 			player.canjump = false;
 		}
 	}
+	if (input->isKeyDown(S_KEY) || input->isKeyDown(VK_DOWN))	// duck down
+	{
+		// duck down
+	}
+
+	if (input->isKeyDown(A_KEY) || input->isKeyDown(VK_LEFT))	// move left
+	{
+		switch (player.actionEnum)
+		{
+		case STATE_IDLE:
+			player.playerface = -1;
+			player.getMovementComponent()->setX_Force(-player.getSpeed() * player.speedmultiplier);
+		case STATE_ATTACK:
+			// down key while attacking if any
+			NULL;
+		case STATE_STAGGERED:
+			// down key while staggered if any
+			NULL;
+		}
+	}
+	else if (input->isKeyDown(D_KEY) || input->isKeyDown(VK_RIGHT))	// move right
+	{
+		switch (player.actionEnum)
+		{
+		case STATE_IDLE:
+			player.playerface = 1;
+			player.getMovementComponent()->setX_Force(player.getSpeed() * player.speedmultiplier);
+		case STATE_ATTACK:
+			// down key while attacking if any
+			NULL;
+		case STATE_STAGGERED:
+			// down key while staggered if any
+			NULL;
+		}
+	}
+	else { player.getMovementComponent()->setX_Force(0); }
+
 	return NULL;	// return NULL
 
 }

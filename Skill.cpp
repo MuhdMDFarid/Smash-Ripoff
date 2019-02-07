@@ -32,6 +32,8 @@ void Skill::execute(Player& player)
 	state = new ActiveState();
 	state->enter();*/
 	///
+	//float alpha = 0;		//  alpha<=90 degrees
+	float fangle = 0;
 	finished = false;
 	// initialize all the hitboxes and adds to the vector
 	newhitbox = new Attack_Hitbox();
@@ -47,8 +49,13 @@ void Skill::execute(Player& player)
 	newhitbox->setCurrentFrame(28);
 
 	newhitbox->setDamage(50);
-	newhitbox->setKnockbackAngle(35+90);
+
+	//alpha = 35;
+
+	newhitbox->setKnockbackAngle(finalangle(35, player.playerface));
+
 	newhitbox->setKnockbackForce(500);
+	newhitbox->setHitStun(0.3);
 
 	// How to push the spawn delay and the hitbox into vector
 	SkillHitbox* newskillhitbox = new SkillHitbox();
@@ -69,8 +76,13 @@ void Skill::execute(Player& player)
 	newhitbox->setCurrentFrame(28);
 
 	newhitbox->setDamage(10);
-	newhitbox->setKnockbackAngle(90);
+
+	//alpha = 90;
+
+	newhitbox->setKnockbackAngle(finalangle(90,player.playerface));
+
 	newhitbox->setKnockbackForce(1000);
+	newhitbox->setHitStun(1);
 
 	// How to push the spawn delay and the hitbox into vector
 	newskillhitbox = new SkillHitbox();
@@ -136,6 +148,24 @@ void Skill::cancel()
 {
 	// delete all Hitboxes from list
 	// end skill
+
+	if (!Hitboxlist.empty())
+	{
+		for (std::vector<SkillHitbox*>::iterator it = Hitboxlist.begin(); it != Hitboxlist.end(); )
+		{
+
+			//SAFE_DELETE((*it)->hitbox);
+			SAFE_DELETE(*it);
+			it = Hitboxlist.erase(it);
+			
+			//else
+			//{
+			//	it++;
+			//}
+		}
+	}
+	finished = true;
+	
 }
 
 //void Skill::completed()
@@ -149,4 +179,15 @@ void Skill::draw()
 		(*it)->hitbox->draw();
 		it++;
 	}
+}
+
+float Skill::finalangle(float alpha,int xdirection)	// calculate actual angle based on playerface
+{
+	//  alpha<=90 degrees
+	if (xdirection < 0) { xdirection = -1; }
+	else { xdirection = 1; }
+
+	float finalangle = 90 - (90 - alpha)*(xdirection);
+
+	return finalangle;
 }

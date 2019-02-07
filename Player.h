@@ -69,7 +69,8 @@ public:
 	void landed();
 	void fall();
 	void jump();
-	void interrupt();
+	void interrupt(float stunduration = 1);		// for when player gets hit *no knock back involved
+	void knockedback(Attack_Hitbox* hitbox);	// when player collides with hitbox
 	State airEnum;
 	PlayerState* airborne;
 	State actionEnum;

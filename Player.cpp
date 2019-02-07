@@ -262,6 +262,7 @@ void Player::setJump(bool canjump)
 	airJump = canjump;
 }
 
+// punch supposedly takes from the moveset
 void Player::punch(/*Game * gamePtr, TextureManager * textureM*/)
 {
 	// Attack Prototype
@@ -404,15 +405,36 @@ void Player::handleInput(Input* input)
 	PlayerState* astate = action->handleInput(*this,input);
 	if (astate != NULL)
 	{
-		airborne->exit(*this);
+		action->exit(*this);
 		delete action;
 		action = astate;
 		action->enter(*this);
 	}
 }
 
-void Player::interrupt()
+void Player::interrupt(float stunduration)
 {
-	action->interrupt(*this);
-	action->enter(*this);
+	movement_component->setX_Force(0);
+	movement_component->setY_Force(0);
+
+	PlayerState* istate = action->interrupt(*this,stunduration);
+	if (istate != NULL)
+	{
+		action->exit(*this);
+		delete action;
+		action = istate;
+		action->enter(*this);
+	}
+}
+
+void Player::knockedback(Attack_Hitbox* hitbox)		// get x/y forces or the hitbox itself
+{
+	float xV = hitbox->getKnockback().x;
+	float yV = hitbox->getKnockback().y;
+	interrupt(hitbox->getStun());
+	getMovementComponent()->setX_Velocity(xV);
+	getMovementComponent()->setY_Velocity(yV);
+
+	//getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
+
 }

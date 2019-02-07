@@ -186,6 +186,7 @@
     <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
     <ClCompile Include="SpeedPotion.cpp" />
+    <ClCompile Include="StaggeredState.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="SkillState.h" />
     <ClInclude Include="SmashRipoff.h" />
     <ClInclude Include="SpeedPotion.h" />
+    <ClInclude Include="StaggeredState.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
   </ItemGroup>

@@ -26,10 +26,15 @@ public:
 	bool isExpired() { return Expired; }
 
 	D3DXVECTOR2 getKnockback() { return damage_component->calculateVector(); }
+	float getDamage() { return damage_component->getDamage(); }
+	float getStun() { return damage_component->getStun(); }
+
 	void setDamage(float dmg) { damage_component->setDamage(dmg); }
 	void setKnockbackAngle(float ang) { damage_component->setAngle(ang); }
 	void setKnockbackForce(float N) { damage_component->setForce(N); }
-	//Damage_Component* getDamage() { return damage_component; }
+	void setHitStun(float stn) { damage_component->setStun(stn); }
+
+	//Damage_Component* getDamageComp() { return damage_component; }
 
 };
 
