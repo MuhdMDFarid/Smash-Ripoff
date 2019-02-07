@@ -32,11 +32,21 @@ void Attack_Hitbox::update(float frameTime)
 {
 	// Hitbox_Attacks should move based on the player
 	Entity::update(frameTime);
-
-	Lifetime -= frameTime;
-	if (Lifetime <= 0)
+	if (getActive())
 	{
-		// delete
-		Expired = true;
+		if (Lifetime > 0)
+		{
+			Lifetime -= frameTime;
+		}
+		if (Lifetime <= 0)
+		{
+			// delete
+			Expired = true;
+		}
 	}
+}
+
+void Attack_Hitbox::collided()
+{
+	// when hitbox collides
 }

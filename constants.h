@@ -71,11 +71,13 @@ const char TEST_HEART_IMAGE2[]	= "pictures\\lives\\2lives.png";
 const char TEST_HEART_IMAGE[]	= "pictures\\lives\\1life.png";
 
 // --GAME--
-const char TEXTURES_IMAGE[]		= "pictures\\textures.png";
-const char NEBULA_IMAGE[]		= "pictures\\orion.jpg";
-const char SQUARE_TEXTURE[]		= "pictures\\Square.png";
+const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
+
+const char NEBULA_IMAGE[] = "pictures\\orion.jpg";
+const char PLAYER_TEXTURE[] = "pictures\\Square.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
-const char PLATFORM_TEXTURE[]	= "pictures\\platform.png";
+const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
+const char SPEEDPOTION_TEXTURE[] = "pictures\\speedpotion.png";
 
 // Key mappings
 // In this game simple constants are used for key mappings. If variables were used

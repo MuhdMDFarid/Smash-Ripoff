@@ -13,6 +13,7 @@ public:
 	void update(Player& player, float frameTime);
 	void enter(Player& player);
 	void exit(Player& player);
+	void interrupt(Player& player);
 };
 
 #endif

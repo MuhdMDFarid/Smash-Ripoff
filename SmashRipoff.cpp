@@ -41,27 +41,9 @@ void SmashRipoff::initialize(HWND hwnd)
     if (!planet.initialize(this, planetNS::WIDTH, planetNS::HEIGHT, 2, &gameTexture))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
 
-    // ship
-    //if (!ship1.initialize(this, shipNS::WIDTH, shipNS::HEIGHT, shipNS::TEXTURE_COLS, &gameTextures))
-    //    throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship1"));
-    //ship1.setFrames(shipNS::SHIP1_START_FRAME, shipNS::SHIP1_END_FRAME);
-    //ship1.setCurrentFrame(shipNS::SHIP1_START_FRAME);
-    //ship1.setX(GAME_WIDTH/4);
-    //ship1.setY(GAME_HEIGHT/4);
-    //ship1.setVelocity(VECTOR2(shipNS::SPEED,-shipNS::SPEED)); // VECTOR2(X, Y)
-    //// ship2
-    //if (!ship2.initialize(this, shipNS::WIDTH, shipNS::HEIGHT, shipNS::TEXTURE_COLS, &gameTextures))
-    //    throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship2"));
-    //ship2.setFrames(shipNS::SHIP2_START_FRAME, shipNS::SHIP2_END_FRAME);
-    //ship2.setCurrentFrame(shipNS::SHIP2_START_FRAME);
-    //ship2.setX(GAME_WIDTH - GAME_WIDTH/4);
-    //ship2.setY(GAME_HEIGHT/4);
-    //ship2.setVelocity(VECTOR2(-shipNS::SPEED,-shipNS::SPEED)); // VECTOR2(X, Y)
-
-
 	// main game textures
-	if (!playerTexture.initialize(graphics, SQUARE_TEXTURE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
+	if (!playerTexture.initialize(graphics, PLAYER_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player textures"));
 
 	if (!player.initialize(this, 32, 32,PlayerNS::TEXTURE_COLS, &playerTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));	
@@ -75,10 +57,7 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!platformTexture.initialize(graphics, PLATFORM_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform texture"));
 
-	/*if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
-	platform.setX(GAME_WIDTH/2);
-	platform.setY(GAME_HEIGHT);*/
+
 
 	if (!platform1.initialize(this, GAME_WIDTH, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
@@ -132,7 +111,20 @@ void SmashRipoff::initialize(HWND hwnd)
 		platformDownList[i].setVelocity(VECTOR2(0, TILE_SIZE * 4));
 	}
 
-	return;
+	///
+
+	// TEMP POTION texture
+	if (!potionTexture.initialize(graphics, SPEEDPOTION_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SPD POT textures"));
+
+	if (!potion.initialize(this, 113, 113, 1, &potionTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
+	potion.setScale(0.5);
+	potion.setX(GAME_WIDTH/2 - potion.getScale()*potion.getWidth());
+	potion.setY(GAME_HEIGHT/2 - potion.getScale()*potion.getWidth());
+
+
+    return;
 }
 
 //=============================================================================
@@ -177,9 +169,9 @@ void SmashRipoff::update()
 	}
 
 	//player.fall();
-	if (platform.getY() <= -platform.getHeight())
-		platform.setY(GAME_HEIGHT);
-	platform.setY(platform.getY() - TILE_SIZE*4*frameTime);
+	//if (platform.getY() <= -platform.getHeight())
+	//	platform.setY(GAME_HEIGHT);
+	//platform.setY(platform.getY() - TILE_SIZE*4*frameTime);
 
 	if (input->isKeyDown(E_KEY))
 	{
@@ -193,10 +185,11 @@ void SmashRipoff::update()
 
 
 
-	//if (input->isKeyDown(VK_SPACE))
-	//{
-		//player.punch(this, &projectileTexture);
-	//}
+	if (input->isKeyDown(VK_SPACE))
+	{
+		//player.interrupt();
+		player.punch(/*this, &playerTextures*/);
+	}
 
 	player.handleInput(input);
 	/*if (input->isKeyDown(W_KEY) || input->isKeyDown(VK_UP))	//jump
@@ -210,7 +203,7 @@ void SmashRipoff::update()
 	}
 	else*/ if (input->isKeyDown(S_KEY)|| input->isKeyDown(VK_DOWN))	// dive down
 	{
-		player.move(0, player.getSpeed());
+		player.move(0, player.getSpeed()*player.speedmultiplier);
 		//player.getMovementComponent()->setY_Force(100);
 	}
 	else
@@ -221,12 +214,14 @@ void SmashRipoff::update()
 	if (input->isKeyDown(A_KEY) || input->isKeyDown(VK_LEFT))	// move left
 	{
 		//player.move(-player.getSpeed(), 0);
-		player.getMovementComponent()->setX_Force(-player.getSpeed());
+		player.playerface = -1;
+		player.getMovementComponent()->setX_Force(-player.getSpeed()*player.speedmultiplier);
 	}
 	else if (input->isKeyDown(D_KEY) || input->isKeyDown(VK_RIGHT))	// move right
 	{
 		//player.move(player.getSpeed(), 0);
-		player.getMovementComponent()->setX_Force(player.getSpeed());
+		player.playerface = 1;
+		player.getMovementComponent()->setX_Force(player.getSpeed()*player.speedmultiplier);
 	}
 	else { player.getMovementComponent()->setX_Force(0); }
 	
@@ -250,11 +245,11 @@ void SmashRipoff::update()
 	}*/
 
 	planet.update(frameTime);
-    ship1.update(frameTime);
-    ship2.update(frameTime);
 
-	platform.update(frameTime);	// should this even have update since platforms dont really move
+	//platform.update(frameTime);	// should this even have update since platforms dont really move
 	platform1.update(frameTime);
+
+	potion.update(frameTime);
 
 	//hk
 	for (int i = 0; i < NO_PLATFORMS; i++)
@@ -282,8 +277,8 @@ void SmashRipoff::ai()
 void SmashRipoff::collisions()
 {
 	VECTOR2 collisionVector;
-
-	if (player.collidesWith(platform1,collisionVector))
+	// platform collision
+	if(player.collidesWith(platform1,collisionVector))
 	{
 		// PROTOTYPE COLLISION Detection
 
@@ -442,6 +437,11 @@ void SmashRipoff::collisions()
 			// end of PROTOTYPE COLLISION DETECTION
 		}
 	}
+
+	if (player.collidesWith(potion, collisionVector))
+	{
+		potion.apply(&player);
+	}
 }
 
 //=============================================================================
@@ -454,9 +454,10 @@ void SmashRipoff::render()
     planet.draw();                          // add the planet to the scene
 	player.draw();
 
-	platform.draw();
+	//platform.draw();
 	platform1.draw();
 
+	potion.draw();
 	
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
@@ -478,7 +479,7 @@ void SmashRipoff::render()
 		}
 	}
 
-	/*
+	
 	if (true)
 	{
 
@@ -503,7 +504,7 @@ void SmashRipoff::render()
 		
 		
 
-	} */
+	} 
 }
 
 //=============================================================================

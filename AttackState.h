@@ -3,6 +3,7 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include "PlayerState.h"
+#include "Skill.h"
 class AttackState :	public PlayerState
 {
 public:
@@ -12,6 +13,7 @@ public:
 	void update(Player& player, float frameTime);
 	void enter(Player& player);
 	void exit(Player& player);
+	void interrupt(Player& player);
 };
 
 #endif

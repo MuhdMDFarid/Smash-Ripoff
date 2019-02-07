@@ -19,10 +19,12 @@ PlayerState* IdleState::handleInput(Player& player, Input* input)
 		{
 		case STATE_GROUNDED:
 			// execute player ground normal based on moveset and key combo
-			player.setCurrentFrame(PlayerNS::P1_ATTACK_START);		//settting frames should be based on moveset
+			player.setFrames(PlayerNS::P1_ATTACK_START,PlayerNS::P1_ATTACK_END);		//settting frames should be based on moveset
+			player.punch();
 		case STATE_AIRBORNE:
 			// execute player aerial normal based on moveset and key combo
-			player.setCurrentFrame(PlayerNS::P1_MOVE_START);		//settting frames should be based on moveset
+			player.setFrames(PlayerNS::P1_ATTACK_START, PlayerNS::P1_ATTACK_END);		//settting frames should be based on moveset
+			player.punch();
 		}
 		return new AttackState();
 	}
@@ -32,15 +34,22 @@ PlayerState* IdleState::handleInput(Player& player, Input* input)
 		{
 		case STATE_GROUNDED:
 			// execute player ground special based on moveset and key combo
-			player.setCurrentFrame(PlayerNS::P1_MOVE_START);		//settting frames should be based on moveset
+			player.setFrames(PlayerNS::P1_SLAM_START, PlayerNS::P1_SLAM_END);			//settting frames should be based on moveset
+			player.punch();
 
 		case STATE_AIRBORNE:
 			// execute player aerial special based on moveset and key combo
-			player.setCurrentFrame(PlayerNS::P1_ATTACK_START);		//settting frames should be based on moveset
+			player.setFrames(PlayerNS::P1_SLAM_START, PlayerNS::P1_SLAM_END);		//settting frames should be based on moveset
+			player.punch();
 
 		}
-		return NULL;	// return NULL
-		//return new AttackState();
+		return new AttackState();
+	}
+	
+	if (input->isKeyDown(VK_RIGHT) || input->isKeyDown(D_KEY))
+	{
+		player.playerface = 1;
+		player.getMovementComponent()->setX_Force(player.getSpeed()*player.speedmultiplier);
 	}
 	return NULL;	// return NULL
 
@@ -62,4 +71,10 @@ void IdleState::enter(Player& player)
 
 void IdleState::exit(Player& player)
 {
+}
+
+void IdleState::interrupt(Player& player)
+{
+	PlayerState::interrupt(player);		// temporary interrupt code
+
 }

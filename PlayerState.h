@@ -19,6 +19,7 @@ public:
 	virtual void update(Player& player, float frameTime) = 0;
 	virtual void enter(Player& player) = 0;
 	virtual void exit(Player& player) = 0;
+	virtual	void interrupt(Player& player);
 };
 
 #endif

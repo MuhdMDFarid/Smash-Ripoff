@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Projectile.h"
 #include "Platform.h"
+#include "SpeedPotion.h"
 #include "heart.h"
 
 //=============================================================================
@@ -23,7 +24,7 @@ private:
     TextureManager nebulaTexture;   // nebula texture
     TextureManager gameTexture;    // game texture
 	TextureManager playerTexture;
-    Ship    ship1, ship2;           // spaceships
+    //Ship    ship1, ship2;           // spaceships
     Planet  planet;					// the planet
     Image   nebula;					// backdrop image
 	Player  player;
@@ -31,10 +32,12 @@ private:
 	// new stuff
 	TextureManager projectileTexture;
 	TextureManager platformTexture;
-	Platform platform;
+	//Platform platform;
 	Platform platform1;
 	Platform platformUpList[NO_PLATFORMS];
 	Platform platformDownList[NO_PLATFORMS];
+	TextureManager potionTexture;
+	SpeedPotion potion;
 	//bool shootable = true;
 
 	// -Hearts-
