@@ -13,47 +13,68 @@
 #include "SpeedPotion.h"
 #include "heart.h"
 #include "Skill.h"
+//#include <vector>
 
 //=============================================================================
 // This class is the core of the game
 //=============================================================================
+class GameState;
+class button;
+
 class SmashRipoff : public Game
 {
 private:
 
-    // old stuff that should be removed(?)
-    TextureManager nebulaTexture;   // nebula texture
-    TextureManager gameTexture;    // game texture
+	// States - Texture - Play
+	TextureManager nebulaTexture;
+	TextureManager gameTexture;
 	TextureManager playerTexture;
-    //Ship    ship1, ship2;           // spaceships
-    Planet  planet;					// the planet
-    Image   nebula;					// backdrop image
-	Player  player;
+
+ //   Planet  planet;					// the planet
+ //   Image   nebula;					// backdrop image
+	//Player  player;
 
 	// new stuff
 	TextureManager projectileTexture;
 	TextureManager platformTexture;
-	//Platform platform;
-	Platform platform1;
-	Platform platformUpList[NO_PLATFORMS];
-	Platform platformDownList[NO_PLATFORMS];
+	////Platform platform;
+	//Platform platform1;
+	//Platform platformUpList[NO_PLATFORMS];
+	//Platform platformDownList[NO_PLATFORMS];
 	TextureManager potionTexture;
-	SpeedPotion potion;
-	//bool shootable = true;
+	//SpeedPotion potion;
+	////bool shootable = true;
 
-	// -Hearts-
-	static const int MAX_HEALTH = 3;
+	//// -Hearts-
+	//static const int MAX_HEALTH = 3;
 	TextureManager heartTexture;
-	Image heart;
+	//Image heart;
 
-	// Players' Health
-	Heart hunterHealth[MAX_HEALTH];
-	Heart priestessHealth[MAX_HEALTH];
-	// List starts from 0
-	int hunterHP = 2;
-	int priestessHP = 2;
-	// Players' Knockback
+	// States
+	// A vector to store game states
+	std::vector<GameState*> states;
+	// States - Texture
+	// States - Texture - Menu
+	TextureManager menuBackgroundTexture;
+	// States - Texture - Pause
+	TextureManager pauseBackgroundTexture;
+	// States - Texture - Option
+	TextureManager optionBackgroundTexture;
+	// States - Texture - Hunter
+	TextureManager hunterDeathTexture;
+	// States - Texture - Priestess
+	TextureManager priestessDeathTexture;
 
+	// Buttons
+	std::vector<button*> buttons;
+
+	//// Players' Health
+	//Heart hunterHealth[MAX_HEALTH];
+	//Heart priestessHealth[MAX_HEALTH];
+	//// List starts from 0
+	//int hunterHP = 2;
+	//int priestessHP = 2;
+	//// Players' Knockback
 public:
 
     // Constructor
@@ -71,6 +92,51 @@ public:
     void releaseAll();
     void resetAll();
 	float YVelocity = -TILE_SIZE * 4;
+
+	// --Buttons--
+
+
+	// --States--
+	// Functions for game states
+	void pushState(GameState* state);
+	void popState();
+	void deleteState();
+
+	// Gets the current state
+	GameState* getCurrentState();
+
+	// Font
+	TextDX titleFont;
+	TextDX buttonFont;
+
+	// States - Image
+	// States - Image - Menu
+	Image menuBackground;
+	// States - Image - Play
+	Image   nebula;
+	Player  player;
+	Planet planet;
+	Platform platform1;
+	Platform platformUpList[NO_PLATFORMS];
+	Platform platformDownList[NO_PLATFORMS];
+	Image heart;
+	SpeedPotion potion;
+	// Players' Health
+	Heart hunterHealth[MAX_HEALTH];
+	Heart priestessHealth[MAX_HEALTH];
+	// List starts from 0
+	int hunterHP = 2;
+	int priestessHP = 2;
+	bool hunterDeath = false;
+	bool priestessDeath = false;
+	// States - Image - Pause
+	Image pauseBackground;
+	// States - Image - Option
+	Image optionBackground;
+	// States - Image - Hunter
+	Image hunterBackground;
+	// States - Image - Priestess
+	Image priestessBackground;
 };
 
 #endif // _SMASHRIPOFF_H

@@ -12,22 +12,20 @@ private:
 	// Changes the state to "MenuState"
 	void mainMenu();
 
-	// Variables
-	TextureManager hunterDeathTexture;
-	Image hunterBackground;
-	TextDX hunterFont;
-
 public:
 
 	// Constructor
-	HunterDeathState(Game* game);
+	HunterDeathState(SmashRipoff* game);
 
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
 	virtual void update(float frameTime);
+	virtual void ai();
+	virtual void collisions();
 	virtual void handleInput(Input* input);
+
 };
 
 #endif // _HUNTER_DEATH_STATE

@@ -1,7 +1,4 @@
 #include "game.h"
-#include "GameState.h"
-#include "HunterDeathState.h"
-#include "PriestessDeathState.h"
 
 // The primary class should inherit from Game class
 
@@ -21,10 +18,6 @@ Game::Game()
 //=============================================================================
 Game::~Game()
 {
-	// Deletes everything in the vector once the game ends (prevents memory leak)
-	while (!states.empty())
-		popState();
-
     deleteAll();                // free all reserved memory
     ShowCursor(true);           // show cursor
 }
@@ -115,10 +108,10 @@ void Game::initialize(HWND hw)
     QueryPerformanceCounter(&timeStart);        // get starting time
 
 	// initialize DirectX font
-	if (dxFont.initialize(graphics, gameNS::POINT_SIZE, false, false, gameNS::FONT) == false)
+	/*if (dxFont.initialize(graphics, gameNS::POINT_SIZE, false, false, gameNS::FONT) == false)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 
-	dxFont.setFontColor(gameNS::FONT_COLOR);
+	dxFont.setFontColor(gameNS::FONT_COLOR);*/
 
     initialized = true;
 }
@@ -133,7 +126,7 @@ void Game::renderGame()
     {
 		graphics->spriteBegin();
 
-		getCurrentState()->draw();
+		render();
 
 		// stop rendering
 		graphics->spriteEnd();
@@ -214,44 +207,14 @@ void Game::run(HWND hwnd)
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
     timeStart = timeEnd;
 
-	// if the state is a nullptr
-	if (getCurrentState() == nullptr)
-		return;
-
-	if (hunterDeath)
-	{
-		this->pushState(new HunterDeathState(this));
-		hunterDeath = false;
-	}
-
-	if (priestessDeath)
-	{
-		this->pushState(new PriestessDeathState(this));
-		priestessDeath = false;
-	}
-
-	// gets user input for the current state
-	getCurrentState()->handleInput(input);
-
-	// updates anything necessary
-	getCurrentState()->update(frameTime);
-
-	// draws anything in the current state (moved into renderGame())
-	// getCurrentState()->draw(frameTime);
-
-	// draw all game items
-	renderGame();
-
-	// This should be moved to "PlayState"
-	// ===============================================
     // update(), ai(), and collisions() are pure virtual functions.
     // These functions must be provided in the class that inherits from Game.
-    // update();                   // update all game items
-    // ai();                       // artificial intelligence
-    // collisions();               // handle collisions
-	// render();				   // draw all game items
-    // input->vibrateControllers(frameTime); // handle controller vibration
-	// input->readControllers();       // read state of controllers
+    update();                   // update all game items
+    ai();                       // artificial intelligence
+    collisions();               // handle collisions
+	renderGame();				// draw all game items
+	input->vibrateControllers(frameTime);	// handle controller vibration
+	input->readControllers();				// read state of controllers
 
 	// Clear input
 	// Call this after all key checks are done
@@ -280,47 +243,4 @@ void Game::deleteAll()
     SAFE_DELETE(graphics);
     SAFE_DELETE(input);
     initialized = false;
-}
-
-//=============================================================================
-// Adds the current state to the top of the vector (game loop goes to that state)
-//=============================================================================
-void Game::pushState(GameState* state)
-{
-	states.push_back(state);
-}
-
-//=============================================================================
-// Removes the current state from the top of the vector
-//=============================================================================
-void Game::popState()
-{
-	// Delete the pointer pointing to the last element
-	states.back();
-	delete states.back();
-
-	// Deletes the last element in the vector
-	states.pop_back();
-}
-
-//=============================================================================
-// Gets the current state (this is a pointer)
-//=============================================================================
-GameState* Game::getCurrentState()
-{
-	// If the vector is empty, return a nullptr
-	if (states.empty())
-		return nullptr;
-
-	// Else, return the last element in the vector
-	else
-		return states.back();
-}
-
-//=============================================================================
-// Removes everything from the vector
-//=============================================================================
-void Game::deleteState()
-{
-	states.clear();
 }

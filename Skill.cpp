@@ -94,7 +94,7 @@ void Skill::update(Player& player, float frameTime)
 					(*it)->hitbox->setActive(true);
 				}	// set hitbox to active
 
-				(*it)->hitbox->setX(player.getX() + ((*it)->hitbox->getWidth()*(*it)->hitbox->getScale())*player.playerface);
+				(*it)->hitbox->setX(player.getX() + ((*it)->hitbox->getWidth()*(*it)->hitbox->getScale()) * player.playerface);
 
 				(*it)->hitbox->setY(player.getCenterY() - ((*it)->hitbox->getHeight()*(*it)->hitbox->getScale()) / 2);		//centers the Y coords of hitbox to player
 

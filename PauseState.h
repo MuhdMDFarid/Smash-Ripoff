@@ -14,22 +14,20 @@ private:
 	// Changes the state to "MenuState"
 	void exitGame();
 
-	// Variables
-	TextureManager pauseBackgroundTexture;
-	Image pauseBackground;
-	TextDX pauseFont;
-
 public:
 
 	// Constructor
-	PauseState(Game* game);
+	PauseState(SmashRipoff* game);
 
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
 	virtual void update(float frameTime);
+	virtual void ai();
+	virtual void collisions();
 	virtual void handleInput(Input* input);
+
 };
 
 #endif // _PAUSE_STATE_H

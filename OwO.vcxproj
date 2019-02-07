@@ -22,7 +22,7 @@
     <ProjectName>SmashRipoff</ProjectName>
     <ProjectGuid>{0259B800-2046-467E-94A2-D13B6F5210BC}</ProjectGuid>
     <RootNamespace>Destroyer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -156,6 +156,7 @@
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="Attack_Component.cpp" />
     <ClCompile Include="Attack_Hitbox.cpp" />
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Damage_Component.cpp" />
     <ClCompile Include="entity.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="Attack_Component.h" />
     <ClInclude Include="Attack_Hitbox.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="Damage_Component.h" />

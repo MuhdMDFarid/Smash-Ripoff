@@ -1,13 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="AirborneState.cpp" />
+    <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="Attack_Component.cpp" />
     <ClCompile Include="Attack_Hitbox.cpp" />
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="GroundedState.cpp" />
     <ClCompile Include="heart.cpp" />
+    <ClCompile Include="HunterDeathState.cpp" />
+    <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -19,40 +25,26 @@
     <ClCompile Include="planet.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="PriestessDeathState.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
     <ClCompile Include="SpeedPotion.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="winmain.cpp" />
-    <ClCompile Include="AirborneState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="GroundedState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="IdleState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillState.cpp">
-      <Filter>States\SkillStates</Filter>
-    </ClCompile>
-    <ClCompile Include="HunterDeathState.cpp" />
-    <ClCompile Include="PriestessDeathState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AirborneState.h" />
+    <ClInclude Include="AttackState.h" />
     <ClInclude Include="Attack_Component.h" />
     <ClInclude Include="Attack_Hitbox.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="entity.h" />
@@ -60,7 +52,10 @@
     <ClInclude Include="gameError.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="GroundedState.h" />
     <ClInclude Include="heart.h" />
+    <ClInclude Include="HunterDeathState.h" />
+    <ClInclude Include="IdleState.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Inventory.h" />
@@ -72,42 +67,17 @@
     <ClInclude Include="planet.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="PriestessDeathState.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillState.h" />
     <ClInclude Include="SmashRipoff.h" />
     <ClInclude Include="SpeedPotion.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
-    <ClInclude Include="AirborneState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="GroundedState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="IdleState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillState.h">
-      <Filter>States\SkillStates</Filter>
-    </ClInclude>
-    <ClInclude Include="HunterDeathState.h" />
-    <ClInclude Include="PriestessDeathState.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="States">
-      <UniqueIdentifier>{c9aebb43-7c3f-4f22-b353-3624784dc21c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="States\SkillStates">
-      <UniqueIdentifier>{03c9c85a-9846-4eff-885f-d7fa37d41092}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

@@ -1,24 +1,10 @@
 #include <iostream>
 #include "OptionState.h"
 
-OptionState::OptionState(Game* game)
+OptionState::OptionState(SmashRipoff* game)
 {
 	// Gets the instance of the game as a pointer
 	this->game = game;
-
-	// Initializes all the necessary assets
-	if (!optionBackgroundTexture.initialize(game->getGraphics(), OPTION_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing option's background texture"));
-
-	if (!optionBackground.initialize(game->getGraphics(), 0, 0, 0, &optionBackgroundTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing option's background"));
-
-	// Initialize DirectX font
-	if (!optionFont.initialize(game->getGraphics(), gameNS::POINT_SIZE, false, false, gameNS::FONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
-
-	// Set DirectX font color
-	optionFont.setFontColor(gameNS::FONT_COLOR);
 }
 
 void OptionState::exitOption()
@@ -30,12 +16,22 @@ void OptionState::exitOption()
 void OptionState::draw()
 {
 	// Draws all the necessary assets
-	optionBackground.draw();
+	game->optionBackground.draw();
 
-	optionFont.printC("Press ESC to leave", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 2);
+	game->titleFont.printC("Press ESC to leave", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 2);
 }
 
 void OptionState::update(float frameTime)
+{
+
+}
+
+void OptionState::ai()
+{
+
+}
+
+void OptionState::collisions()
 {
 
 }

@@ -1,11 +1,11 @@
-#ifndef _HEART_H
-#define _HEART_H
+#ifndef _BUTTON_H
+#define _BUTTON_H
 #define WIN32_LEAN_AND_MEAN
 
 #include "entity.h"
 #include "constants.h"
 
-namespace heartNS
+namespace buttonNS
 {
 	const int WIDTH = 32;					// image width
 	const int HEIGHT = 32;					// image height
@@ -14,13 +14,17 @@ namespace heartNS
 }
 
 // inherits from Entity class
-class Heart : public Entity
+class Button : public Entity
 {
 public:
 
 	// Constructor
-	Heart();
+	Button();
 
+	// ======================
+	// Functions
+	// ======================
+	void mouseHover();
 };
 
-#endif // _HEART_H
+#endif // _BUTTON_H
