@@ -10,6 +10,7 @@
 #include "Projectile.h"
 #include "Movement_Component.h"
 #include "Attack_Hitbox.h"
+#include "heart.h"
 
 enum State
 {
@@ -94,10 +95,18 @@ public:
 	
 	Skill* skill;
 
-	// TEMP potion effect
-	float speedmultiplier = 1;
-	float agilityduration = 0;
+	// Speed potion effect
+	float speedmultiplier = 1; // set base speed
+	float agilityduration = 0; // set inactive
 
+	// TEMP HP potion effect
+	static const int MAX_HEALTH = 3;
+	// Players' Health
+	Heart hunterHealth[MAX_HEALTH];
+	Heart priestessHealth[MAX_HEALTH];
+	// List starts from 0
+	int hunterHP = 2;
+	int priestessHP = 2;
 	Player();
 
 	// Destructor

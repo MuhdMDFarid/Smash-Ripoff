@@ -11,6 +11,7 @@
 #include "Projectile.h"
 #include "Platform.h"
 #include "SpeedPotion.h"
+#include "HealthPotion.h"
 #include "heart.h"
 
 //=============================================================================
@@ -36,21 +37,17 @@ private:
 	Platform platform1;
 	Platform platformUpList[NO_PLATFORMS];
 	Platform platformDownList[NO_PLATFORMS];
-	TextureManager potionTexture;
-	SpeedPotion potion;
+	TextureManager speedpotionTexture;
+	TextureManager healthpotionTexture;
+	SpeedPotion speedpotion;
+	HealthPotion healthpotion;
 	//bool shootable = true;
 
 	// -Hearts-
-	static const int MAX_HEALTH = 3;
 	TextureManager heartTexture;
 	Image heart;
 
-	// Players' Health
-	Heart hunterHealth[MAX_HEALTH];
-	Heart priestessHealth[MAX_HEALTH];
-	// List starts from 0
-	int hunterHP = 2;
-	int priestessHP = 2;
+	
 	// Players' Knockback
 
 public:

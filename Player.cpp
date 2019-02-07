@@ -5,9 +5,10 @@
 
 #include "IdleState.h"
 #include "AttackState.h"
+#include "Skill.h"
 
 //#include "StaggeredState"
-#include "Skill.h"
+
 //#include <cstdlib>	// for random
 
 Player::Player() : Entity()
@@ -97,11 +98,11 @@ void Player::update(float frameTime)
 	// TEMP AGILITY POTION THINGY
 	if (agilityduration > 0)
 	{
-		agilityduration -= frameTime;
+		agilityduration -= frameTime; // -1 second off the duration per frametime
 	}
 	else
 	{
-		speedmultiplier = 1;
+		speedmultiplier = 1; // base speed multiplier without potion
 	}
 	// GRAVITY SIMULATION
 	//if (!grounded)	//grounded is the state if the player is not airborne

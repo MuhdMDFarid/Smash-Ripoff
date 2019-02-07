@@ -1,4 +1,6 @@
 #include "SmashRipoff.h"
+#include <string>
+#include <ctime>
 
 //=============================================================================
 // Constructor
@@ -22,7 +24,17 @@ SmashRipoff::~SmashRipoff()
 //=============================================================================
 void SmashRipoff::initialize(HWND hwnd)
 {
+
     Game::initialize(hwnd); // throws GameError
+	int randomx1;
+	int randomx2;
+	int randomy1;
+	int randomy2;
+	srand(time(NULL));
+	randomx1 = rand() % (GAME_WIDTH);
+	randomx2 = rand() % (GAME_WIDTH);
+	randomy1 = rand() % (GAME_HEIGHT);
+	randomy2 = rand() % (GAME_HEIGHT);
 
     // nebula texture
     if (!nebulaTexture.initialize(graphics,STAGE_IMAGE))
@@ -68,28 +80,28 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!heartTexture.initialize(graphics, HEART_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing heart texture"));
 
-	for (int i = 0; i < MAX_HEALTH; i++)
+	for (int i = 0; i < player.MAX_HEALTH; i++)
 	{
-		if (!hunterHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+		if (!player.hunterHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
 		// Makes the image bigger
-		hunterHealth[i].setScale(2);
+		player.hunterHealth[i].setScale(2);
 		// Sets it to the left of the screen (player 1)
-		hunterHealth[i].setX(heartNS::WIDTH * i);			
+		player.hunterHealth[i].setX(heartNS::WIDTH * i);			
 		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
-		hunterHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * hunterHealth[i].getScale()));
+		player.hunterHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * player.hunterHealth[i].getScale()));
 	}
 
-	for (int i = 0; i < MAX_HEALTH; i++)
+	for (int i = 0; i < player.MAX_HEALTH; i++)
 	{
-		if (!priestessHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+		if (!player.priestessHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
 		// Makes the image bigger
-		priestessHealth[i].setScale(2);
+		player.priestessHealth[i].setScale(2);
 		// Sets it to the right of the screen (player 2)
-		priestessHealth[i].setX(GAME_WIDTH - ((heartNS::WIDTH * (i + 1)) + heartNS::WIDTH));
+		player.priestessHealth[i].setX(GAME_WIDTH - ((heartNS::WIDTH * (i + 1)) + heartNS::WIDTH));
 		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
-		priestessHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * priestessHealth[i].getScale()));
+		player.priestessHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * player.priestessHealth[i].getScale()));
 	}
 
 	//hk
@@ -114,15 +126,23 @@ void SmashRipoff::initialize(HWND hwnd)
 	///
 
 	// TEMP POTION texture
-	if (!potionTexture.initialize(graphics, SPEEDPOTION_TEXTURE))
+	if (!speedpotionTexture.initialize(graphics, SPEEDPOTION_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SPD POT textures"));
 
-	if (!potion.initialize(this, 113, 113, 1, &potionTexture))	// 1 since texture has only one image
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
-	potion.setScale(0.5);
-	potion.setX(GAME_WIDTH/2 - potion.getScale()*potion.getWidth());
-	potion.setY(GAME_HEIGHT/2 - potion.getScale()*potion.getWidth());
+	if (!healthpotionTexture.initialize(graphics, HEALTHPOTION_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HP POT textures"));
 
+	if (!speedpotion.initialize(this, 113, 113, 1, &speedpotionTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
+
+	if (!healthpotion.initialize(this, 50, 50, 1, &healthpotionTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
+	speedpotion.setScale(0.5);
+	speedpotion.setX(randomx1 - speedpotion.getScale()*speedpotion.getWidth());
+	speedpotion.setY(randomy1 - speedpotion.getScale()*speedpotion.getWidth());
+	healthpotion.setScale(0.5);
+	healthpotion.setX(randomx2 - healthpotion.getScale()*healthpotion.getWidth());
+	healthpotion.setY(randomy2 - healthpotion.getScale()*healthpotion.getWidth());
 
     return;
 }
@@ -139,10 +159,10 @@ void SmashRipoff::update()
 	{
 		input->keyUp(O_KEY);
 
-		if (hunterHP > 0)
+		if (player.hunterHP > 0)
 		{
-			hunterHealth[hunterHP].setActive(false);
-			hunterHP--;
+			player.hunterHealth[player.hunterHP].setActive(false);
+			player.hunterHP--;
 		}
 
 		else
@@ -156,10 +176,10 @@ void SmashRipoff::update()
 	{
 		input->keyUp(P_KEY);
 
-		if (priestessHP > 0)
+		if (player.priestessHP > 0)
 		{
-			priestessHealth[priestessHP].setActive(false);
-			priestessHP--;
+			player.priestessHealth[player.priestessHP].setActive(false);
+			player.priestessHP--;
 		}
 
 		else
@@ -249,7 +269,8 @@ void SmashRipoff::update()
 	//platform.update(frameTime);	// should this even have update since platforms dont really move
 	platform1.update(frameTime);
 
-	potion.update(frameTime);
+	speedpotion.update(frameTime);
+	healthpotion.update(frameTime);
 
 	//hk
 	for (int i = 0; i < NO_PLATFORMS; i++)
@@ -437,11 +458,17 @@ void SmashRipoff::collisions()
 			// end of PROTOTYPE COLLISION DETECTION
 		}
 	}
-
-	if (player.collidesWith(potion, collisionVector))
+	// ben speed potion apply
+	if (player.collidesWith(speedpotion, collisionVector))
 	{
-		potion.apply(&player);
+		speedpotion.apply(&player);
 	}
+
+	if (player.collidesWith(healthpotion, collisionVector))
+	{
+		healthpotion.apply(&player);
+	}
+
 }
 
 //=============================================================================
@@ -457,7 +484,8 @@ void SmashRipoff::render()
 	//platform.draw();
 	platform1.draw();
 
-	potion.draw();
+	speedpotion.draw();
+	healthpotion.draw();
 	
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
@@ -466,16 +494,16 @@ void SmashRipoff::render()
 	}
 	// draw every bullet put inside player
 
-	for (int i = 0; i < MAX_HEALTH; i++)	// Add Players' Health
+	for (int i = 0; i < player.MAX_HEALTH; i++)	// Add Players' Health
 	{
-		if (hunterHealth[i].getActive())	// Checks to see if the heart is active (if it isn't, don't draw it)
+		if (player.hunterHealth[i].getActive())	// Checks to see if the heart is active (if it isn't, don't draw it)
 		{
-			hunterHealth[i].draw();
+			player.hunterHealth[i].draw();
 		}
 
-		if (priestessHealth[i].getActive())
+		if (player.priestessHealth[i].getActive())
 		{
-			priestessHealth[i].draw();
+			player.priestessHealth[i].draw();
 		}
 	}
 

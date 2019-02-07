@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "entity.h"
 #include "constants.h"
+#include "heart.h"
+#include "Player.h"
 
 namespace PotionNS
 {

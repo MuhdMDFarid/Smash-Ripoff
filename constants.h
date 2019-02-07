@@ -77,6 +77,7 @@ const char PLAYER_TEXTURE[] = "pictures\\Square.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
 const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
 const char SPEEDPOTION_TEXTURE[] = "pictures\\speedpotion.png";
+const char HEALTHPOTION_TEXTURE[] = "pictures\\healthpotion.png";
 
 // Key mappings
 // In this game simple constants are used for key mappings. If variables were used
