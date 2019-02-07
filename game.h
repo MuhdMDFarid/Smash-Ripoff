@@ -42,9 +42,8 @@ protected:
 
 	// Additions
 	TextDX dxFont;					// DirectX font for fps
-	std::vector<GameState*> states;	// a list to store the states
-
-	bool hunterDeath = false; 
+	std::vector<GameState*> states;	// A vector to store game states
+	bool hunterDeath = false;
 	bool priestessDeath = false;
 
 public:
@@ -66,12 +65,12 @@ public:
     // Call run repeatedly by the main message loop in WinMain
     virtual void run(HWND);
 
-    // Call when the graphics device was lost.
-    // Release all reserved video memory so graphics device may be reset.
-    virtual void releaseAll();
+	// Call when the graphics device was lost.
+	// Release all reserved video memory so graphics device may be reset.
+	virtual void releaseAll();
 
-    // Recreate all surfaces and reset all entities.
-    virtual void resetAll();
+	// Recreate all surfaces and reset all entities.
+	virtual void resetAll();
 
     // Delete all reserved memory.
     virtual void deleteAll();
@@ -98,7 +97,7 @@ public:
 	void pushState(GameState* state);
 	void popState();
 	void deleteState();
-
+	
 	// Gets the current state
 	GameState* getCurrentState();
 

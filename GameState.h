@@ -18,10 +18,6 @@ public:
 	virtual void draw() = 0;
 	virtual void update(float frameTime) = 0;
 	virtual void handleInput(Input* input) = 0;
-
-	// Releasing and resetting graphic items
-	virtual void releaseAll() = 0;
-	virtual void resetAll() = 0;
 };
 
 #endif // _GAME_STATE_H

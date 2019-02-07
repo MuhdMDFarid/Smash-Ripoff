@@ -8,11 +8,6 @@ PlayState::PlayState(Game* game)
 	this->game = game;
 }
 
-PlayState::~PlayState()
-{
-	// Isn't needed because it got released in SmashRipoff.cpp
-}
-
 void PlayState::pauseGame()
 {
 	// Transitions from "PlayState" to "PauseState"
@@ -43,14 +38,4 @@ void PlayState::handleInput(Input* input)
 	}
 
 	// Mouse
-}
-
-void PlayState::releaseAll()
-{
-	// Isn't needed because it got released in SmashRipoff.cpp
-}
-
-void PlayState::resetAll()
-{
-	// Isn't needed because it got released in SmashRipoff.cpp
 }

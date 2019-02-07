@@ -17,18 +17,12 @@ public:
 	// Constructor
 	PlayState(Game* game);
 
-	// Destructor
-	~PlayState();
-
 	// ======================
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
 	virtual void update(float frameTime);
 	virtual void handleInput(Input* input);
-
-	virtual void releaseAll();
-	virtual void resetAll();
 };
 
 #endif // _PLAY_STATE_H

@@ -22,12 +22,6 @@ PauseState::PauseState(Game* game)
 	pauseFont.setFontColor(gameNS::FONT_COLOR);
 }
 
-PauseState::~PauseState()
-{
-	// Call onLostDevice for all graphic items
-	releaseAll();
-}
-
 void PauseState::unpauseGame()
 {
 	// Pops up the "PauseState" (PlayState --> PauseState (popped))
@@ -38,6 +32,7 @@ void PauseState::exitGame()
 {
 	// Pops everything from the list and creates a new "MenuState"
 	game->deleteState();
+	// Ideally, the game should restart here (SAFE_DELETE (game))?  
 	game->pushState(new MenuState(game));
 }
 
@@ -76,18 +71,4 @@ void PauseState::handleInput(Input* input)
 	}
 
 	// Mouse
-}
-
-void PauseState::releaseAll()
-{
-	pauseBackgroundTexture.onLostDevice();
-	game->releaseAll();
-	return;
-}
-
-void PauseState::resetAll()
-{
-	pauseBackgroundTexture.onResetDevice();
-	game->resetAll();
-	return;
 }

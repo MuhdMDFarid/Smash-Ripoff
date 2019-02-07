@@ -67,7 +67,6 @@ public:
     void ai();          // "
     void collisions();  // "
     void render();      // "
-
     void releaseAll();
     void resetAll();
 	float YVelocity = -TILE_SIZE * 4;

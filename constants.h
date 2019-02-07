@@ -2,7 +2,6 @@
 #define _CONSTANTS_H            // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
 
-#include <Windows.h>
 #include <windows.h>
 //-----------------------------------------------
 // Useful macros
@@ -55,14 +54,16 @@ const int TILE_SIZE = 32;
 
 // Graphics images
 // --MENU--
-const char STAGE_IMAGE[]	=	"pictures\\background\\spaceStage.jpg";
-const char MENU_IMAGE[]		=	"pictures\\background\\menuBackground.png";
-const char PAUSE_IMAGE[]	=	"pictures\\background\\pauseBackground.png";
-const char OPTION_IMAGE[]	=	"pictures\\background\\optionBackground.png";
+const char STAGE_IMAGE[]		= "pictures\\background\\spaceStage.jpg";
+const char MENU_IMAGE[]			= "pictures\\background\\menuBackground.png";
+const char PAUSE_IMAGE[]		= "pictures\\background\\pauseBackground.png";
+const char OPTION_IMAGE[]		= "pictures\\background\\optionBackground.png";
+const char HUNTER_IMAGE[]		= "pictures\\background\\hunterBackground.png";
+const char PRIESTESS_IMAGE[]	= "pictures\\background\\priestessBackground.png";
 
 // --GUI--
 // Hearts, ver. 1
-const char HEART_IMAGE[]	= "pictures\\lives\\heartv2.png";
+const char HEART_IMAGE[]		= "pictures\\lives\\heartv2.png";
 // Hearts, ver. 2 (might have to collate into a sheet to use this version)
 const char TEST_HEART_IMAGE3[]	= "pictures\\lives\\3lives.png";
 const char TEST_HEART_IMAGE2[]	= "pictures\\lives\\2lives.png";
