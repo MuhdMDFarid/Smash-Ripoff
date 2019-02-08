@@ -68,7 +68,7 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!player.initialize(this, 32, 32,PlayerNS::TEXTURE_COLS, &playerTextures))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));	
 	player.setX(GAME_WIDTH / 2);
-	player.setY(GAME_HEIGHT / 2);
+	player.setY(GAME_HEIGHT / 4);
 
 
 	// projectile texture
@@ -79,10 +79,10 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!platformTexture.initialize(graphics, PLATFORM_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform texture"));
 
-	/*if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
+	if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	platform.setX(GAME_WIDTH/2);
-	platform.setY(GAME_HEIGHT);*/
+	platform.setY(GAME_HEIGHT/2);
 
 	if (!platform1.initialize(this, GAME_WIDTH*4/6.5, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
@@ -143,7 +143,7 @@ void SmashRipoff::initialize(HWND hwnd)
 
 	if (!landmine.initialize(this, 60, 30, 1, &landmineTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
-	landmine.setX(rand () % int (platform1.getWidth()));
+	landmine.setX(rand () % (int (platform1.getWidth())) + platform1.getX());
 	landmine.setY(platform1.getY() - LANDMINE_SIZE);
 	return;
 }
@@ -191,9 +191,7 @@ void SmashRipoff::update()
 	}
 
 	//player.fall();
-	if (platform.getY() <= -platform.getHeight())
-		platform.setY(GAME_HEIGHT);
-	platform.setY(platform.getY() - TILE_SIZE*4*frameTime);
+	
 
 	if (input->isKeyDown(E_KEY))
 	{
@@ -269,6 +267,7 @@ void SmashRipoff::update()
 
 	platform.update(frameTime);	// should this even have update since platforms dont really move
 	platform1.update(frameTime);
+	platform.setRadians(platform.getRadians() - platformNS::ROTATION_RATE);
 
 	//hk
 	for (int i = 0; i < NO_PLATFORMS; i++)
@@ -298,6 +297,77 @@ void SmashRipoff::ai()
 void SmashRipoff::collisions()
 {
 	VECTOR2 collisionVector;
+	if (player.collideRotatedBox(platform, collisionVector))
+	{
+		// PROTOTYPE COLLISION Detection
+
+		// collide with top of platform
+		if (player.getCenterY() + player.getEdge().bottom*player.getScale() >= platform.getCenterY() + platform.getEdge().top*platform.getScale()
+			&& player.getCenterY() + player.getEdge().top*player.getScale() < platform.getCenterY() + platform.getEdge().top*platform.getScale())
+		{
+			// player collides from the top of the platform
+			player.setY(platform.getCenterY() + platform.getEdge().top*platform.getScale()
+				- player.getHeight());		// prevents player from moving past the left side of platform
+
+			if (player.getMovementComponent()->getY_Velocity() > 0)		// if player is moving downwards it sets velocity to 0...
+			{	// this is to prevent reseting velocity when player is jumping from the side up wards
+				player.getMovementComponent()->setY_Velocity(0);
+			}
+
+			//player.setJump(true);
+			//player.grounded = true;
+			if (player.airEnum != STATE_GROUNDED)
+			{
+				player.landed();
+			}
+		}
+
+		else if (player.getCenterX() + player.getEdge().right*player.getScale() >= platform.getCenterX() + platform.getEdge().left*platform.getScale()
+			&& player.getCenterX() + player.getEdge().left*player.getScale() < platform.getCenterX() + platform.getEdge().left*platform.getScale())
+		{
+			// player collides from the left side of platform
+			player.setX(platform.getCenterX() + platform.getEdge().left*platform.getScale()
+				- player.getWidth());		// prevents player from moving past the right side of platform
+
+			if (player.getMovementComponent()->getX_Velocity() > 0)		// if player is moving towards right it sets velocity to 0
+			{
+				player.getMovementComponent()->setX_Velocity(0);
+			}
+		}
+
+		else if (player.getCenterX() + player.getEdge().left*player.getScale() <= platform.getCenterX() + platform.getEdge().right*platform.getScale()
+			&& player.getCenterX() + player.getEdge().right*player.getScale() > platform.getCenterX() + platform.getEdge().right*platform.getScale())
+		{
+			// player collides from right side of platform
+			player.setX(platform.getCenterX() + platform.getEdge().right*platform.getScale());		// prevents player from moving past the left side of platform
+
+			if (player.getMovementComponent()->getX_Velocity() < 0)		// if player is moving towards left it sets velocity to 0
+			{
+				player.getMovementComponent()->setX_Velocity(0);
+			}
+		}
+
+		else if (player.getCenterY() + player.getEdge().top*player.getScale() <= platform.getCenterY() + platform.getEdge().bottom*platform.getScale()
+			&& player.getCenterY() + player.getEdge().bottom*player.getScale() > platform.getCenterY() + platform.getEdge().bottom*platform.getScale())
+		{
+			// player collides from the bottom of the platform
+			player.setY(platform.getCenterY() + platform.getEdge().bottom*platform.getScale());
+
+			if (player.getMovementComponent()->getY_Velocity() < 0)		// if player is moving upwards it sets velocity to 0...
+			{	// this is to prevent player from keeping upwards velocity when hitting the bottom of plat
+				player.getMovementComponent()->setY_Velocity(0);
+			}
+		}
+		// end of PROTOTYPE COLLISION DETECTION
+	}
+	else			// If not colliding with platform1s 
+	{
+		if (player.airEnum != STATE_AIRBORNE)
+		{
+			player.fall();
+		}
+
+	}
 
 	if (player.collidesWith(platform1,collisionVector))
 	{
@@ -480,7 +550,6 @@ void SmashRipoff::render()
 
 	platform.draw();
 	platform1.draw();
-
 	
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{

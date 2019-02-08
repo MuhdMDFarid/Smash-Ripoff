@@ -18,6 +18,7 @@
 #define LP_3D       LPDIRECT3D9
 #define VECTOR2     D3DXVECTOR2
 #define LP_DXFONT	LPD3DXFONT	// font for textDX
+#define VECTORMATRIX D3DXMATRIX
 
 // Color defines
 #define COLOR_ARGB DWORD

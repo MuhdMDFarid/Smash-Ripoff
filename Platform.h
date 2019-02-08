@@ -6,6 +6,11 @@
 #include "constants.h"
 #include <vector>		// maybe for the multiple collision boxes for weird shaped obstacles
 
+namespace platformNS
+{
+	const float ROTATION_RATE = (float)PI / 180; // radians per second
+}
+
 class Platform:public Entity
 {
 private:
