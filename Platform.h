@@ -8,7 +8,7 @@
 
 namespace platformNS
 {
-	const float ROTATION_RATE = (float)PI / 180; // radians per second
+	const float ROTATION_RATE = (float)PI / 2; // radians per second
 }
 
 class Platform:public Entity

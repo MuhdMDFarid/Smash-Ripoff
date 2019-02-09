@@ -55,8 +55,7 @@ class Entity : public Image
     // Pre: &ent = Other entity
     // Post: &collisionVector contains collision vector
     virtual bool collideRotatedBoxCircle(Entity &ent, VECTOR2 &collisionVector);
-    // Separating axis collision detection helper functions
-    void computeRotatedBox();
+    // Separating axis collision detection helper function
     bool projectionsOverlap(Entity &ent);
     bool collideCornerCircle(VECTOR2 corner, Entity &ent, VECTOR2 &collisionVector);
 
@@ -182,6 +181,7 @@ class Entity : public Image
     // Adds the gravitational force to the velocity vector of this entity
     void gravityForce(Entity *other, float frameTime);
 
+	void computeRotatedBox();
 };
 
 #endif // _ENTITY_H
