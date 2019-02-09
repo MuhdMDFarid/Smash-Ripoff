@@ -8,11 +8,12 @@
 #include "planet.h"
 //#include "ship.h"
 #include "Player.h"
-#include "Projectile.h"
+#include "Projectile_Hitbox.h"
 #include "Platform.h"
 #include "SpeedPotion.h"
 #include "heart.h"
 #include "Skill.h"
+#include "PlayerInput_Component.h"
 //#include <vector>
 
 //=============================================================================
@@ -28,7 +29,8 @@ private:
 	// States - Texture - Play
 	TextureManager nebulaTexture;
 	TextureManager gameTexture;
-	TextureManager playerTexture;
+	TextureManager hunterTexture;
+	TextureManager priestessTexture;
 
  //   Planet  planet;					// the planet
  //   Image   nebula;					// backdrop image
@@ -114,7 +116,8 @@ public:
 	Image menuBackground;
 	// States - Image - Play
 	Image   nebula;
-	Player  player;
+	Player  hunter;
+	Player priestess;
 	Planet planet;
 	Platform platform1;
 	Platform platformUpList[NO_PLATFORMS];

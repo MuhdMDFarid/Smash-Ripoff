@@ -34,10 +34,13 @@ void StaggeredState::update(Player & player, float frameTime)
 void StaggeredState::enter(Player & player)
 {
 	player.actionEnum = STATE_STAGGERED;
+	player.getMovementComponent()->setX_Force(0);
+	player.getMovementComponent()->setY_Force(0);
 	player.setAnimationComplete(false);
-	player.setFrames(PlayerNS::P1_IDLE_START, PlayerNS::P1_IDLE_END);
-	player.setCurrentFrame(PlayerNS::P1_IDLE_START);
+	player.setFrames(PlayerNS::P1_STAGGERED_START, PlayerNS::P1_STAGGERED_END);
+	player.setCurrentFrame(PlayerNS::P1_STAGGERED_START);
 	player.setLoop(true);
+
 }
 
 void StaggeredState::exit(Player & player)

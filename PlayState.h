@@ -26,6 +26,8 @@ public:
 	virtual void collisions();
 	virtual void handleInput(Input* input);
 
+	void playercollision(Player* p);
+
 };
 
 #endif // _PLAY_STATE_H

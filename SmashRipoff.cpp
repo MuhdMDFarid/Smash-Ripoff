@@ -107,12 +107,37 @@ void SmashRipoff::initialize(HWND hwnd)
     if (!planet.initialize(this, planetNS::WIDTH, planetNS::HEIGHT, 2, &gameTexture))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
 
-	if (!playerTexture.initialize(graphics, PLAYER_TEXTURE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player textures"));
+	if (!hunterTexture.initialize(graphics, HUNTER_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Hunter textures"));
 
-	if (!player.initialize(this, 32, 32, PlayerNS::TEXTURE_COLS, &playerTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));	
+	if (!priestessTexture.initialize(graphics, PRIESTESS_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Priestess textures"));
 
+	// -- Hunter --
+	// Initializes all the necessary assets
+	if (!hunter.initialize(this, 32, 32, PlayerNS::TEXTURE_COLS, &hunterTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Hunter"));	
+
+	PlayerInput_Component* Hinput= new PlayerInput_Component();
+	Hinput->bindUp(W_KEY);
+	Hinput->bindDown(S_KEY);
+	Hinput->bindLeft(A_KEY);
+	Hinput->bindRight(D_KEY);
+	Hinput->bindNormal(R_KEY);
+	Hinput->bindSpecial(T_KEY);
+	hunter.setPK(Hinput);
+
+	if (!priestess.initialize(this, 32, 32, PlayerNS::TEXTURE_COLS, &priestessTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));
+	PlayerInput_Component* Pinput = new PlayerInput_Component();
+	Pinput->bindUp(UP_KEY);
+	Pinput->bindDown(DOWN_KEY);
+	Pinput->bindLeft(LEFT_KEY);
+	Pinput->bindRight(RIGHT_KEY);
+	Pinput->bindNormal(PERIOD_KEY);
+	Pinput->bindSpecial(COMMA_KEY);
+	priestess.setPK(Pinput);
+	priestess.setX(GAME_WIDTH / 2);
 
 	// projectile texture
 	if (!projectileTexture.initialize(graphics, PROJECTILE_TEXTURE))

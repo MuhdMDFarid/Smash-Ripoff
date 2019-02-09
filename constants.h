@@ -76,7 +76,8 @@ const char TEST_HEART_IMAGE[]	= "pictures\\lives\\1life.png";
 const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
 
 const char NEBULA_IMAGE[] = "pictures\\orion.jpg";
-const char PLAYER_TEXTURE[] = "pictures\\Square.png";
+const char HUNTER_TEXTURE[] = "pictures\\Square.png";
+const char PRIESTESS_TEXTURE[] = "pictures\\Square2.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
 const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
 const char SPEEDPOTION_TEXTURE[] = "pictures\\speedpotion.png";
@@ -103,8 +104,8 @@ const UCHAR UP_KEY = VK_UP;				// ^ key (Jump)
 const UCHAR DOWN_KEY = VK_DOWN;			// v key (Dive)
 const UCHAR LEFT_KEY = VK_LEFT;			// < key (Left)
 const UCHAR RIGHT_KEY = VK_RIGHT;		// > key (Right)
-const UCHAR ATTACK_KEY = VK_OEM_PERIOD;	// . key (Attack1)
-const UCHAR ATTACK2_KEY = VK_OEM_COMMA;	// , key (Attack2)
+const UCHAR PERIOD_KEY = VK_OEM_PERIOD;	// . key (Attack1)
+const UCHAR COMMA_KEY = VK_OEM_COMMA;	// , key (Attack2)
 
 // Additional Stuff
 const UCHAR B_KEY = 0x42;		// B key

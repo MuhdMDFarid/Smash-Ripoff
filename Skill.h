@@ -4,13 +4,14 @@
 
 #include <vector>
 #include "Player.h"
-#include "Attack_Hitbox.h"
+#include "Melee_Hitbox.h"
 #include "SkillState.h"
 
 struct SkillHitbox 
 {
 	float spawndelay;
-	Attack_Hitbox* hitbox;
+	Hitbox* hitbox;
+	//Melee_Hitbox* hitbox;
 };
 
 enum S_State
@@ -24,19 +25,20 @@ class SkillState;
 // the actual move 
 class Skill
 {
-private:
+protected:
 	SkillState* state;
 	bool finished;
+	float endLag;
 public:
 	std::vector<SkillHitbox*> Hitboxlist;
-	Attack_Hitbox* newhitbox;
+	Hitbox* newhitbox;
 	// 
 
 //public:
 	Skill();
 	~Skill();
-	void execute(Player& player);
-	void update(Player& player,float frameTime);		// maybe don't need
+	virtual void execute(Player& player);
+	virtual void update(Player& player, float frameTime);		// maybe don't need
 	void cancel();
 	bool isFinished() { return finished; }
 	void draw();

@@ -5,9 +5,12 @@
 
 #include "IdleState.h"
 #include "AttackState.h"
+#include "StaggeredState.h"
 
-//#include "StaggeredState"
+// Skill related classes
 #include "Skill.h"
+#include "Hunter_NormalS.h"
+#include "Hunter_SpecialS.h"
 //#include <cstdlib>	// for random
 
 Player::Player() : Entity()
@@ -23,7 +26,7 @@ Player::Player() : Entity()
 	speed = 1000;
 	playerface = 1;
 	
-	//	TEMP code while component implementation is not taught
+	//	TEMP code for component implementation
 	movement_component = new Movement_Component();
 	airJump = true;
 	jumpcooldown = 0;
@@ -43,7 +46,10 @@ Player::Player() : Entity()
 	edge.right = TILE_SIZE / 2;
 
 	skill = new Skill();
-	
+	//normals = new Hunter_NormalS();
+	//specials = new Hunter_SpecialS();
+		
+	pk_bind = new PlayerInput_Component();
 }
 
 Player::~Player()
@@ -58,6 +64,7 @@ void Player::draw()
 	drawHitboxes();
 
 	skill->draw();
+	//specials->draw();
 
 	Entity::draw();
 }
@@ -177,7 +184,7 @@ void Player::update(float frameTime)
 	Entity::update(frameTime);
 
 	// update projectiles/hitboxes
-	updateProjectiles(frameTime);
+	//updateProjectiles(frameTime);
 	updateHitboxes(frameTime);
 
 	try {
@@ -201,7 +208,7 @@ void Player::move(int x_force,int y_force)		// change the force on the char for 
 
 void Player::shoot(Game*gamePtr,int x_target, int y_target, TextureManager *textureM)
 {
-	newprojectile = new Projectile();
+	newprojectile = new Projectile_Hitbox();
 
 	// create projectile
 	if( !newprojectile->initialize(gamePtr,32,32,1,textureM))
@@ -226,32 +233,32 @@ void Player::shoot(Game*gamePtr,int x_target, int y_target, TextureManager *text
 
 }
 
-void Player::updateProjectiles(float frameTime)
-{
-	// delete projectiles that are out of boundary can be placed in projectile.update()
-	for (std::vector<Projectile*>::iterator it = projectilelist.begin(); it != projectilelist.end(); )
-	{
-		if ((*it)->getX() > GAME_WIDTH || (*it)->getX() < -(*it)->getWidth()/2 || (*it)->getY() > GAME_HEIGHT || (*it)->getY() < -(*it)->getHeight())
-		{
-			it = deleteProjectile(it);
-		}
-		else
-		{
-			it++;
-		}
-	}
+//void Player::updateProjectiles(float frameTime)
+//{
+//	// delete projectiles that are out of boundary can be placed in projectile.update()
+//	for (std::vector<Projectile_Hitbox*>::iterator it = projectilelist.begin(); it != projectilelist.end(); )
+//	{
+//		if ((*it)->getX() > GAME_WIDTH || (*it)->getX() < -(*it)->getWidth()/2 || (*it)->getY() > GAME_HEIGHT || (*it)->getY() < -(*it)->getHeight())
+//		{
+//			it = deleteProjectile(it);
+//		}
+//		else
+//		{
+//			it++;
+//		}
+//	}
+//
+//	// update projectiles
+//	if (!projectilelist.empty())
+//	{
+//		for (int i = 0; i < projectilelist.size(); i++)
+//		{
+//			projectilelist[i]->update(frameTime);
+//		}
+//	}
+//}
 
-	// update projectiles
-	if (!projectilelist.empty())
-	{
-		for (int i = 0; i < projectilelist.size(); i++)
-		{
-			projectilelist[i]->update(frameTime);
-		}
-	}
-}
-
-std::vector<Projectile*>::iterator Player::deleteProjectile(std::vector<Projectile*>::iterator it)
+std::vector<Projectile_Hitbox*>::iterator Player::deleteProjectile(std::vector<Projectile_Hitbox*>::iterator it)
 {
 	SAFE_DELETE(*it);
 	return projectilelist.erase(it);
@@ -263,33 +270,31 @@ void Player::setJump(bool canjump)
 }
 
 // punch supposedly takes from the moveset
-void Player::punch(/*Game * gamePtr, TextureManager * textureM*/)
+void Player::normalS(/*Game * gamePtr, TextureManager * textureM*/)
 {
 	// Attack Prototype
 	//skill.excecute(*this);
 	
 	//skill = new Skill();
+	Skill* nskill = new Hunter_NormalS();
+	if (nskill != NULL)
+	{
+		delete skill;
+		skill = nskill;
+	}
 	skill->execute(*this);
-
 	//
+}
 
-	////state thing
-	//action = new AttackState();
-	//action->enter(*this);
-	////
-	//newhitbox = new Attack_Hitbox();
-	//
-	//// create hitbox
-	//if (!newhitbox->initialize(gamePtr, 32, 32, 1, textureM))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
-	//newhitbox->setScale(5);
-
-	//// set hitbox position
-	//newhitbox->setX(getX() + getWidth());
-	//newhitbox->setY(getY() + (getHeight() - newhitbox->getHeight()*newhitbox->getScale()) / 2);		//centers the Y coords of hitbox to player
-
-
-	//hitboxlist.push_back(newhitbox);
+void Player::specialS()
+{
+	Skill* nskill = new Hunter_SpecialS();
+	if (nskill != NULL)
+	{
+		delete skill;
+		skill = nskill;
+	}
+	skill->execute(*this);
 }
 
 void Player::drawHitboxes()
@@ -312,10 +317,7 @@ void Player::updateHitboxes(float frameTime)
 		for (int i = 0; i < hitboxlist.size(); i++)
 		{
 			// Hitbox_Attacks should move based on the player
-			hitboxlist[i]->setX(getX() + getWidth());
-			hitboxlist[i]->setY(getY()+(getHeight() - hitboxlist[i]->getHeight()*hitboxlist[i]->getScale())/2);		//centers the Y coords of hitbox to player
-
-			hitboxlist[i]->update(frameTime);
+			hitboxlist[i]->update(frameTime,*this);
 
 		}
 		deleteHitbox();
@@ -326,7 +328,7 @@ void Player::deleteHitbox()		// deletes all hitboxes for now
 {
 	if (!hitboxlist.empty())
 	{
-		for (std::vector<Attack_Hitbox*>::iterator it = hitboxlist.begin(); it != hitboxlist.end(); )
+		for (std::vector<Hitbox*>::iterator it = hitboxlist.begin(); it != hitboxlist.end(); )
 		{
 			if ((*it)->isExpired())
 			{
@@ -414,9 +416,6 @@ void Player::handleInput(Input* input)
 
 void Player::interrupt(float stunduration)
 {
-	movement_component->setX_Force(0);
-	movement_component->setY_Force(0);
-
 	PlayerState* istate = action->interrupt(*this,stunduration);
 	if (istate != NULL)
 	{
@@ -427,14 +426,21 @@ void Player::interrupt(float stunduration)
 	}
 }
 
-void Player::knockedback(Attack_Hitbox* hitbox)		// get x/y forces or the hitbox itself
+void Player::knockback(float xV,float yV)		// get x/y forces or the hitbox itself
 {
-	float xV = hitbox->getKnockback().x;
-	float yV = hitbox->getKnockback().y;
-	interrupt(hitbox->getStun());
 	getMovementComponent()->setX_Velocity(xV);
 	getMovementComponent()->setY_Velocity(yV);
 
 	//getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
+}
+
+void Player::hitted(Damage_Component* damageC)		// when player got
+{
+	float xV = damageC->calculateVector().x;
+	float yV = damageC->calculateVector().y;
+	
+	interrupt(damageC->getStun());
+	knockback(xV, yV);
+	//damage code to receive damage
 
 }

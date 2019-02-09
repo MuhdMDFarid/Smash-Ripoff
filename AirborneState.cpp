@@ -13,7 +13,7 @@ AirborneState::~AirborneState()
 
 PlayerState* AirborneState::handleInput(Player& player, Input* input)
 {
-	if (input->isKeyDown(VK_UP)||input->isKeyDown(W_KEY))
+	if (input->isKeyDown(player.getPK()->getUp()))		// air jump
 	{
 		if (player.canjump && player.actionEnum!= STATE_ATTACK && player.actionEnum != STATE_STAGGERED)
 		{
@@ -27,7 +27,7 @@ PlayerState* AirborneState::handleInput(Player& player, Input* input)
 			}
 		}
 	}
-	if (input->isKeyDown(S_KEY) || input->isKeyDown(VK_DOWN))	// dive down
+	if (input->isKeyDown(player.getPK()->getDown()))	// dive down
 	{
 		switch (player.actionEnum)
 		{
@@ -46,7 +46,7 @@ PlayerState* AirborneState::handleInput(Player& player, Input* input)
 		player.getMovementComponent()->setY_Force(0);
 	}
 
-	if (input->isKeyDown(A_KEY) || input->isKeyDown(VK_LEFT))	// move left
+	if (input->isKeyDown(player.getPK()->getLeft()))	// move left
 	{
 		switch (player.actionEnum)
 		{
@@ -61,7 +61,7 @@ PlayerState* AirborneState::handleInput(Player& player, Input* input)
 			NULL;
 		}
 	}
-	else if (input->isKeyDown(D_KEY) || input->isKeyDown(VK_RIGHT))	// move right
+	else if (input->isKeyDown(player.getPK()->getRight()))	// move right
 	{
 		switch (player.actionEnum)
 		{

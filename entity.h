@@ -87,6 +87,9 @@ class Entity : public Image
     // Return RECT structure used for BOX and ROTATED_BOX collision detection.
     virtual const RECT& getEdge() const {return edge;}
 
+	// set RECT structure used for BOX and ROTATED_BOX collision detection.
+	virtual void setEdge(RECT& e) { edge = e; }
+
     // Return corner c of ROTATED_BOX
     virtual const VECTOR2* getCorner(UINT c) const
     {

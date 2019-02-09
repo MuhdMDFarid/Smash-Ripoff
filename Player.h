@@ -7,10 +7,12 @@
 #include <vector>
 //#include"ship.h"
 
-#include "Projectile.h"
+#include "Projectile_Hitbox.h"
 #include "Movement_Component.h"
-#include "Attack_Hitbox.h"
+//#include "Hitbox.h"
+#include "PlayerInput_Component.h"
 
+class Hitbox;
 
 enum State
 {
@@ -35,6 +37,23 @@ namespace PlayerNS
 	const float JUMP_CD = 0.5f;
 	const int JUMP_VELOCITY = 500;
 
+	//// Player 1 (Bounty Hunter)
+	//const UCHAR P1_UP = W_KEY;
+	//const UCHAR P1_DOWN = S_KEY;
+	//const UCHAR P1_LEFT = A_KEY;
+	//const UCHAR P1_RIGHT = D_KEY;
+	//const UCHAR P1_ATTACK = R_KEY;
+	//const UCHAR P1_SPECIAL = T_KEY;
+
+	//// Player 2 (Priestess)
+	//const UCHAR P2_UP = UP_KEY;
+	//const UCHAR P2_DOWN = DOWN_KEY;
+	//const UCHAR P2_LEFT = LEFT_KEY;
+	//const UCHAR P2_RIGHT = RIGHT_KEY;
+	//const UCHAR P2_ATTACK = PERIOD_KEY;
+	//const UCHAR P2_SPECIAL = COMMA_KEY;
+	//
+
 	// Player 1 Frames
 	const int P1_IDLE_START = 0;
 	const int P1_IDLE_END = 3;
@@ -48,6 +67,9 @@ namespace PlayerNS
 	const int P1_AIRBORNE_START = 12;
 	const int P1_AIRBORNE_END = 15;
 
+	const int P1_STAGGERED_START = 16;
+	const int P1_STAGGERED_END = 19;
+	
 	const int P1_SLAM_START = 20;
 	const int P1_SLAM_END = 23;
 	
@@ -62,6 +84,7 @@ private:
 	float moveDelay = 0;
 	
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
+	PlayerInput_Component* pk_bind;				// Player Key Bindings
 	//std::vector<Projectile*> projectilelist;
 	
 public:
@@ -70,7 +93,8 @@ public:
 	void fall();
 	void jump();
 	void interrupt(float stunduration = 1);		// for when player gets hit *no knock back involved
-	void knockedback(Attack_Hitbox* hitbox);	// when player collides with hitbox
+	void knockback(float xV, float yV);	// when player collides with hitbox
+	void hitted(Damage_Component* damageC);
 	State airEnum;
 	PlayerState* airborne;
 	State actionEnum;
@@ -81,6 +105,12 @@ public:
 
 	int playerface;
 
+	PlayerInput_Component* getPK() { return pk_bind; }
+	void setPK(PlayerInput_Component* pk) { 
+		delete pk_bind;
+		pk_bind = pk;
+	}
+
 	// GHETTO
 	Game* game = nullptr;
 	TextureManager* getTextureManager() { return textureManager; }
@@ -88,14 +118,16 @@ public:
 	void handleInput(Input* input);
 
 
-	Projectile *newprojectile;		// not sure if this should be done
-	std::vector<Projectile*> projectilelist;
+	Projectile_Hitbox *newprojectile;		// not sure if this should be done
+	std::vector<Projectile_Hitbox*> projectilelist;
 
 	// hitbox_attack components stuff
-	std::vector<Attack_Hitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
-	Attack_Hitbox *newhitbox;		// this should be placed in a hitbox_attack
+	std::vector<Hitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
+	Hitbox *newhitbox;		// this should be placed in a hitbox_attack
 	
 	Skill* skill;
+	//Skill* normals;
+	//Skill* specials;
 	//std::vector<SkillHitbox*> getskillhitbox() { return skill->Hitboxlist; }
 
 	// TEMP potion effect
@@ -126,15 +158,17 @@ public:
 
 	// should consider placing this somewhere projectile related
 	void shoot(Game*gamePtr, int x_target, int y_target, TextureManager*textureM);
-	void updateProjectiles(float frameTime);
-	std::vector<Projectile*>::iterator deleteProjectile(std::vector<Projectile*>::iterator it);
+	//void updateProjectiles(float frameTime);
+	std::vector<Projectile_Hitbox*>::iterator deleteProjectile(std::vector<Projectile_Hitbox*>::iterator it);
 
-	// melee/hitbox attack prototype
-	void punch(/*Game*gamePtr, TextureManager*textureM*/);
+	// hitbox attack
 	void drawHitboxes();
 	void updateHitboxes(float frameTime);
 	void deleteHitbox();
 
+	// attack
+	void normalS(/*Game*gamePtr, TextureManager*textureM*/);
+	void specialS();
 };
 
 #endif // _PLAYER_H

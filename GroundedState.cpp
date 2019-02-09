@@ -13,7 +13,7 @@ GroundedState::~GroundedState()
 
 PlayerState* GroundedState::handleInput(Player& player, Input* input)
 {
-	if (input->isKeyDown(VK_UP) || input->isKeyDown(W_KEY))		// input should be based on key bindings
+	if (input->isKeyDown(player.getPK()->getUp()))		// jump from ground
 	{
 		if (player.actionEnum != STATE_ATTACK && player.actionEnum != STATE_STAGGERED)
 		{
@@ -22,12 +22,12 @@ PlayerState* GroundedState::handleInput(Player& player, Input* input)
 			player.canjump = false;
 		}
 	}
-	if (input->isKeyDown(S_KEY) || input->isKeyDown(VK_DOWN))	// duck down
+	if (input->isKeyDown(player.getPK()->getDown()))	// duck down
 	{
 		// duck down
 	}
 
-	if (input->isKeyDown(A_KEY) || input->isKeyDown(VK_LEFT))	// move left
+	if (input->isKeyDown(player.getPK()->getLeft()))	// move left
 	{
 		switch (player.actionEnum)
 		{
@@ -42,7 +42,7 @@ PlayerState* GroundedState::handleInput(Player& player, Input* input)
 			NULL;
 		}
 	}
-	else if (input->isKeyDown(D_KEY) || input->isKeyDown(VK_RIGHT))	// move right
+	else if (input->isKeyDown(player.getPK()->getRight()))	// move right
 	{
 		switch (player.actionEnum)
 		{

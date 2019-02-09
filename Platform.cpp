@@ -55,7 +55,7 @@ void Platform::updateUp(float frameTime)
 	Entity::update(frameTime);
 
 	//hk
-	spriteData.y += frameTime * velocity.y;
+	spriteData.y += frameTime * velocity.y*0;
 	spriteData.x += frameTime * velocity.x;
 	if (spriteData.y + TILE_SIZE < 0)
 	{

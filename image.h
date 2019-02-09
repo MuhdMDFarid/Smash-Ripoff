@@ -100,8 +100,14 @@ class Image
     // Set X location.
     virtual void setX(float newX)   {spriteData.x = newX;}
 
+	// Set Center X location
+	virtual void setCenterX(float newCX) { spriteData.x = newCX - spriteData.width / 2 * getScale(); }
+
     // Set Y location.
     virtual void setY(float newY)   {spriteData.y = newY;}
+
+	// Set Center Y location
+	virtual void setCenterY(float newCY) { spriteData.y = newCY - spriteData.height / 2 * getScale(); }
 
     // Set scale.
     virtual void setScale(float s)  {spriteData.scale = s;}
