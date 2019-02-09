@@ -12,9 +12,13 @@
 
 namespace gameNS
 {
-	const char FONT[] = "Comic Sans MS";								// font
-	const int POINT_SIZE = 60;											// point size
-	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);	// white
+	const char tFont[] = "Times New Roman";								// Title Font		
+	const char bFont[] = "Average";										// Button Font
+	const int tPoint_Size = 95;											// Point Size
+	const int bPoint_Size = 40;											// "
+	
+	const COLOR_ARGB tFont_Color = SETCOLOR_ARGB(255, 255, 255, 255);	// tFont's color
+	const COLOR_ARGB bFont_Color = SETCOLOR_ARGB(255, 238, 140, 190);	// bFont's color
 	const int BUF_SIZE = 30;
 	static char buffer[BUF_SIZE];
 }

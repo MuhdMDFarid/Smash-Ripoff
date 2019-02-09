@@ -75,18 +75,37 @@ void SmashRipoff::initialize(HWND hwnd)
 	
 	// --Fonts--
 	// Initialize DirectX font
-	if (!titleFont.initialize(graphics, gameNS::POINT_SIZE, false, false, "Times New Roman"))
+	if (!titleFont.initialize(graphics, gameNS::tPoint_Size, false, false, gameNS::tFont))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 
 	// Set DirectX font color
-	titleFont.setFontColor(gameNS::FONT_COLOR);
+	titleFont.setFontColor(gameNS::tFont_Color);
 
 	// Initialize DirectX font
-	if (!buttonFont.initialize(graphics, gameNS::POINT_SIZE, false, false, gameNS::FONT))
+	if (!buttonFont.initialize(graphics, gameNS::bPoint_Size, false, false, gameNS::bFont))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 
 	// Set DirectX font color
-	buttonFont.setFontColor(gameNS::FONT_COLOR);
+	buttonFont.setFontColor(gameNS::bFont_Color);
+
+	
+	// --Buttons--
+	// Initializes all the necessary assets
+	if (!buttonTexture.initialize(graphics, BUTTON_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing button's texture"));
+
+	/*
+	if (!button.initialize(this, buttonNS::WIDTH, buttonNS::HEIGHT, buttonNS::TEXTURE_COLS, &buttonTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing button"));
+	*/
+	if (!startButton.initialize(this, buttonNS::WIDTH, buttonNS::HEIGHT, buttonNS::TEXTURE_COLS, &buttonTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing start button"));
+	if (!optionButton.initialize(this, buttonNS::WIDTH, buttonNS::HEIGHT, buttonNS::TEXTURE_COLS, &buttonTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing option button"));
+	if (!resumeButton.initialize(this, buttonNS::WIDTH, buttonNS::HEIGHT, buttonNS::TEXTURE_COLS, &buttonTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing resume button"));
+	if (!exitButton.initialize(this, buttonNS::WIDTH, buttonNS::HEIGHT, buttonNS::TEXTURE_COLS, &buttonTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing exit button"));
 
 
 	// --GAME--
@@ -95,7 +114,7 @@ void SmashRipoff::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
 
     // main game textures
-    if (!gameTexture.initialize(graphics,TEXTURES_IMAGE))
+    if (!gameTexture.initialize(graphics, TEXTURES_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 
     // nebula image
@@ -184,7 +203,7 @@ void SmashRipoff::initialize(HWND hwnd)
 	potion.setX(GAME_WIDTH/2 - potion.getScale()*potion.getWidth());
 	potion.setY(GAME_HEIGHT/2 - potion.getScale()*potion.getWidth());
 
-	// --Menu--
+	// --Menu-- (Game has to start off with this state)
 	this->pushState(new MenuState(this));
 
     return;
@@ -205,6 +224,7 @@ void SmashRipoff::update()
 //=============================================================================
 void SmashRipoff::ai()
 {
+	// --States--
 	this->getCurrentState()->ai();
 }
 
@@ -213,12 +233,12 @@ void SmashRipoff::ai()
 //=============================================================================
 void SmashRipoff::collisions()
 {
+	// --States--
 	this->getCurrentState()->collisions();
 
 	//VECTOR2 collisionVector;
 
-
-	//// HITBOX collision
+	// HITBOX collision
 	//if (!player.skill->Hitboxlist.empty())
 	//{
 	//	for (std::vector<SkillHitbox*>::iterator it = player.skill->Hitboxlist.begin(); it != player.skill->Hitboxlist.end(); )
@@ -237,9 +257,9 @@ void SmashRipoff::collisions()
 	//	}
 	//}
 
-	//// END OF HITBOX COLLISION
+	// END OF HITBOX COLLISION
 
-	//// platform collision
+	// platform collision
 	//if(player.collidesWith(platform1,collisionVector))
 	//{
 	//	// PROTOTYPE COLLISION Detection
@@ -411,13 +431,15 @@ void SmashRipoff::collisions()
 //=============================================================================
 void SmashRipoff::render()
 {
-	/*
+	// --States--
+	this->getCurrentState()->draw();
+
 	/// OLD draw
 	//nebula.draw();                          // add the orion nebula to the scene
 	//planet.draw();                          // add the planet to the scene
 	//player.draw();
 
-	////platform.draw();
+	//platform.draw();
 	//platform1.draw();
 
 	//potion.draw();
@@ -464,10 +486,6 @@ void SmashRipoff::render()
 	//	dxFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
 
 	///
-	*/
-
-	// --States--
-	this->getCurrentState()->draw();
 }
 
 //=============================================================================
@@ -553,4 +571,28 @@ GameState* SmashRipoff::getCurrentState()
 void SmashRipoff::deleteState()
 {
 	states.clear();
+}
+
+//=============================================================================
+// Resets every asset
+//=============================================================================
+void SmashRipoff::resetGame()
+{
+	// Health
+	hunterHP = 2;
+	priestessHP = 2;
+
+	for (int i = 0; i < MAX_HEALTH; i++)
+	{
+		priestessHealth[i].setActive(true);
+		hunterHealth[i].setActive(true);
+	}
+
+	// Potions
+	player.speedmultiplier = 1;
+	player.agilityduration = 0;
+
+	// Player
+	player.setX(0);
+	player.setY(0);
 }

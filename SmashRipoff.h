@@ -12,14 +12,14 @@
 #include "Platform.h"
 #include "SpeedPotion.h"
 #include "heart.h"
+#include "button.h"
 #include "Skill.h"
-//#include <vector>
+#include <vector>
 
 //=============================================================================
 // This class is the core of the game
 //=============================================================================
 class GameState;
-class button;
 
 class SmashRipoff : public Game
 {
@@ -30,27 +30,27 @@ private:
 	TextureManager gameTexture;
 	TextureManager playerTexture;
 
- //   Planet  planet;					// the planet
- //   Image   nebula;					// backdrop image
+	//Planet  planet;					// the planet
+	//Image   nebula;					// backdrop image
 	//Player  player;
 
 	// new stuff
 	TextureManager projectileTexture;
 	TextureManager platformTexture;
-	////Platform platform;
+	//Platform platform;
 	//Platform platform1;
 	//Platform platformUpList[NO_PLATFORMS];
 	//Platform platformDownList[NO_PLATFORMS];
 	TextureManager potionTexture;
 	//SpeedPotion potion;
-	////bool shootable = true;
+	//bool shootable = true;
 
-	//// -Hearts-
+	// --Hearts--
 	//static const int MAX_HEALTH = 3;
 	TextureManager heartTexture;
 	//Image heart;
 
-	// States
+	// --States--
 	// A vector to store game states
 	std::vector<GameState*> states;
 	// States - Texture
@@ -65,16 +65,16 @@ private:
 	// States - Texture - Priestess
 	TextureManager priestessDeathTexture;
 
-	// Buttons
-	std::vector<button*> buttons;
+	// --Button--
+	TextureManager buttonTexture;
 
-	//// Players' Health
+	// Players' Health
 	//Heart hunterHealth[MAX_HEALTH];
 	//Heart priestessHealth[MAX_HEALTH];
-	//// List starts from 0
+	// List starts from 0
 	//int hunterHP = 2;
 	//int priestessHP = 2;
-	//// Players' Knockback
+	// Players' Knockback
 public:
 
     // Constructor
@@ -93,9 +93,6 @@ public:
     void resetAll();
 	float YVelocity = -TILE_SIZE * 4;
 
-	// --Buttons--
-
-
 	// --States--
 	// Functions for game states
 	void pushState(GameState* state);
@@ -105,17 +102,28 @@ public:
 	// Gets the current state
 	GameState* getCurrentState();
 
+	// Reset the game
+	void resetGame();
+
 	// Font
 	TextDX titleFont;
 	TextDX buttonFont;
 
+	// Button
+	// Button button;
+	Button startButton;
+	Button optionButton;
+	Button resumeButton;
+	Button exitButton;
+
 	// States - Image
 	// States - Image - Menu
 	Image menuBackground;
+
 	// States - Image - Play
 	Image   nebula;
 	Player  player;
-	Planet planet;
+	Planet	planet;
 	Platform platform1;
 	Platform platformUpList[NO_PLATFORMS];
 	Platform platformDownList[NO_PLATFORMS];
@@ -129,6 +137,7 @@ public:
 	int priestessHP = 2;
 	bool hunterDeath = false;
 	bool priestessDeath = false;
+
 	// States - Image - Pause
 	Image pauseBackground;
 	// States - Image - Option
