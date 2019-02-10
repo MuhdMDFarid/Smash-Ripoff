@@ -295,7 +295,6 @@ void Player::updateHitboxes(float frameTime)
 		{
 			// Hitbox_Attacks should move based on the player
 			hitboxlist[i]->update(frameTime,*this);
-
 		}
 		deleteHitbox();
 	}

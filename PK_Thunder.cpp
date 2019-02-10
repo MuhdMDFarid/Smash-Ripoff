@@ -26,7 +26,7 @@ PK_Thunder::~PK_Thunder()
 void PK_Thunder::execute(Player& player)
 {
 	Skill::execute(player);
-
+	mciSendString("close sounds/PK_THUNDER.mp3", NULL, 0, NULL);
 	// State version of skill
 	///
 	/*
@@ -35,14 +35,15 @@ void PK_Thunder::execute(Player& player)
 	///
 	//float alpha = 0;		//  alpha<=90 degrees
 	float fangle = 0;
-	endLag = 0.5f;
+	endLag = 10.0f;
 	//finished = false;
 	// initialize all the hitboxes and adds to the vector
 
 	// FIRST HITBOX
-	newhitbox = new Controlled_Projectile_Hitbox();
+	newhitbox = new Controlled_Projectile_Hitbox(300);
 	newhitbox->setAcceleration(500);
-	newhitbox->setY_Velocity(-400);
+	//(Controlled_Projectile_Hitbox)newhitbox
+	newhitbox->setY_Velocity(-300);
 
 	// create hitbox
 	if (!newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
@@ -62,76 +63,28 @@ void PK_Thunder::execute(Player& player)
 	newhitbox->setEdge(*hitarea);
 	//hitarea = nullptr;
 	delete hitarea;
-
+	newhitbox->setScale(0.75);
 	newhitbox->setDamage(50);
 
 	//alpha = 35;
 
-	newhitbox->setKnockbackAngle(finalangle(35, player.playerface));
+	newhitbox->setKnockbackAngle(finalangle(90, player.playerface));
 
-	newhitbox->setKnockbackForce(50);
-	newhitbox->setHitStun(0.3);
-	newhitbox->setLifetime(15);
+	newhitbox->setKnockbackForce(420);
+	newhitbox->setHitStun(1);
+	newhitbox->setLifetime(10);
 
 	// How to push the spawn delay and the hitbox into vector
 	SkillHitbox* newskillhitbox = new SkillHitbox();
 	newskillhitbox->hitbox = newhitbox;
 	newskillhitbox->spawndelay = 0.2;
 	Hitboxlist.push_back(newskillhitbox);
-
-	
+	//mciSendString("play sounds/PK_THUNDER.mp3 repeat", NULL, 0, NULL);
+	mciSendString("play sounds/PK_THUNDER.mp3", NULL, 0, NULL);
+	//mciSendString("play sounds/PK_THUNDER.mp3 from 0", NULL, 0, NULL);
+	//PlaySound("sounds\\PK_THUNDER.mp3", NULL, SND_ASYNC);
+	//pictures\\background\\menuBack.png
 }
-
-//void PK_Thunder::update(Player& player, float frameTime)
-//{
-//	if (!Hitboxlist.empty())
-//	{
-//		for (std::vector<SkillHitbox*>::iterator it = Hitboxlist.begin(); it != Hitboxlist.end(); )
-//		{
-//			(*it)->hitbox->update(frameTime, player);
-//
-//			if((*it)->spawndelay<=0)
-//			{
-//				if (!(*it)->hitbox->getActive()) 
-//				{ 
-//					// set hitbox to active
-//					(*it)->hitbox->activate(player);
-//
-//				}					
-//				// Sets the X coords of the hitbox based on the direction player faces
-//				//(*it)->hitbox->setCenterX(player.getCenterX()+(player.playerface)*(*it)->hitbox->getEdge().right*(*it)->hitbox->getScale());
-//				//(*it)->hitbox->update(frameTime,player);
-//				// Sets the Y coords of the hitbox based on the center of the player
-//				//(*it)->hitbox->setCenterY(player.getCenterY());						//centers the Y coords of hitbox to player
-//
-//			}
-//
-//			else if ((*it)->spawndelay > 0)			// updating spawn delay
-//			{
-//				(*it)->spawndelay -= frameTime;
-//			}
-//
-//
-//			if ((*it)->hitbox->getActive())
-//			{
-//				//SAFE_DELETE(*it);
-//				it = Hitboxlist.erase(it);
-//			}
-//			else
-//			{
-//				it++;
-//			}
-//		}
-//	}
-//	else if(endLag>0)
-//	{
-//		endLag -= frameTime;
-//	}
-//	else
-//	{
-//		finished = true;
-//	}
-//}
 
 void PK_Thunder::cancel()
 {
@@ -139,37 +92,9 @@ void PK_Thunder::cancel()
 	// end skill
 	Skill::cancel();
 
-	//if (!Hitboxlist.empty())
-	//{
-	//	for (std::vector<SkillHitbox*>::iterator it = Hitboxlist.begin(); it != Hitboxlist.end(); )
-	//	{
-
-	//		//SAFE_DELETE((*it)->hitbox);
-	//		SAFE_DELETE(*it);
-	//		it = Hitboxlist.erase(it);
-	//		
-	//		//else
-	//		//{
-	//		//	it++;
-	//		//}
-	//	}
-	//}
-	//finished = true;
 	
 }
 
-//void Skill::completed()
-//{
-//}
-
-//void PK_Thunder::draw()
-//{
-//	for (std::vector<SkillHitbox*>::iterator it = Hitboxlist.begin(); it != Hitboxlist.end(); )
-//	{
-//		(*it)->hitbox->draw();
-//		it++;
-//	}
-//}
 
 //float PK_Thunder::finalangle(float alpha,int xdirection)	// calculate actual angle based on playerface
 //{

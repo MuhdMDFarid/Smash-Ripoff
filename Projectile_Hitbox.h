@@ -36,7 +36,7 @@ public:
 	void setVelocity(int x_velocity, int y_velocity);
 
 	virtual void update(float frameTime,Player& player);
-	void collided();
+	virtual void collided();
 	void activate(Player& player);
 	//void remove();
 	//void damage(WEAPON weapon);

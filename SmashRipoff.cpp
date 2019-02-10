@@ -169,7 +169,7 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!platform1.initialize(this, GAME_WIDTH, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	platform1.setX(0);
-	platform1.setY(GAME_HEIGHT-platform1.getHeight());
+	platform1.setY(GAME_HEIGHT-platform1.getHeight()-200);
 
 	// Hearts
 	if (!heartTexture.initialize(graphics, HEART_IMAGE))
@@ -614,10 +614,15 @@ void SmashRipoff::resetGame()
 	}
 
 	// Potions
-	player.speedmultiplier = 1;
-	player.agilityduration = 0;
+	hunter.speedmultiplier = 1;
+	hunter.agilityduration = 0;
+	priestess.speedmultiplier = 1;
+	priestess.agilityduration = 0;
 
-	// Player
-	player.setX(0);
-	player.setY(0);
+	// Player position
+	hunter.setX(0);
+	hunter.setY(0);
+
+	priestess.setX(GAME_WIDTH-priestess.getWidth()*priestess.getScale());
+	priestess.setY(0);
 }

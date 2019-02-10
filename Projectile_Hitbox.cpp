@@ -61,12 +61,12 @@ void Projectile_Hitbox::update(float frameTime,Player& player)
 			//remove();
 			Expired = true;
 		}
-		else if (getY() > GAME_HEIGHT - getHeight()*getScale())
+		else if (getY() > GAME_HEIGHT /*- getHeight()*getScale()*/)
 		{
 			//remove();
 			Expired = true;
 		}
-		else if (getY() < 0)
+		else if (getY() < 0-getHeight()*getScale())
 		{
 			//remove();
 			Expired = true;
