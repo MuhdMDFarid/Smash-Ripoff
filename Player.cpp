@@ -252,7 +252,7 @@ void Player::normalS(/*Game * gamePtr, TextureManager * textureM*/)
 	//skill.excecute(*this);
 	
 	//skill = new Skill();
-	Skill* nskill = new Hunter_NormalS();
+	Skill* nskill = new Hunter_SpecialS();
 	if (nskill != NULL)
 	{
 		delete skill;

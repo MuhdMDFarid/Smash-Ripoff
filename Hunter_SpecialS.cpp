@@ -24,6 +24,7 @@ Hunter_SpecialS::~Hunter_SpecialS()
 void Hunter_SpecialS::execute(Player& player)
 {
 	Skill::execute(player);
+	mciSendString("close sounds/PK_FIRE.mp3", NULL, 0, NULL);
 
 	// State version of skill
 	///
@@ -41,7 +42,6 @@ void Hunter_SpecialS::execute(Player& player)
 	
 	// set movement of projectile
 	newhitbox->setX_Velocity(200 * player.playerface);
-	//newhitbox->setX_Force(100 * player.playerface);
 	newhitbox->setY_Velocity(-500);
 	newhitbox->setY_Force(GRAVITY);
 
@@ -69,7 +69,7 @@ void Hunter_SpecialS::execute(Player& player)
 	//alpha = 90;
 	newhitbox->setKnockbackAngle(finalangle(90,player.playerface));
 
-	newhitbox->setKnockbackForce(1069);
+	newhitbox->setKnockbackForce(200);
 	newhitbox->setHitStun(0.75);
 	newhitbox->setLifetime(15);
 
@@ -78,7 +78,8 @@ void Hunter_SpecialS::execute(Player& player)
 	newskillhitbox->hitbox = newhitbox;
 	newskillhitbox->spawndelay = 0.75;
 	Hitboxlist.push_back(newskillhitbox);
-	
+	mciSendString("play sounds/PK_FIRE.mp3", NULL, 0, NULL);
+
 }
 
 void Hunter_SpecialS::cancel()
