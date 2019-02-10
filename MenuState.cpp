@@ -52,7 +52,7 @@ void MenuState::draw()
 	menuFont.printC("Press ESC to leave", GAME_WIDTH / 2, (GAME_HEIGHT / 5) * 4);
 }
 
-void MenuState::update(float frameTime)
+void MenuState::update(Timer *gameTimer)
 {
 
 }

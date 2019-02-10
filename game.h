@@ -10,6 +10,7 @@
 #include "gameError.h"
 #include "textDX.h"
 #include <vector>
+#include "Timer.h"
 
 namespace gameNS
 {
@@ -40,12 +41,17 @@ protected:
     DWORD   sleepTime;          // number of milli-seconds to sleep between frames
     bool    initialized;
 
+
 	// Additions
 	TextDX dxFont;					// DirectX font for fps
 	std::vector<GameState*> states;	// a list to store the states
 
 	bool hunterDeath = false; 
 	bool priestessDeath = false;
+
+	// Timer
+	bool    paused;             // true if game is paused
+	Timer *currentGameTimeCpp;
 
 public:
 
@@ -64,7 +70,7 @@ public:
     virtual void initialize(HWND hwnd);
 
     // Call run repeatedly by the main message loop in WinMain
-    virtual void run(HWND);
+    virtual void run(HWND, Timer *gameTimer);
 
     // Call when the graphics device was lost.
     // Release all reserved video memory so graphics device may be reset.
@@ -106,13 +112,13 @@ public:
     // These functions MUST be written in any class that inherits from Game
 
     // Update game items.
-    virtual void update() = 0;
+    virtual void update(Timer *gameTimer) = 0;
 
     // Perform AI calculations.
-    virtual void ai() = 0;
+    virtual void ai(Timer *gameTimer) = 0;
 
     // Check for collisions.
-    virtual void collisions() = 0;
+    virtual void collisions(Timer *gameTimer) = 0;
 
     // Render graphics.
     // Call graphics->spriteBegin();

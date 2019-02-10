@@ -51,7 +51,7 @@ void PauseState::draw()
 	pauseFont.printC("Press ENTER to exit", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 3);
 }
 
-void PauseState::update(float frameTime)
+void PauseState::update(Timer *gameTimer)
 {
 
 }

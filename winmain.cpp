@@ -6,6 +6,8 @@
 #include <crtdbg.h>             // for detecting memory leaks
 #include "SmashRipoff.h"
 #include "MenuState.h"
+#include <chrono>
+#include "Timer.h"
 
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
@@ -15,6 +17,7 @@ LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM);
 // Game pointer
 SmashRipoff *game = NULL;
 HWND hwnd = NULL;
+Timer *gameTimer = NULL;
 
 //=============================================================================
 // Starting point for a Windows application
@@ -31,6 +34,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     // Create the game, sets up message handler
     game = new SmashRipoff;
+
+	//create the timer here
+	gameTimer = new Timer();
 
     // Create the window
     if (!CreateMainWindow(hwnd, hInstance, nCmdShow))
@@ -62,7 +68,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			else
 			{
 				// Run the game loop
-				game->run(hwnd);
+				game->run(hwnd, gameTimer);
 			}
         }
         SAFE_DELETE (game);     // free memory before exit

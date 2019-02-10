@@ -8,6 +8,7 @@
 //=============================================================================
 Game::Game()
 {
+	paused = false;             // game is not paused
     input = new Input();        // initialize keyboard input immediately
     // additional initialization is handled in later call to input->initialize()
     graphics = NULL;
@@ -96,6 +97,7 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 //=============================================================================
 void Game::initialize(HWND hw)
 {
+	currentGameTimeCpp = new Timer();
     hwnd = hw;                                  // save window handle
 
     // initialize graphics
@@ -186,8 +188,9 @@ void Game::setDisplayMode(graphicsNS::DISPLAY_MODE mode)
 //=============================================================================
 // Call repeatedly by the main message loop in WinMain
 //=============================================================================
-void Game::run(HWND hwnd)
+void Game::run(HWND hwnd, Timer *gameTimer)
 {
+	currentGameTimeCpp = gameTimer;
     if (graphics == NULL)            // if graphics not initialized
         return;
 
@@ -212,6 +215,16 @@ void Game::run(HWND hwnd)
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
     timeStart = timeEnd;
 
+
+	// These functions must be provided in the class that inherits from Game.
+	if (!paused)                    // if not paused
+	{
+		update(gameTimer);                   // update all game items
+		ai(gameTimer);                       // artificial intelligence
+		collisions(gameTimer);               // handle collisions
+		input->vibrateControllers(frameTime); // handle controller vibration
+	}
+
 	// if the state is a nullptr
 	if (getCurrentState() == nullptr)
 		return;
@@ -225,7 +238,7 @@ void Game::run(HWND hwnd)
 	getCurrentState()->handleInput(input);
 
 	// updates anything necessary
-	getCurrentState()->update(frameTime);
+	getCurrentState()->update(gameTimer);
 
 	// draws anything in the current state (moved into renderGame())
 	// getCurrentState()->draw(frameTime);

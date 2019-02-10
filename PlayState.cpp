@@ -1,6 +1,7 @@
 #include <iostream>
 #include "PlayState.h"
 #include "PauseState.h"
+#include "Timer.h"
 
 PlayState::PlayState(Game* game)
 {
@@ -24,11 +25,11 @@ void PlayState::draw()
 	game->render();					// Draw all game items
 }
 
-void PlayState::update(float frameTime)
+void PlayState::update(Timer *gameTimer)
 {
-	game->update();					// Update all game items
-	game->ai();						// Aritifical Intelligence (A.I.)
-	game->collisions();				// Handle collisions
+	game->update(gameTimer);					// Update all game items
+	game->ai(gameTimer);						// Aritifical Intelligence (A.I.)
+	game->collisions(gameTimer);				// Handle collisions
 }
 
 void PlayState::handleInput(Input* input)

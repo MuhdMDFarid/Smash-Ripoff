@@ -7,6 +7,7 @@
 #include "textureManager.h"				// Textures
 #include "image.h"						// Images
 #include "textDX.h"						// Fonts
+#include "Timer.h"
 
 class GameState
 {
@@ -16,7 +17,7 @@ public:
 
 	// Abstract functions - these functions are to be used in OTHER classes (e.g. menu, game, option, etc.)
 	virtual void draw() = 0;
-	virtual void update(float frameTime) = 0;
+	virtual void update(Timer *gameTimer) = 0;
 	virtual void handleInput(Input* input) = 0;
 
 	// Releasing and resetting graphic items

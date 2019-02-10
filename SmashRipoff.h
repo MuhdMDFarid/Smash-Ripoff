@@ -54,6 +54,8 @@ private:
 	// Landmine
 	Landmine landmine;
 	TextureManager landmineTexture;
+	bool isPaused;
+	int nextIntervalValue = 0;
 
 public:
 
@@ -65,9 +67,9 @@ public:
 
     // Initialize the game
     void initialize(HWND hwnd);
-    void update();      // must override pure virtual from Game
-    void ai();          // "
-    void collisions();  // "
+	void update(Timer *gameTimer);      // must override pure virtual from Game
+	void ai(Timer *gameTimer);          // "
+	void collisions(Timer *gameTimer);  // 
     void render();      // "
 
     void releaseAll();

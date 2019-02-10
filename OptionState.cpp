@@ -41,7 +41,7 @@ void OptionState::draw()
 	optionFont.printC("Press ESC to leave", GAME_WIDTH / 2, (GAME_HEIGHT / 4) * 2);
 }
 
-void OptionState::update(float frameTime)
+void OptionState::update(Timer *gameTimer)
 {
 
 }

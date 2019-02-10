@@ -138,20 +138,21 @@ void SmashRipoff::initialize(HWND hwnd)
 	}
 
 	// landmine textures
-	if (!landmineTexture.initialize(graphics, LANDMINE_IMAGE))
+	/*if (!landmineTexture.initialize(graphics, LANDMINE_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 
 	if (!landmine.initialize(this, 60, 30, 1, &landmineTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	landmine.setX(rand () % (int (platform1.getWidth())) + platform1.getX());
-	landmine.setY(platform1.getY() - LANDMINE_SIZE);
+	landmine.setY(platform1.getY() - LANDMINE_SIZE);*/
+
 	return;
 }
 
 //=============================================================================
 // Update all game items
 //=============================================================================
-void SmashRipoff::update()
+void SmashRipoff::update(Timer *gameTimer)
 {
 	player.update(frameTime);
 
@@ -265,9 +266,11 @@ void SmashRipoff::update()
     ship1.update(frameTime);
     ship2.update(frameTime);
 
-	platform.update(frameTime);	// should this even have update since platforms dont really move
+	platform.update(frameTime);
 	platform1.update(frameTime);
 	platform.setRadians(platform.getRadians() - platformNS::ROTATION_RATE * frameTime);
+
+	float test = gameTimer->getCurrentElapsedTime(isPaused);
 
 	//hk
 	for (int i = 0; i < NO_PLATFORMS; i++)
@@ -276,25 +279,36 @@ void SmashRipoff::update()
 		platformDownList[i].updateDown(frameTime);
 	}
 
-	landmine.update(frameTime);
-	//update every bullet in player ithink
-	//
-	//if (player.airEnum != STATE_AIRBORNE)
-	//{
-	//	player.fall();
-	//}
+	int numOfSecondsPassed = int(gameTimer->getCurrentElapsedTime(isPaused));
+	if (numOfSecondsPassed % 5 == 0 && numOfSecondsPassed != 0 && numOfSecondsPassed != nextIntervalValue)
+	{
+		nextIntervalValue = numOfSecondsPassed;
+		while (landmine.getActive() == false)
+		{
+			if (!landmineTexture.initialize(graphics, LANDMINE_IMAGE))
+				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
+
+			if (!landmine.initialize(this, 60, 30, 1, &landmineTexture))	// 1 since texture has only one image
+				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+			landmine.draw();
+			landmine.update(frameTime);
+			landmine.setX(rand() % (int(platform1.getWidth())) + platform1.getX());
+			landmine.setY(platform1.getY() - LANDMINE_SIZE);
+		}
+	}
 }
 
 //=============================================================================
 // Artificial Intelligence
 //=============================================================================
-void SmashRipoff::ai()
-{}
+void SmashRipoff::ai(Timer *gameTimer)
+{
+}
 
 //=============================================================================
 // Handle collisions
 //=============================================================================
-void SmashRipoff::collisions()
+void SmashRipoff::collisions(Timer *gameTimer)
 {
 	VECTORMATRIX collisionRotation;
 	VECTOR2 collisionVector;

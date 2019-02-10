@@ -31,7 +31,7 @@ public:
 	// Functions (inherited from GameState)
 	// ======================
 	virtual void draw();
-	virtual void update(float frameTime);
+	virtual void update(Timer *gameTimer);
 	virtual void handleInput(Input* input);
 
 	virtual void releaseAll();
