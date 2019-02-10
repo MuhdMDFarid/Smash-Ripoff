@@ -11,6 +11,9 @@ public:
 
 	SmashRipoff* game;
 
+	// Vector
+	std::vector<Button> buttonList;
+
 	// Abstract functions - these functions are to be used in OTHER classes (e.g. menu, game, option, etc.)
 	virtual void draw() = 0;
 	virtual void update(float frameTime) = 0;

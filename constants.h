@@ -49,7 +49,7 @@ const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE;	// maximum time used in calcul
 //const float GRAVITY = 6.67428e-11f;
 const float MASS_PLANET = 1.0e14f;
 const float MASS_SHIP = 5.0f;
-const float GRAVITY = 1000;             // gravitational constant
+const float GRAVITY = 1000;							// gravitational constant
 
 const int TILE_SIZE = 32;
 // const int GRID_WIDTH = GAME_WIDTH / TILE_SIZE;
@@ -58,13 +58,17 @@ const int TILE_SIZE = 32;
 // Graphics images
 // --MENU--
 const char STAGE_IMAGE[]		= "pictures\\background\\spaceStage.jpg";
-const char MENU_IMAGE[]			= "pictures\\background\\menuBackground.png";
-const char PAUSE_IMAGE[]		= "pictures\\background\\pauseBackground.png";
-const char OPTION_IMAGE[]		= "pictures\\background\\optionBackground.png";
-const char HUNTER_IMAGE[]		= "pictures\\background\\hunterBackground.png";
-const char PRIESTESS_IMAGE[]	= "pictures\\background\\priestessBackground.png";
+const char MENU_IMAGE[]			= "pictures\\background\\menuBack.png";
+// const char PAUSE_IMAGE[]		= "pictures\\background\\pauseBackground.png";
+const char PAUSE_IMAGE[]		= "pictures\\background\\defaultBack.png";
+// const char OPTION_IMAGE[]	= "pictures\\background\\optionBackground.png";
+const char OPTION_IMAGE[]		= "pictures\\background\\defaultBack.png";
+const char HUNTER_IMAGE[]		= "pictures\\background\\hunterBack.png";
+const char PRIESTESS_IMAGE[]	= "pictures\\background\\priestessBack.png";
 
 // --GUI--
+// Buttons
+const char BUTTON_IMAGE[]		= "pictures\\button\\buttons.png";
 // Hearts, ver. 1
 const char HEART_IMAGE[]		= "pictures\\lives\\heartv2.png";
 // Hearts, ver. 2 (might have to collate into a sheet to use this version)
@@ -74,7 +78,6 @@ const char TEST_HEART_IMAGE[]	= "pictures\\lives\\1life.png";
 
 // --GAME--
 const char TEXTURES_IMAGE[] =	"pictures\\textures.png";
-
 const char NEBULA_IMAGE[] = "pictures\\orion.jpg";
 const char HUNTER_TEXTURE[] = "pictures\\Square.png";
 const char PRIESTESS_TEXTURE[] = "pictures\\Square2.png";

@@ -11,6 +11,8 @@ private:
 
 	// Changes the state to "MenuState"
 	void mainMenu();
+	// Changes the state to "PlayState"
+	void playAgain();
 
 public:
 
