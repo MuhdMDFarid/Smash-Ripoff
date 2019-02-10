@@ -81,8 +81,8 @@ void SmashRipoff::initialize(HWND hwnd)
 
 	if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
-	platform.setX(GAME_WIDTH/2);
-	platform.setY(GAME_HEIGHT*2/4);
+	platform.setX(GAME_WIDTH*1/3);
+	platform.setY(GAME_HEIGHT*1/2);
 
 	if (!platform1.initialize(this, GAME_WIDTH*4/6.5, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
