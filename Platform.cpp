@@ -61,6 +61,10 @@ void Platform::updateUp(float frameTime)
 	{
 		spriteData.y = GAME_HEIGHT;
 	}
+	if (spriteData.y > GAME_HEIGHT)
+	{
+		spriteData.y = -TILE_SIZE;
+	}
 }
 
 void Platform::updateDown(float frameTime)
@@ -73,5 +77,9 @@ void Platform::updateDown(float frameTime)
 	if (spriteData.y > GAME_HEIGHT)
 	{
 		spriteData.y = -TILE_SIZE;
+	}
+	if (spriteData.y + TILE_SIZE < 0)
+	{
+		spriteData.y = GAME_HEIGHT;
 	}
 }

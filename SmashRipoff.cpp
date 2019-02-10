@@ -280,6 +280,7 @@ void SmashRipoff::update(Timer *gameTimer)
 	}
 
 	int numOfSecondsPassed = int(gameTimer->getCurrentElapsedTime(isPaused));
+
 	if (numOfSecondsPassed % 5 == 0 && numOfSecondsPassed != 0 && numOfSecondsPassed != nextIntervalValue)
 	{
 		nextIntervalValue = numOfSecondsPassed;
@@ -292,6 +293,12 @@ void SmashRipoff::update(Timer *gameTimer)
 		landmine.update(frameTime);
 		landmine.setX(rand() % (int(platform1.getWidth())) + platform1.getX());
 		landmine.setY(platform1.getY() - LANDMINE_SIZE);
+
+		for (int i = 0; i < NO_PLATFORMS; i++)
+		{
+			platformDownList[i].setVelocity(-platformDownList[i].getVelocity());
+			platformUpList[i].setVelocity(-platformUpList[i].getVelocity());
+		}
 	}
 }
 
@@ -470,7 +477,7 @@ void SmashRipoff::collisions(Timer *gameTimer)
 
 				if (player.getMovementComponent()->getY_Velocity() >= 0)		// if player is moving downwards it sets velocity to 0...
 				{	// this is to prevent reseting velocity when player is jumping from the side up wards
-					player.getMovementComponent()->setY_Velocity(0);
+					player.getMovementComponent()->setY_Velocity(-YVelocity);
 					// player collides from the top of the platformUpList[i]
 					player.setY(platformUpList[i].getCenterY() + platformUpList[i].getEdge().top*platformUpList[i].getScale()
 						- player.getHeight());		// prevents player from moving past the left side of platformUpList[i]
@@ -496,7 +503,7 @@ void SmashRipoff::collisions(Timer *gameTimer)
 			&& player.getCenterY() + player.getEdge().top*player.getScale() < platformDownList[i].getCenterY() + platformDownList[i].getEdge().top*platformDownList[i].getScale())
 				//&& player.getCenterY() + player.getEdge().top*player.getScale() < platformDownList[i].getCenterY() + platformDownList[i].getEdge().top*platformDownList[i].getScale())
 			{
-				if (player.getMovementComponent()->getY_Velocity() > 0)		// if player is moving downwards it sets velocity to 0...
+				if (player.getMovementComponent()->getY_Velocity() >= 0)		// if player is moving downwards it sets velocity to 0...
 				{	// this is to prevent reseting velocity when player is jumping from the side Down wards
 					player.getMovementComponent()->setY_Velocity(-YVelocity);
 					// player collides from the top of the platformDownList[i]
@@ -519,6 +526,7 @@ void SmashRipoff::collisions(Timer *gameTimer)
 		landmine.setScale(0);
 		landmine.setActive(false);
 	}
+
 }
 
 //=============================================================================
@@ -539,7 +547,6 @@ void SmashRipoff::render()
 		platformUpList[i].draw();
 		platformDownList[i].draw();
 	}
-
 	landmine.draw();
 	// draw every bullet put inside player
 
