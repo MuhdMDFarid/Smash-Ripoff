@@ -13,6 +13,7 @@
 #include "SpeedPotion.h"
 #include "HealthPotion.h"
 #include "heart.h"
+#include "meteor.h"
 
 //=============================================================================
 // This class is the core of the game
@@ -39,8 +40,10 @@ private:
 	Platform platformDownList[NO_PLATFORMS];
 	TextureManager speedpotionTexture;
 	TextureManager healthpotionTexture;
+	TextureManager meteorTexture;
 	SpeedPotion speedpotion;
 	HealthPotion healthpotion;
+	Meteor meteor;
 	//bool shootable = true;
 
 	// -Hearts-

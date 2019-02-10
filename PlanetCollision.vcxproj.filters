@@ -50,6 +50,7 @@
     <ClCompile Include="HunterDeathState.cpp" />
     <ClCompile Include="PriestessDeathState.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
+    <ClCompile Include="meteor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack_Component.h" />
@@ -103,6 +104,7 @@
     <ClInclude Include="HunterDeathState.h" />
     <ClInclude Include="PriestessDeathState.h" />
     <ClInclude Include="HealthPotion.h" />
+    <ClInclude Include="meteor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="States">

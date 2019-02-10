@@ -144,6 +144,18 @@ void SmashRipoff::initialize(HWND hwnd)
 	healthpotion.setX(randomx2 - healthpotion.getScale()*healthpotion.getWidth());
 	healthpotion.setY(randomy2 - healthpotion.getScale()*healthpotion.getWidth());
 
+
+	// Meteor texture
+	if (!meteorTexture.initialize(graphics, METEOR_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing meteor texture"));
+	if (!meteor.initialize(this, 1600, 1600, 1, &meteorTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing meteor"));
+	meteor.setScale(0.1);
+	meteor.setDegrees(0);
+	meteor.setX(GAME_WIDTH - GAME_WIDTH / 4);
+	meteor.setY(GAME_HEIGHT / 4);
+	meteor.setVelocity(VECTOR2(-meteorNS::SPEED, meteorNS::SPEED));
+
     return;
 }
 
@@ -269,9 +281,10 @@ void SmashRipoff::update()
 	//platform.update(frameTime);	// should this even have update since platforms dont really move
 	platform1.update(frameTime);
 
+	//ben
 	speedpotion.update(frameTime);
 	healthpotion.update(frameTime);
-
+	meteor.update(frameTime);
 	//hk
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
@@ -486,7 +499,8 @@ void SmashRipoff::render()
 
 	speedpotion.draw();
 	healthpotion.draw();
-	
+	meteor.draw();
+
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
 		platformUpList[i].draw();
@@ -547,6 +561,7 @@ void SmashRipoff::releaseAll()
 	projectileTexture.onLostDevice();
 	platformTexture.onLostDevice();
 	heartTexture.onLostDevice();
+	meteorTexture.onLostDevice();
 
 	Game::releaseAll();
     return;
@@ -564,6 +579,7 @@ void SmashRipoff::resetAll()
 	projectileTexture.onResetDevice();
 	platformTexture.onResetDevice();
 	heartTexture.onResetDevice();
+	meteorTexture.onResetDevice();
 
 	Game::resetAll();
     return;
