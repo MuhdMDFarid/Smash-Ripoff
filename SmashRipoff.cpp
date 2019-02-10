@@ -283,18 +283,15 @@ void SmashRipoff::update(Timer *gameTimer)
 	if (numOfSecondsPassed % 5 == 0 && numOfSecondsPassed != 0 && numOfSecondsPassed != nextIntervalValue)
 	{
 		nextIntervalValue = numOfSecondsPassed;
-		while (landmine.getActive() == false)
-		{
-			if (!landmineTexture.initialize(graphics, LANDMINE_IMAGE))
-				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
+		if (!landmineTexture.initialize(graphics, LANDMINE_IMAGE))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 
-			if (!landmine.initialize(this, 60, 30, 1, &landmineTexture))	// 1 since texture has only one image
-				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
-			landmine.draw();
-			landmine.update(frameTime);
-			landmine.setX(rand() % (int(platform1.getWidth())) + platform1.getX());
-			landmine.setY(platform1.getY() - LANDMINE_SIZE);
-		}
+		if (!landmine.initialize(this, 60, 30, 1, &landmineTexture))	// 1 since texture has only one image
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+		landmine.draw();
+		landmine.update(frameTime);
+		landmine.setX(rand() % (int(platform1.getWidth())) + platform1.getX());
+		landmine.setY(platform1.getY() - LANDMINE_SIZE);
 	}
 }
 
