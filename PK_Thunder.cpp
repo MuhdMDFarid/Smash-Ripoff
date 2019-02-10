@@ -1,3 +1,8 @@
+//  Module:				Gameplay Programming
+//  Assignment2:        One Without the Other (OWO)
+//  Student Name:       Lim Wei, Jourdan | Muhammed Bin md Farid | Tsang Hong Kang | Benedict Yee Jian Hui
+//  Student Number:     S10166869D | S10172457K | S10172695F | S10173071G
+
 #include "PK_Thunder.h"
 
 #include "Hitbox.h"
@@ -68,7 +73,7 @@ void PK_Thunder::execute(Player& player)
 
 	//alpha = 35;
 
-	newhitbox->setKnockbackAngle(finalangle(90, player.playerface));
+	newhitbox->setKnockbackAngle(finalangle(60, player.playerface));
 
 	newhitbox->setKnockbackForce(420);
 	newhitbox->setHitStun(1);

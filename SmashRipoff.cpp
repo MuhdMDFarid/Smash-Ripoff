@@ -1,3 +1,8 @@
+//  Module:				Gameplay Programming
+//  Assignment2:        One Without the Other (OWO)
+//  Student Name:       Lim Wei, Jourdan | Muhammed Bin md Farid | Tsang Hong Kang | Benedict Yee Jian Hui
+//  Student Number:     S10166869D | S10172457K | S10172695F | S10173071G
+
 #include "SmashRipoff.h"
 #include "MenuState.h"
 #include "HunterDeathState.h"
@@ -146,8 +151,11 @@ void SmashRipoff::initialize(HWND hwnd)
 	Hinput->bindSpecial(T_KEY);
 	hunter.setPK(Hinput);
 
+	// -- Priestess --
+	// Initializes all the necessary assets
 	if (!priestess.initialize(this, 32, 32, PlayerNS::TEXTURE_COLS, &priestessTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player"));
+
 	PlayerInput_Component* Pinput = new PlayerInput_Component();
 	Pinput->bindUp(UP_KEY);
 	Pinput->bindDown(DOWN_KEY);

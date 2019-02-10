@@ -1,3 +1,8 @@
+//  Module:				Gameplay Programming
+//  Assignment2:        One Without the Other (OWO)
+//  Student Name:       Lim Wei, Jourdan | Muhammed Bin md Farid | Tsang Hong Kang | Benedict Yee Jian Hui
+//  Student Number:     S10166869D | S10172457K | S10172695F | S10173071G
+
 #include "Hunter_SpecialS.h"
 
 //#include "ActiveState.h"
@@ -62,16 +67,16 @@ void Hunter_SpecialS::execute(Player& player)
 	hitarea->right = newhitbox->getSpriteDataRect().right/2;
 	newhitbox->setEdge(*hitarea);
 
-	newhitbox->setScale(1.5);
+	newhitbox->setScale(0.75);
 	delete hitarea;
 
 	newhitbox->setDamage(1);
 	//alpha = 90;
 	newhitbox->setKnockbackAngle(finalangle(90,player.playerface));
 
-	newhitbox->setKnockbackForce(200);
+	newhitbox->setKnockbackForce(150);
 	newhitbox->setHitStun(0.75);
-	newhitbox->setLifetime(15);
+	newhitbox->setLifetime(2);
 
 	// How to push the spawn delay and the hitbox into vector
 	SkillHitbox* newskillhitbox = new SkillHitbox();
