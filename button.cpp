@@ -3,7 +3,7 @@
 //=============================================================================
 // Default Constructor
 //=============================================================================
-Button::Button() : Entity()
+Button::Button()
 {
 	spriteData.width	= buttonNS::WIDTH;			// Size of the button
 	spriteData.height	= buttonNS::HEIGHT;

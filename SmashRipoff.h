@@ -14,7 +14,6 @@
 #include "heart.h"
 #include "button.h"
 #include "Skill.h"
-#include <vector>
 
 //=============================================================================
 // This class is the core of the game

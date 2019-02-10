@@ -20,6 +20,9 @@ PriestessDeathState::PriestessDeathState(SmashRipoff* game)
 	game->exitButton.setX((GAME_WIDTH - buttonNS::WIDTH) / 2);
 	game->exitButton.setY((GAME_HEIGHT / 5) * 4);
 	buttonList.push_back(game->exitButton);
+
+	buttonList[0].setSelectedK(true);
+	buttonList[0].setCurrentFrame(buttonNS::HOVER_BUTTON);
 }
 
 void PriestessDeathState::mainMenu()
@@ -70,15 +73,89 @@ void PriestessDeathState::collisions()
 void PriestessDeathState::handleInput(Input* input)
 {
 	// Keyboard
-	if (input->isKeyDown(VK_UP))
+	if (input->isKeyDown(W_KEY))
 	{
-		//
+		for (int i = 0; i < buttonList.size(); i++)
+		{
+			if (buttonList[i].getSelectedK())
+			{
+				buttonList[i].setSelectedK(false);
+
+				if (i != 0)
+				{
+					// Moves up the list
+					buttonList[i - 1].setSelectedK(true);
+					buttonList[i - 1].setCurrentFrame(buttonNS::HOVER_BUTTON);
+				}
+
+				else if (i == 0)
+				{
+					// Needs to loop around the vector
+					buttonList[buttonList.size() - 1].setSelectedK(true);
+					buttonList[buttonList.size() - 1].setCurrentFrame(buttonNS::HOVER_BUTTON);
+				}
+
+				input->keyUp(W_KEY);		// <-- Doesn't register multiple presses
+				break;
+			}
+		}
 	}
 
-	if (input->isKeyDown(VK_DOWN))
+	if (input->isKeyDown(S_KEY))
 	{
-		//
+		for (int i = 0; i < buttonList.size(); i++)
+		{
+			if (buttonList[i].getSelectedK())
+			{
+				buttonList[i].setSelectedK(false);
+
+				if (i != buttonList.size() - 1)
+				{
+					// Moves down the list
+					buttonList[i + 1].setSelectedK(true);
+					buttonList[i + 1].setCurrentFrame(buttonNS::HOVER_BUTTON);
+				}
+
+				else if (i == buttonList.size() - 1)
+				{
+					// Needs to loop around the vector
+					buttonList[0].setSelectedK(true);
+					buttonList[0].setCurrentFrame(buttonNS::HOVER_BUTTON);
+				}
+
+				input->keyUp(S_KEY);		// <-- Doesn't register multiple presses
+				break;
+			}
+		}
 	}
+
+	if (input->isKeyDown(ENTER_KEY))
+	{
+		for (int i = 0; i < buttonList.size(); i++)
+		{
+			if (buttonList[i].getSelectedK())
+			{
+				// Restart
+				if (i == 0)
+				{
+					buttonList[i].setSelectedK(false);
+					buttonList[i].setCurrentFrame(buttonNS::CLICK_BUTTON);
+					playAgain();
+				}
+
+				// Exit
+				else if (i == 1)
+				{
+					buttonList[i].setSelectedK(false);
+					buttonList[i].setCurrentFrame(buttonNS::CLICK_BUTTON);
+					mainMenu();
+				}
+			}
+		}
+
+		input->keyUp(ENTER_KEY);		// <-- Doesn't register multiple presses
+	}
+
 
 
 	// Mouse
@@ -88,13 +165,13 @@ void PriestessDeathState::handleInput(Input* input)
 		if (buttonList[i].mouseOver(input))
 		{
 			// Changes the frame to look as if it's being hovered
-			buttonList[i].setSelected(true);
+			buttonList[i].setSelectedM(true);
 			buttonList[i].setCurrentFrame(buttonNS::HOVER_BUTTON);
 		}
 
-		else if (!buttonList[i].mouseOver(input))
+		else if (!buttonList[i].mouseOver(input) && !buttonList[i].getSelectedK())
 		{
-			buttonList[i].setSelected(false);
+			buttonList[i].setSelectedM(false);
 			buttonList[i].setCurrentFrame(buttonNS::IDLE_BUTTON);
 		}
 	}
@@ -103,12 +180,11 @@ void PriestessDeathState::handleInput(Input* input)
 	{
 		for (int i = 0; i < buttonList.size(); i++)
 		{
-			if (buttonList[i].getSelected())
+			if (buttonList[i].getSelectedM())
 			{
 				if (i == 0)
 				{
 					// If i == 0, it means this is the start button
-					buttonList[i].setClicked(true);
 					buttonList[i].setCurrentFrame(buttonNS::CLICK_BUTTON);
 					playAgain();
 				}
@@ -116,7 +192,6 @@ void PriestessDeathState::handleInput(Input* input)
 				else if (i == 1)
 				{
 					// If i == 1, it means this is the option button
-					buttonList[i].setClicked(true);
 					buttonList[i].setCurrentFrame(buttonNS::CLICK_BUTTON);
 					input->setMouseLButton(false);		// <-- Doesn't register multiple clicks
 					mainMenu();

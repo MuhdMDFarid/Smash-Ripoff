@@ -15,7 +15,7 @@ namespace buttonNS
 	const int TEXTURE_COLS = 3;				// amount of columns
 	
 	// --Frames--
-	const int currentFrame = 0;				// starts off as idle
+	const int currentFrame = 0;					// starts off as idle
 	const int IDLE_BUTTON = 0;
 	const int HOVER_BUTTON = 1;
 	const int CLICK_BUTTON = 2;
@@ -27,9 +27,9 @@ class Button : public Entity
 private:
 
 	// Checks to see if the button is selected (hovered)
-	bool selected;
-	// Checks to see if the button is clicked
-	bool clicked;
+	bool selectedMouse;
+	// Checks to see if the button is selected (keyboard)
+	bool selectedKey;
 
 public:
 
@@ -39,16 +39,16 @@ public:
 	// ======================
 	// Functions
 	// ======================
-	bool getSelected() { return selected; }
-	void setSelected(bool b)
+	bool getSelectedM() { return selectedMouse; }
+	void setSelectedM(bool b)
 	{
-		selected = b;
+		selectedMouse = b;
 	}
 
-	bool getClicked() { return clicked; }
-	void setClicked(bool b)
+	bool getSelectedK() { return selectedKey; }
+	void setSelectedK(bool b)
 	{
-		clicked = b;
+		selectedKey = b;
 	}
 
 	bool mouseOver(Input* input);
