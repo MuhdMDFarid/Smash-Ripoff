@@ -7,6 +7,7 @@
 #include <vector>
 //#include"ship.h"
 
+//#include "Controlled_Projectile_Hitbox.h"
 #include "Projectile_Hitbox.h"
 #include "Movement_Component.h"
 //#include "Hitbox.h"
@@ -105,6 +106,7 @@ public:
 
 	int playerface;
 
+	// get the PlayerInput Component
 	PlayerInput_Component* getPK() { return pk_bind; }
 	void setPK(PlayerInput_Component* pk) { 
 		delete pk_bind;
@@ -169,6 +171,20 @@ public:
 	// attack
 	void normalS(/*Game*gamePtr, TextureManager*textureM*/);
 	void specialS();
+
+
+	// Movement Component controls
+	float getX_Velocity() { return movement_component->getX_Velocity(); }
+	float getY_Velocity() { return movement_component->getY_Velocity(); }
+
+	float getX_Force() { return movement_component->getX_Force(); }
+	float getY_Force() { return movement_component->getY_Force(); }
+
+	void setX_Velocity(float xV) { movement_component->setX_Velocity(xV); }
+	void setX_Force(float xF) { movement_component->setX_Force(xF); }
+
+	void setY_Velocity(float yV) { movement_component->setY_Velocity(yV); }
+	void setY_Force(float yF) { movement_component->setY_Force(yF); }
 };
 
 #endif // _PLAYER_H

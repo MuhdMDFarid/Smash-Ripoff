@@ -72,7 +72,20 @@ void AttackState::enter(Player& player)
 
 void AttackState::exit(Player& player)
 {
-	
+	//switch (player.airEnum)
+	//{
+	//case STATE_GROUNDED:
+	//	player.setAnimationComplete(false);
+	//	player.setFrames(PlayerNS::P1_IDLE_START, PlayerNS::P1_IDLE_END);
+	//	player.setCurrentFrame(PlayerNS::P1_IDLE_START);
+	//	player.setLoop(true);
+
+	//case STATE_AIRBORNE:
+	//	player.setAnimationComplete(false);
+	//	player.setFrames(PlayerNS::P1_AIRBORNE_START, PlayerNS::P1_AIRBORNE_END);
+	//	player.setCurrentFrame(PlayerNS::P1_AIRBORNE_START);
+	//	player.setLoop(true);		
+	//}
 }
 
 PlayerState* AttackState::interrupt(Player& player,float stunduration)

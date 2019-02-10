@@ -71,6 +71,12 @@
     <ClCompile Include="Hitbox.cpp">
       <Filter>Hitboxes</Filter>
     </ClCompile>
+    <ClCompile Include="PK_Thunder.cpp">
+      <Filter>Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="Controlled_Projectile_Hitbox.cpp">
+      <Filter>Hitboxes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack_Component.h" />
@@ -143,6 +149,12 @@
       <Filter>Hitboxes</Filter>
     </ClInclude>
     <ClInclude Include="Hitbox.h">
+      <Filter>Hitboxes</Filter>
+    </ClInclude>
+    <ClInclude Include="PK_Thunder.h">
+      <Filter>Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="Controlled_Projectile_Hitbox.h">
       <Filter>Hitboxes</Filter>
     </ClInclude>
   </ItemGroup>

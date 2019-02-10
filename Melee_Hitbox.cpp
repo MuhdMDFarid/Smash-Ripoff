@@ -55,6 +55,8 @@ void Melee_Hitbox::collided()
 
 void Melee_Hitbox::activate(Player & player)
 {
+	//setVisible(false);
+	setVisible(true);
 	Hitbox::activate(player);
 	//setCenterX(player.getCenterX());
 	//setCenterY(player.getCenterY());

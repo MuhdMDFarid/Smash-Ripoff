@@ -13,7 +13,7 @@ class Player;
 
 class Projectile_Hitbox : public Hitbox
 {
-private:
+protected:
 	float projectileAcceleration = 10.0f;
 	float projectileIVelocity = 10.0f;
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
@@ -33,11 +33,17 @@ public:
 	//virtual bool initialize(Game* gamePtr, int width, int height, int ncols, TextureManager* textureM);
 	void setForce(int x_force, int y_force);
 
-	void update(float frameTime,Player& player);
+	void setVelocity(int x_velocity, int y_velocity);
+
+	virtual void update(float frameTime,Player& player);
 	void collided();
 	void activate(Player& player);
 	//void remove();
 	//void damage(WEAPON weapon);
+
+	void setAcceleration(float acc) { projectileAcceleration = acc; }		// set the Acceleration value of projectile
+
+	void setIVelocity(float iv) { projectileIVelocity = iv; }				// set the Initial Velocity value of projectile 
 
 	// Movement Component controls
 	float getX_Velocity() { return movement_component->getX_Velocity(); }

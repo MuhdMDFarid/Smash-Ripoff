@@ -1,4 +1,4 @@
-#include "Hunter_NormalS.h"
+#include "PK_Thunder.h"
 
 #include "Hitbox.h"
 //#include "Projectile_Hitbox.h"
@@ -6,7 +6,7 @@
 //#include "CompletedState.h"
 //#include "InactiveState.h"
 
-Hunter_NormalS::Hunter_NormalS()
+PK_Thunder::PK_Thunder()
 {
 	//std::vector<SkillHitbox*> Hitboxlist;
 
@@ -19,11 +19,11 @@ Hunter_NormalS::Hunter_NormalS()
 }
 
 
-Hunter_NormalS::~Hunter_NormalS()
+PK_Thunder::~PK_Thunder()
 {
 }
 
-void Hunter_NormalS::execute(Player& player)
+void PK_Thunder::execute(Player& player)
 {
 	Skill::execute(player);
 
@@ -40,7 +40,9 @@ void Hunter_NormalS::execute(Player& player)
 	// initialize all the hitboxes and adds to the vector
 
 	// FIRST HITBOX
-	newhitbox = new Melee_Hitbox();
+	newhitbox = new Controlled_Projectile_Hitbox();
+	newhitbox->setAcceleration(500);
+	newhitbox->setY_Velocity(-400);
 
 	// create hitbox
 	if (!newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
@@ -55,8 +57,8 @@ void Hunter_NormalS::execute(Player& player)
 	RECT* hitarea = new RECT();
 	hitarea->top = -newhitbox->getSpriteDataRect().bottom / 2;
 	hitarea->bottom = newhitbox->getSpriteDataRect().bottom / 2;
-	hitarea->left = -newhitbox->getSpriteDataRect().right;
-	hitarea->right = newhitbox->getSpriteDataRect().right;
+	hitarea->left = -newhitbox->getSpriteDataRect().right/2;
+	hitarea->right = newhitbox->getSpriteDataRect().right/2;
 	newhitbox->setEdge(*hitarea);
 	//hitarea = nullptr;
 	delete hitarea;
@@ -69,6 +71,7 @@ void Hunter_NormalS::execute(Player& player)
 
 	newhitbox->setKnockbackForce(50);
 	newhitbox->setHitStun(0.3);
+	newhitbox->setLifetime(15);
 
 	// How to push the spawn delay and the hitbox into vector
 	SkillHitbox* newskillhitbox = new SkillHitbox();
@@ -76,47 +79,10 @@ void Hunter_NormalS::execute(Player& player)
 	newskillhitbox->spawndelay = 0.2;
 	Hitboxlist.push_back(newskillhitbox);
 
-	// SECOND HITBOX
-	newhitbox = new Melee_Hitbox();
-	//newhitbox->setX_Velocity(100);
-	
-	// create hitbox
-	if (!newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
-	newhitbox->setActive(false);
-	newhitbox->setVisible(false);
-
-	newhitbox->setFrameDelay(0.05);
-	newhitbox->setFrames(28, 31);
-	//newhitbox->setCurrentFrame(28);
-
-	hitarea = new RECT();
-	hitarea->top = -newhitbox->getSpriteDataRect().bottom / 2;
-	hitarea->bottom = newhitbox->getSpriteDataRect().bottom / 2;
-	hitarea->left = -newhitbox->getSpriteDataRect().right;
-	hitarea->right = newhitbox->getSpriteDataRect().right;
-	newhitbox->setEdge(*hitarea);
-
-	newhitbox->setScale(1.5);
-	delete hitarea;
-
-	newhitbox->setDamage(1);
-	//alpha = 90;
-	newhitbox->setKnockbackAngle(finalangle(75,player.playerface));
-
-	newhitbox->setKnockbackForce(420);
-	newhitbox->setHitStun(1);
-	newhitbox->setLifetime(0.2);
-
-	// How to push the spawn delay and the hitbox into vector
-	newskillhitbox = new SkillHitbox();
-	newskillhitbox->hitbox = newhitbox;
-	newskillhitbox->spawndelay = 0.5;
-	Hitboxlist.push_back(newskillhitbox);
 	
 }
 
-//void Hunter_NormalS::update(Player& player, float frameTime)
+//void PK_Thunder::update(Player& player, float frameTime)
 //{
 //	if (!Hitboxlist.empty())
 //	{
@@ -167,7 +133,7 @@ void Hunter_NormalS::execute(Player& player)
 //	}
 //}
 
-void Hunter_NormalS::cancel()
+void PK_Thunder::cancel()
 {
 	// delete all Hitboxes from list
 	// end skill
@@ -196,7 +162,7 @@ void Hunter_NormalS::cancel()
 //{
 //}
 
-//void Hunter_NormalS::draw()
+//void PK_Thunder::draw()
 //{
 //	for (std::vector<SkillHitbox*>::iterator it = Hitboxlist.begin(); it != Hitboxlist.end(); )
 //	{
@@ -205,7 +171,7 @@ void Hunter_NormalS::cancel()
 //	}
 //}
 
-//float Hunter_NormalS::finalangle(float alpha,int xdirection)	// calculate actual angle based on playerface
+//float PK_Thunder::finalangle(float alpha,int xdirection)	// calculate actual angle based on playerface
 //{
 //	//  alpha<=90 degrees
 //	if (xdirection < 0) { xdirection = -1; }

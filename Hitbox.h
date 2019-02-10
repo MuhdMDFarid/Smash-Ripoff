@@ -52,5 +52,8 @@ public:
 	virtual void setY_Velocity(float yV) {};
 	virtual void setY_Force(float yF) {};
 
+	virtual void setAcceleration(float acc) {};		// set the Acceleration value of projectile
+	virtual void setIVelocity(float iv) {};			// set the Initial Velocity value of projectile 
+
 };
 #endif

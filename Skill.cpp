@@ -175,16 +175,8 @@ void Skill::update(Player& player, float frameTime)
 				{ 
 					// set hitbox to active
 					(*it)->hitbox->activate(player);
-
 				}					
-				// Sets the X coords of the hitbox based on the direction player faces
-				//(*it)->hitbox->setCenterX(player.getCenterX()+(player.playerface)*(*it)->hitbox->getEdge().right*(*it)->hitbox->getScale());
-				//(*it)->hitbox->update(frameTime,player);
-				// Sets the Y coords of the hitbox based on the center of the player
-				//(*it)->hitbox->setCenterY(player.getCenterY());						//centers the Y coords of hitbox to player
-
 			}
-
 			else if ((*it)->spawndelay > 0)			// updating spawn delay
 			{
 				(*it)->spawndelay -= frameTime;
@@ -193,7 +185,7 @@ void Skill::update(Player& player, float frameTime)
 
 			if ((*it)->hitbox->getActive())
 			{
-				//SAFE_DELETE(*it);
+				SAFE_DELETE(*it);
 				it = Hitboxlist.erase(it);
 			}
 			else

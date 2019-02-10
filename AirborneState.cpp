@@ -89,7 +89,7 @@ void AirborneState::enter(Player& player)
 {
 	player.airEnum = STATE_AIRBORNE;
 
-	if (player.airEnum != STATE_ATTACK)
+	if (player.actionEnum == STATE_IDLE)
 	{
 		player.setAnimationComplete(false);
 		player.setFrames(PlayerNS::P1_AIRBORNE_START, PlayerNS::P1_AIRBORNE_END);

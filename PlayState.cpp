@@ -124,6 +124,7 @@ void PlayState::collisions()
 				//game->player.getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
 				//game->player.interrupt(0.5);
 				game->priestess.hitted((*it)->getDamageC());
+				(*it)->collided();
 				break;
 			}
 			it++;
@@ -141,6 +142,7 @@ void PlayState::collisions()
 				//game->player.getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
 				//game->player.interrupt(0.5);
 				game->hunter.hitted((*it)->getDamageC());
+				(*it)->collided();
 				break;
 			}
 			it++;
@@ -382,6 +384,8 @@ void PlayState::handleInput(Input* input)
 void PlayState::playercollision(Player* p)
 {
 	VECTOR2 collisionVector;
+	bool platformcollided = false;
+
 	if (p->collidesWith(game->platform1, collisionVector))
 	{
 		// PROTOTYPE COLLISION Detection
@@ -398,13 +402,24 @@ void PlayState::playercollision(Player* p)
 			{	// this is to prevent reseting velocity when player is jumping from the side up wards
 				p->getMovementComponent()->setY_Velocity(0);
 			}
-
+			platformcollided = true;
 			//player.setJump(true);
 			//player.grounded = true;
-			if (p->airEnum != STATE_GROUNDED)
-			{
-				p->landed();
-			}
+			//if (platformcollided) 
+			//{
+			//	if (p->airEnum != STATE_GROUNDED)
+			//	{
+			//		p->landed();
+			//	}
+			//}
+			//else
+			//{
+			//	if (p->airEnum != STATE_AIRBORNE)
+			//	{
+			//		// WHY DOES player keep running fall() even when on platform
+			//		p->fall();
+			//	}
+			//}
 		}
 
 		else if (p->getCenterX() + p->getEdge().right * p->getScale() >= game->platform1.getCenterX() + game->platform1.getEdge().left * game->platform1.getScale()
@@ -479,14 +494,11 @@ void PlayState::playercollision(Player* p)
 			// player collides from the bottom of the platform
 		}*/
 	}
-	else			// If not colliding with platforms 
-	{
-		if (p->airEnum != STATE_AIRBORNE)
-		{
-			p->fall();
-		}
+	//else			// If not colliding with platforms 
+	//{
 
-	}
+
+	//}
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
 		if (p->collidesWith(game->platformUpList[i], collisionVector))
@@ -505,11 +517,12 @@ void PlayState::playercollision(Player* p)
 					p->setY(game->platformUpList[i].getCenterY() + game->platformUpList[i].getEdge().top * game->platformUpList[i].getScale()
 						- p->getHeight());		// prevents player from moving past the left side of platformUpList[i]
 				}
+				platformcollided = true;
 
-				if (p->airEnum != STATE_GROUNDED)
-				{
-					p->landed();
-				}
+				//if (p->airEnum != STATE_GROUNDED)
+				//{
+				//	p->landed();
+				//}
 			}
 			// end of PROTOTYPE COLLISION DETECTION
 		}
@@ -532,11 +545,12 @@ void PlayState::playercollision(Player* p)
 					p->setY(game->platformDownList[i].getCenterY() + game->platformDownList[i].getEdge().top * game->platformDownList[i].getScale()
 						- p->getHeight());		// prevents player from moving past the left side of platformDownList[i]
 				}
-
+				platformcollided = true;
+/*
 				if (p->airEnum != STATE_GROUNDED)
 				{
 					p->landed();
-				}
+				}*/
 			}
 			// end of PROTOTYPE COLLISION DETECTION
 		}
@@ -544,5 +558,21 @@ void PlayState::playercollision(Player* p)
 	if (p->collidesWith(game->potion, collisionVector))
 	{
 		game->potion.apply(p);
+	}
+
+	if (platformcollided)
+	{
+		if (p->airEnum != STATE_GROUNDED)
+		{
+			p->landed();
+		}
+	}
+	else
+	{
+		if (p->airEnum != STATE_AIRBORNE)
+		{
+			// WHY DOES player keep running fall() even when on platform
+			p->fall();
+		}
 	}
 }

@@ -89,7 +89,7 @@ void GroundedState::enter(Player & player)
 	player.airEnum = STATE_GROUNDED;
 	player.airJump = true;
 
-	if (player.actionEnum != STATE_ATTACK)
+	if (player.actionEnum == STATE_IDLE)
 	{
 		player.setAnimationComplete(false);
 		player.setFrames(PlayerNS::P1_IDLE_START, PlayerNS::P1_IDLE_END);

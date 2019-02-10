@@ -4,6 +4,7 @@
 
 Hitbox::Hitbox()
 {
+
 	Lifetime = 0.1f;
 	Expired = false;
 	collisionType = entityNS::BOX;
@@ -61,7 +62,7 @@ void Hitbox::update(float frameTime,Player& player)
 void Hitbox::activate(Player& player)
 {
 	// set hitbox to active
-	setVisible(true);
+	//setVisible(true);
 	setActive(true);
 	player.hitboxlist.push_back(this);
 }

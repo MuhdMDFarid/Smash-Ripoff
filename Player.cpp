@@ -11,6 +11,10 @@
 #include "Skill.h"
 #include "Hunter_NormalS.h"
 #include "Hunter_SpecialS.h"
+#include "PK_Thunder.h"
+
+#include "Controlled_Projectile_Hitbox.h"
+
 //#include <cstdlib>	// for random
 
 Player::Player() : Entity()
@@ -110,24 +114,20 @@ void Player::update(float frameTime)
 	{
 		speedmultiplier = 1;
 	}
-	// GRAVITY SIMULATION
-	//if (!grounded)	//grounded is the state if the player is not airborne
-	//{
-		//movement_component->setY_Velocity(movement_component->getY_Velocity() + GRAVITY * frameTime);
-	//}
+
 	//	Handling the movement
 
 	// using MOVEMENT_COMPONENT
-	movement_component->setY_Velocity(movement_component->getY_Velocity() + movement_component->getY_Force()*frameTime);
+	setY_Velocity(getY_Velocity() + getY_Force()*frameTime);
 	/// If the player moving over limit, do not add force. (move to a function)
 	// limit maximum velocity
-	if (movement_component->getX_Velocity() < MovementNS::MAX_VELOCITY*speedmultiplier && movement_component->getX_Force()>=0)		// if X velocity reached max towards the right 
+	if (getX_Velocity() < MovementNS::MAX_VELOCITY*speedmultiplier && getX_Force()>=0)		// if X velocity reached max towards the right 
 	{
-		movement_component->setX_Velocity(movement_component->getX_Velocity() + movement_component->getX_Force()*frameTime);
+		setX_Velocity(getX_Velocity() + getX_Force()*frameTime);
 	}
-	else if (movement_component->getX_Velocity() > -MovementNS::MAX_VELOCITY*speedmultiplier && movement_component->getX_Force()<=0)		// if X velocity reached max towards the left
+	else if (getX_Velocity() > -MovementNS::MAX_VELOCITY*speedmultiplier && getX_Force()<=0)		// if X velocity reached max towards the left
 	{
-		movement_component->setX_Velocity(movement_component->getX_Velocity() + movement_component->getX_Force()*frameTime);
+		setX_Velocity(getX_Velocity() + getX_Force()*frameTime);
 	}
 	///
 
@@ -138,8 +138,8 @@ void Player::update(float frameTime)
 	//}
 
 	// set coordinates for actual movement
-	spriteData.x = spriteData.x + movement_component->getX_Velocity()*frameTime;
-	spriteData.y = spriteData.y + movement_component->getY_Velocity()*frameTime;
+	spriteData.x = spriteData.x + getX_Velocity()*frameTime;
+	spriteData.y = spriteData.y + getY_Velocity()*frameTime;
 
 	///////////////////////////////
 	//  to make the player loop back on screen may not need in future cos they die
@@ -155,7 +155,7 @@ void Player::update(float frameTime)
 	if (getY() > GAME_HEIGHT - getHeight()*getScale())
 	{
 		setY(GAME_HEIGHT - getHeight()*getScale() + 1);
-		movement_component->setY_Velocity(0);
+		setY_Velocity(0);
 		//airJump = true;		// reset the jump to enable jump
 		landed();
 	}
@@ -163,7 +163,7 @@ void Player::update(float frameTime)
 	{
 		setY(-(int)GAME_HEIGHT/5);
 	//	setY(0-GAME_HEIGHT*0);
-		movement_component->setY_Velocity(0);
+		setY_Velocity(0);
 	}
 	//////////////////////////
 
@@ -198,8 +198,8 @@ void Player::update(float frameTime)
 
 void Player::move(int x_force,int y_force)		// change the force on the char for movement
 {
-	movement_component->setX_Force(x_force);
-	movement_component->setY_Force(y_force);
+	setX_Force(x_force);
+	setY_Force(y_force);
 	//movement_component->addX_Force(x_force);
 	//movement_component->addY_Force(y_force);
 
@@ -233,30 +233,6 @@ void Player::shoot(Game*gamePtr,int x_target, int y_target, TextureManager *text
 
 }
 
-//void Player::updateProjectiles(float frameTime)
-//{
-//	// delete projectiles that are out of boundary can be placed in projectile.update()
-//	for (std::vector<Projectile_Hitbox*>::iterator it = projectilelist.begin(); it != projectilelist.end(); )
-//	{
-//		if ((*it)->getX() > GAME_WIDTH || (*it)->getX() < -(*it)->getWidth()/2 || (*it)->getY() > GAME_HEIGHT || (*it)->getY() < -(*it)->getHeight())
-//		{
-//			it = deleteProjectile(it);
-//		}
-//		else
-//		{
-//			it++;
-//		}
-//	}
-//
-//	// update projectiles
-//	if (!projectilelist.empty())
-//	{
-//		for (int i = 0; i < projectilelist.size(); i++)
-//		{
-//			projectilelist[i]->update(frameTime);
-//		}
-//	}
-//}
 
 std::vector<Projectile_Hitbox*>::iterator Player::deleteProjectile(std::vector<Projectile_Hitbox*>::iterator it)
 {
@@ -288,7 +264,8 @@ void Player::normalS(/*Game * gamePtr, TextureManager * textureM*/)
 
 void Player::specialS()
 {
-	Skill* nskill = new Hunter_SpecialS();
+	Skill* nskill = new PK_Thunder();
+	//Skill* nskill = new Hunter_SpecialS();
 	if (nskill != NULL)
 	{
 		delete skill;
@@ -352,12 +329,18 @@ void Player::deleteHitbox()		// deletes all hitboxes for now
 
 void Player::landed()
 {
-	airborne = new GroundedState();
+	PlayerState* astate = new GroundedState();
+	airborne->exit(*this);
+	delete airborne;
+	airborne = astate;
 	airborne->enter(*this);
 }
 void Player::fall()
 {
-	airborne = new AirborneState();
+	PlayerState* astate = new AirborneState();
+	airborne->exit(*this);
+	delete airborne;
+	airborne = astate;
 	airborne->enter(*this);
 	//airEnum = STATE_AIRBORNE;	// should put in GroundedState::enter()
 }
@@ -428,19 +411,19 @@ void Player::interrupt(float stunduration)
 
 void Player::knockback(float xV,float yV)		// get x/y forces or the hitbox itself
 {
-	getMovementComponent()->setX_Velocity(xV);
-	getMovementComponent()->setY_Velocity(yV);
+	setX_Velocity(xV);
+	setY_Velocity(yV);
 
 	//getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
 }
 
 void Player::hitted(Damage_Component* damageC)		// when player got
 {
-	float xV = damageC->calculateVector().x;
-	float yV = damageC->calculateVector().y;
+	float xV = damageC->calculateVector().x/**damage*/;
+	float yV = damageC->calculateVector().y/**damage*/;
 	
 	interrupt(damageC->getStun());
 	knockback(xV, yV);
 	//damage code to receive damage
-
+	//damagemeter+=damageC->getDamage()
 }
