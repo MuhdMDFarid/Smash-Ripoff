@@ -61,27 +61,6 @@ void PlayState::draw()
 		game->pushState(new PriestessDeathState(game));
 		game->priestessDeath = false;
 	}
-
-	// DEBUG
-	// Print message
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "fps %d, Press ESC to pause", (int)game->getfps());
-		game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 3, GAME_HEIGHT / 8);
-
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "X-Vel: %d", (int)game->hunter.getMovementComponent()->getX_Velocity());
-		game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, GAME_HEIGHT / 5);
-
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Vel: %d", (int)game->hunter.getMovementComponent()->getY_Velocity());
-		game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 2 * GAME_HEIGHT / 5);
-
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "X-Force: %d", (int)game->hunter.getMovementComponent()->getX_Force());
-		game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 3 * GAME_HEIGHT / 5);
-
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "Y-Force: %d", (int)game->hunter.getMovementComponent()->getY_Force());
-		game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 4 * GAME_HEIGHT / 5);
-
-		_snprintf_s(gameNS::buffer, gameNS::BUF_SIZE, "projectiles: %d", (int)game->hunter.jumpcooldown);
-		game->buttonFont.printC(gameNS::buffer, GAME_WIDTH / 2, 0 * GAME_HEIGHT / 5);
-	//
 }
 
 void PlayState::update(float frameTime)

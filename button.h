@@ -31,9 +31,9 @@ class Button : public Entity
 private:
 
 	// Checks to see if the button is selected (hovered)
-	bool selectedMouse;
+	bool selectedMouse = false;
 	// Checks to see if the button is selected (keyboard)
-	bool selectedKey;
+	bool selectedKey = false;
 
 public:
 
