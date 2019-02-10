@@ -76,7 +76,6 @@ void MenuState::collisions()
 
 void MenuState::handleInput(Input* input)
 {
-	buttonList.size();
 	// Keyboard
 	if (input->isKeyDown(W_KEY))
 	{
@@ -174,6 +173,9 @@ void MenuState::handleInput(Input* input)
 	// Mouse
 	for (int i = 0; i < buttonList.size(); i++)
 	{
+		// Resets 'Selected' state
+		buttonList[i].setSelectedM(false);
+
 		// Checks to see which button is hovered over
 		if (buttonList[i].mouseOver(input))
 		{

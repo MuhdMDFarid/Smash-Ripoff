@@ -4,7 +4,6 @@
 
 #include "entity.h"
 #include "constants.h"
-#include <vector>
 
 namespace buttonNS
 {
@@ -27,9 +26,9 @@ class Button : public Entity
 private:
 
 	// Checks to see if the button is selected (hovered)
-	bool selectedMouse=false;
+	bool selectedMouse;
 	// Checks to see if the button is selected (keyboard)
-	bool selectedKey = false;
+	bool selectedKey;
 
 public:
 

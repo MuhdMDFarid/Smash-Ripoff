@@ -623,6 +623,6 @@ void SmashRipoff::resetGame()
 	hunter.setX(0);
 	hunter.setY(0);
 
-	priestess.setX(GAME_WIDTH-priestess.getWidth()*priestess.getScale());
+	priestess.setX(GAME_WIDTH-priestess.getWidth() * priestess.getScale());
 	priestess.setY(0);
 }

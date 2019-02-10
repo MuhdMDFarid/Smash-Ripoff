@@ -3,10 +3,8 @@
 //=============================================================================
 // Default Constructor
 //=============================================================================
-Button::Button()
+Button::Button() : Entity()
 {
-	selectedMouse = false;
-	selectedKey = false;
 	spriteData.width	= buttonNS::WIDTH;			// Size of the button
 	spriteData.height	= buttonNS::HEIGHT;
 	spriteData.x		= buttonNS::X;				// Location of the button
