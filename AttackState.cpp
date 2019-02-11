@@ -30,7 +30,7 @@ void AttackState::update(Player& player, float frameTime)
 	// when Attack is Completed SHOULDN'T BE BASED ON ANIMATION
 	// Some animation shouldn't be cancelled like attack animations
 	//if (player.getAnimationComplete()||player.getCurrentFrame()<player.getStartFrame()/*when moveset is ended*/)
-	if(player.skill->isFinished())
+	if(player.activeSkill->isFinished())
 	{// if condition should be based on moveset rather than animation i think
 		PlayerState* istate = new IdleState();
 		if (istate != NULL)
@@ -97,6 +97,6 @@ PlayerState* AttackState::interrupt(Player& player,float stunduration)
 {
 	// code to cancel all attacks
 	//...
-	player.skill->cancel();
+	player.activeSkill->cancel();
 	return PlayerState::interrupt(player,stunduration);		// temporary interrupt code
 }

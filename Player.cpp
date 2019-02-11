@@ -15,7 +15,7 @@
 // Skill related classes
 #include "Skill.h"
 #include "Hunter_NormalS.h"
-#include "Hunter_SpecialS.h"
+#include "PK_Fire.h"
 #include "PK_Thunder.h"
 
 #include "Controlled_Projectile_Hitbox.h"
@@ -55,9 +55,9 @@ Player::Player() : Entity()
 	edge.left = -TILE_SIZE / 2;
 	edge.right = TILE_SIZE / 2;
 
-	skill = new Skill();
-	//normals = new Hunter_NormalS();
-	//specials = new Hunter_SpecialS();
+	skillSet.push_back(new Hunter_NormalS());
+	skillSet.push_back(new PK_Fire());
+	activeSkill = skillSet[0];
 		
 	pk_bind = new PlayerInput_Component();
 }
@@ -73,7 +73,7 @@ void Player::draw()
 	// hitbox_component draw() method-ish
 	drawHitboxes();
 
-	skill->draw();
+	activeSkill->draw();
 	//specials->draw();
 
 	Entity::draw();
@@ -138,11 +138,6 @@ void Player::update(float frameTime)
 	///
 
 
-	//if (movement_component->getY_Velocity() > MovementNS::MAX_VELOCITY)		
-	//{
-	//	movement_component->setY_Velocity(MovementNS::MAX_VELOCITY);
-	//}
-
 	// set coordinates for actual movement
 	spriteData.x = spriteData.x + getX_Velocity()*frameTime;
 	spriteData.y = spriteData.y + getY_Velocity()*frameTime;
@@ -184,12 +179,11 @@ void Player::update(float frameTime)
 
 	Entity::update(frameTime);
 
-	// update projectiles/hitboxes
-	//updateProjectiles(frameTime);
 	updateHitboxes(frameTime);
 
 	try {
-		skill->update(*this, frameTime);
+		//if (actionEnum = STATE_ATTACK)
+			activeSkill->update(*this, frameTime);
 	}
 	catch (const std::exception e)
 	{
@@ -209,12 +203,19 @@ void Player::death()
 
 }
 
+void Player::setSkillSet(std::vector<Skill*> newSkillSet)
+{
+	skillSet.clear();
+	for (int i = 0; i < newSkillSet.size(); i++)
+	{
+		skillSet.push_back(newSkillSet[i]);
+	}
+}
+
 void Player::move(int x_force,int y_force)		// change the force on the char for movement
 {
 	setX_Force(x_force);
 	setY_Force(y_force);
-	//movement_component->addX_Force(x_force);
-	//movement_component->addY_Force(y_force);
 
 }
 
@@ -259,32 +260,40 @@ void Player::setJump(bool canjump)
 }
 
 // punch supposedly takes from the moveset
-void Player::normalS(/*Game * gamePtr, TextureManager * textureM*/)
+void Player::useSkill(int skillno)
 {
+	Skill* skill = skillSet[skillno];
+	if (skill != NULL)
+	{
+		activeSkill = skill;
+		activeSkill->execute(*this);
+		skill = nullptr;
+	}
 	// Attack Prototype
 	//skill.excecute(*this);
 	
 	//skill = new Skill();
-	Skill* nskill = new Hunter_SpecialS();
-	if (nskill != NULL)
-	{
-		delete skill;
-		skill = nskill;
-	}
-	skill->execute(*this);
+	//Skill* nskill = new PK_Fire();
+	//if (nskill != NULL)
+	//{
+	//	delete activeSkill;
+	//	activeSkill = nskill;
+	//}
+	//activeSkill->execute(*this);
 	//
 }
+
 
 void Player::specialS()
 {
 	Skill* nskill = new PK_Thunder();
-	//Skill* nskill = new Hunter_SpecialS();
+	//Skill* nskill = new PK_Fire();
 	if (nskill != NULL)
 	{
-		delete skill;
-		skill = nskill;
+		delete activeSkill;
+		activeSkill = nskill;
 	}
-	skill->execute(*this);
+	activeSkill->execute(*this);
 }
 
 void Player::drawHitboxes()

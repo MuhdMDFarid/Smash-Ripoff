@@ -157,6 +157,7 @@
     <ClCompile Include="Attack_Component.cpp" />
     <ClCompile Include="Controlled_Projectile_Hitbox.cpp" />
     <ClCompile Include="Hitbox.cpp" />
+    <ClCompile Include="Hunter_SpecialS.cpp" />
     <ClCompile Include="Landmine.cpp" />
     <ClCompile Include="Melee_Hitbox.cpp" />
     <ClCompile Include="button.cpp" />
@@ -169,13 +170,14 @@
     <ClCompile Include="HealthPotion.cpp" />
     <ClCompile Include="heart.cpp" />
     <ClCompile Include="HunterDeathState.cpp" />
-    <ClCompile Include="Hunter_SpecialS.cpp" />
+    <ClCompile Include="PK_Fire.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="meteor.cpp" />
     <ClCompile Include="Movement_Component.cpp" />
     <ClCompile Include="Hunter_NormalS.cpp" />
     <ClCompile Include="OptionState.cpp" />
@@ -206,6 +208,7 @@
     <ClInclude Include="Attack_Component.h" />
     <ClInclude Include="Controlled_Projectile_Hitbox.h" />
     <ClInclude Include="Hitbox.h" />
+    <ClInclude Include="Hunter_SpecialS.h" />
     <ClInclude Include="Landmine.h" />
     <ClInclude Include="Melee_Hitbox.h" />
     <ClInclude Include="button.h" />
@@ -221,13 +224,14 @@
     <ClInclude Include="HealthPotion.h" />
     <ClInclude Include="heart.h" />
     <ClInclude Include="HunterDeathState.h" />
-    <ClInclude Include="Hunter_SpecialS.h" />
+    <ClInclude Include="PK_Fire.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="meteor.h" />
     <ClInclude Include="Movement_Component.h" />
     <ClInclude Include="Hunter_NormalS.h" />
     <ClInclude Include="OptionState.h" />

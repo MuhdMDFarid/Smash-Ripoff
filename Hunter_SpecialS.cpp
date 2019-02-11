@@ -5,20 +5,15 @@
 
 #include "Hunter_SpecialS.h"
 
+#include "Hitbox.h"
+//#include "Projectile_Hitbox.h"
 //#include "ActiveState.h"
 //#include "CompletedState.h"
 //#include "InactiveState.h"
 
 Hunter_SpecialS::Hunter_SpecialS()
 {
-	//std::vector<SkillHitbox*> Hitboxlist;
-
 	finished = false;
-	//SkillHitbox* newskillhitbox = new SkillHitbox();
-	//newskillhitbox->spawndelay = 1;
-	//newskillhitbox->hitbox = new Attack_Hitbox();
-	//Hitboxlist.push_back(newskillhitbox);
-
 }
 
 
@@ -29,63 +24,51 @@ Hunter_SpecialS::~Hunter_SpecialS()
 void Hunter_SpecialS::execute(Player& player)
 {
 	Skill::execute(player);
-	mciSendString("close sounds/PK_FIRE.mp3", NULL, 0, NULL);
 
-	// State version of skill
-	///
-	/*
-	state = new ActiveState();
-	state->enter();*/
-	///
-	//float alpha = 0;		//  alpha<=90 degrees
+
 	float fangle = 0;
-	endLag = 0.75f;
-	int projectiles = 3;
+	endLag = 0.2f;
+
 	// initialize all the hitboxes and adds to the vector
-	for (int i = 0; i < projectiles;i++ )
-	{
-		newhitbox = new Projectile_Hitbox();
 
-		// set movement of projectile
-		newhitbox->setX_Velocity((200 +i*50)* player.playerface);
-		newhitbox->setY_Velocity(-(450+i*50));
-		newhitbox->setY_Force(GRAVITY);
+	// FIRST HITBOX
+	newhitbox = new Projectile_Hitbox();
+	newhitbox->setX_Force(player.playerface*SkillNS::HUNTER_SPEC_ACC);
+	newhitbox->setX_Velocity(player.playerface*SkillNS::HUNTER_SPEC_VEL);
 
-		// create hitbox
-		if (!newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
-		newhitbox->setActive(false);
-		newhitbox->setVisible(false);
+	// create hitbox
+	if (!newhitbox->initialize(player.game, TILE_SIZE, TILE_SIZE, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
+	newhitbox->setActive(false);
+	newhitbox->setVisible(false);
 
-		newhitbox->setFrameDelay(0.05);
-		newhitbox->setFrames(28, 31);
-		//newhitbox->setCurrentFrame(28);
+	newhitbox->setFrameDelay(0.05);
+	newhitbox->setFrames(28, 31);
 
-		RECT* hitarea = new RECT();
-		hitarea->top = -newhitbox->getSpriteDataRect().bottom / 2;
-		hitarea->bottom = newhitbox->getSpriteDataRect().bottom / 2;
-		hitarea->left = -newhitbox->getSpriteDataRect().right / 2;
-		hitarea->right = newhitbox->getSpriteDataRect().right / 2;
-		newhitbox->setEdge(*hitarea);
+	// set hitbox rect
+	RECT* hitarea = new RECT();
+	hitarea->top = -newhitbox->getSpriteDataRect().bottom / 2;
+	hitarea->bottom = newhitbox->getSpriteDataRect().bottom / 2;
+	hitarea->left = -newhitbox->getSpriteDataRect().right / 2;
+	hitarea->right = newhitbox->getSpriteDataRect().right / 2;
+	newhitbox->setEdge(*hitarea);
+	//hitarea = nullptr;
+	delete hitarea;
 
-		newhitbox->setScale(0.75);
-		delete hitarea;
 
-		newhitbox->setDamage(50);
-		//alpha = 90;
-		newhitbox->setKnockbackAngle(finalangle(90, player.playerface));
+	//alpha = 35;
+	newhitbox->setScale(SkillNS::HUNTER_SPEC_SCA);
+	newhitbox->setKnockbackAngle(finalangle(SkillNS::HUNTER_SPEC_ANG, player.playerface));
+	newhitbox->setDamage(SkillNS::HUNTER_SPEC_DMG);
+	newhitbox->setKnockbackForce(SkillNS::HUNTER_SPEC_KNB);
+	newhitbox->setHitStun(SkillNS::HUNTER_SPEC_STN);
+	newhitbox->setLifetime(SkillNS::HUNTER_SPEC_LIF);
 
-		newhitbox->setKnockbackForce(69);
-		newhitbox->setHitStun(0.75);
-		newhitbox->setLifetime(2);
-
-		// How to push the spawn delay and the hitbox into vector
-		SkillHitbox* newskillhitbox = new SkillHitbox();
-		newskillhitbox->hitbox = newhitbox;
-		newskillhitbox->spawndelay = 0.75;
-		Hitboxlist.push_back(newskillhitbox);
-	}
-	mciSendString("play sounds/PK_FIRE.mp3", NULL, 0, NULL);
+	// How to push the spawn delay and the hitbox into vector
+	SkillHitbox* newskillhitbox = new SkillHitbox();
+	newskillhitbox->hitbox = newhitbox;
+	newskillhitbox->spawndelay = 0.2;
+	Hitboxlist.push_back(newskillhitbox);
 
 }
 
@@ -94,5 +77,46 @@ void Hunter_SpecialS::cancel()
 	// delete all Hitboxes from list
 	// end skill
 	Skill::cancel();
+
+	//if (!Hitboxlist.empty())
+	//{
+	//	for (std::vector<SkillHitbox*>::iterator it = Hitboxlist.begin(); it != Hitboxlist.end(); )
+	//	{
+
+	//		//SAFE_DELETE((*it)->hitbox);
+	//		SAFE_DELETE(*it);
+	//		it = Hitboxlist.erase(it);
+	//		
+	//		//else
+	//		//{
+	//		//	it++;
+	//		//}
+	//	}
+	//}
+	//finished = true;
 	
 }
+
+//void Skill::completed()
+//{
+//}
+
+//void Hunter_SpecialS::draw()
+//{
+//	for (std::vector<SkillHitbox*>::iterator it = Hitboxlist.begin(); it != Hitboxlist.end(); )
+//	{
+//		(*it)->hitbox->draw();
+//		it++;
+//	}
+//}
+
+//float Hunter_SpecialS::finalangle(float alpha,int xdirection)	// calculate actual angle based on playerface
+//{
+//	//  alpha<=90 degrees
+//	if (xdirection < 0) { xdirection = -1; }
+//	else { xdirection = 1; }
+//
+//	float finalangle = 90 - (90 - alpha)*(xdirection);
+//
+//	return finalangle;
+//}

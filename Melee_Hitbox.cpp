@@ -56,6 +56,7 @@ void Melee_Hitbox::update(float frameTime,Player& player)
 void Melee_Hitbox::collided()
 {
 	// when hitbox collides
+	Expired = true;
 }
 
 void Melee_Hitbox::activate(Player & player)

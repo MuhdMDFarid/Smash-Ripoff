@@ -17,6 +17,7 @@
 #include "Platform.h"
 #include "RotatingPlatform.h"
 #include "Landmine.h"
+#include "meteor.h"
 #include "SpeedPotion.h"
 #include "HealthPotion.h"
 #include "heart.h"
@@ -54,6 +55,9 @@ private:
 	//landmine
 	TextureManager landmineTexture;
 	//bool shootable = true;
+
+	// meteor
+	TextureManager meteorTexture;
 
 	// --Hearts--
 	//static const int MAX_HEALTH = 3;
@@ -146,6 +150,7 @@ public:
 	Platform platformUpList[NO_PLATFORMS];
 	Platform platformDownList[NO_PLATFORMS];
 	Landmine landmine;
+	Meteor meteor;
 	Image heart;
 	// Players' Health
 	bool hunterDeath = false;

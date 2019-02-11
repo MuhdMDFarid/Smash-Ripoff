@@ -48,7 +48,7 @@ void Hunter_NormalS::execute(Player& player)
 	newhitbox = new Melee_Hitbox();
 
 	// create hitbox
-	if (!newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
+	if (!newhitbox->initialize(player.game, TILE_SIZE, TILE_SIZE, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
 	newhitbox->setActive(false);
 	newhitbox->setVisible(false);
@@ -65,16 +65,14 @@ void Hunter_NormalS::execute(Player& player)
 	newhitbox->setEdge(*hitarea);
 	//hitarea = nullptr;
 	delete hitarea;
-
-	newhitbox->setDamage(50);
-
 	//alpha = 35;
 
-	newhitbox->setKnockbackAngle(finalangle(35, player.playerface));
+	newhitbox->setKnockbackAngle(finalangle(SkillNS::HUNTER_NORM_ANG_1, player.playerface));
 
-	newhitbox->setKnockbackForce(50);
-	newhitbox->setHitStun(0.3);
-
+	newhitbox->setDamage(SkillNS::HUNTER_NORM_DMG_1);
+	newhitbox->setKnockbackForce(SkillNS::HUNTER_NORM_KNB_1);
+	newhitbox->setHitStun(SkillNS::HUNTER_NORM_STN_1);
+	newhitbox->setLifetime(SkillNS::HUNTER_NORM_LIF_1);
 	// How to push the spawn delay and the hitbox into vector
 	SkillHitbox* newskillhitbox = new SkillHitbox();
 	newskillhitbox->hitbox = newhitbox;
@@ -86,7 +84,7 @@ void Hunter_NormalS::execute(Player& player)
 	//newhitbox->setX_Velocity(100);
 	
 	// create hitbox
-	if (!newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
+	if (!newhitbox->initialize(player.game, TILE_SIZE, TILE_SIZE, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
 	newhitbox->setActive(false);
 	newhitbox->setVisible(false);
@@ -105,14 +103,14 @@ void Hunter_NormalS::execute(Player& player)
 	newhitbox->setScale(1.5);
 	delete hitarea;
 
-	newhitbox->setDamage(1);
 	//alpha = 90;
-	newhitbox->setKnockbackAngle(finalangle(75,player.playerface));
 
-	newhitbox->setKnockbackForce(420);
-	newhitbox->setHitStun(1);
-	newhitbox->setLifetime(0.2);
+	newhitbox->setKnockbackAngle(finalangle(SkillNS::HUNTER_NORM_ANG_2, player.playerface));
 
+	newhitbox->setDamage(SkillNS::HUNTER_NORM_DMG_2);
+	newhitbox->setKnockbackForce(SkillNS::HUNTER_NORM_KNB_2);
+	newhitbox->setHitStun(SkillNS::HUNTER_NORM_STN_2);
+	newhitbox->setLifetime(SkillNS::HUNTER_NORM_LIF_2);
 	// How to push the spawn delay and the hitbox into vector
 	newskillhitbox = new SkillHitbox();
 	newskillhitbox->hitbox = newhitbox;

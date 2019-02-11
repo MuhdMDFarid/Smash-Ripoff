@@ -136,7 +136,8 @@ public:
 	std::vector<Hitbox*> hitboxlist;		// this should be placed in a hitbox_attack component
 	Hitbox *newhitbox;		// this should be placed in a hitbox_attack
 	
-	Skill* skill;
+	std::vector<Skill*> skillSet;
+	Skill* activeSkill;
 	//Skill* normals;
 	//Skill* specials;
 	//std::vector<SkillHitbox*> getskillhitbox() { return skill->Hitboxlist; }
@@ -170,8 +171,7 @@ public:
 	void drawProjectiles();
 	void update(float frameTime);
 	void death();
-
-	//void setCollisionType(entityNS::COLLISION_TYPE coltype);
+	void setSkillSet(std::vector<Skill*> newSkillSet);
 
 
 	Movement_Component* getMovementComponent() { return movement_component; }
@@ -189,7 +189,8 @@ public:
 	void deleteHitbox();
 
 	// attack
-	void normalS(/*Game*gamePtr, TextureManager*textureM*/);
+	void useSkill(int skillno);
+
 	void specialS();
 
 

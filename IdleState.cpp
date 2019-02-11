@@ -25,11 +25,11 @@ PlayerState* IdleState::handleInput(Player& player, Input* input)
 		case STATE_GROUNDED:
 			// execute player ground normal based on moveset and key combo
 			player.setFrames(PlayerNS::P1_ATTACK_START,PlayerNS::P1_ATTACK_END);		//settting frames should be based on moveset
-			player.normalS();
+			player.useSkill(0);
 		case STATE_AIRBORNE:
 			// execute player aerial normal based on moveset and key combo
 			player.setFrames(PlayerNS::P1_ATTACK_START, PlayerNS::P1_ATTACK_END);		//settting frames should be based on moveset
-			player.normalS();
+			player.useSkill(0);
 		}
 		return new AttackState();
 	}
@@ -40,13 +40,12 @@ PlayerState* IdleState::handleInput(Player& player, Input* input)
 		case STATE_GROUNDED:
 			// execute player ground special based on moveset and key combo
 			player.setFrames(PlayerNS::P1_SLAM_START, PlayerNS::P1_SLAM_END);			//settting frames should be based on moveset
-			player.specialS();
+			player.useSkill(1);
 
 		case STATE_AIRBORNE:
 			// execute player aerial special based on moveset and key combo
 			player.setFrames(PlayerNS::P1_SLAM_START, PlayerNS::P1_SLAM_END);		//settting frames should be based on moveset
-			player.specialS();
-
+			player.useSkill(1);
 		}
 		return new AttackState();
 	}

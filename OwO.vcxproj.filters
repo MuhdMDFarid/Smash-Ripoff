@@ -59,9 +59,6 @@
     <ClCompile Include="Hunter_NormalS.cpp">
       <Filter>Skills</Filter>
     </ClCompile>
-    <ClCompile Include="Hunter_SpecialS.cpp">
-      <Filter>Skills</Filter>
-    </ClCompile>
     <ClCompile Include="Melee_Hitbox.cpp">
       <Filter>Hitboxes</Filter>
     </ClCompile>
@@ -80,6 +77,13 @@
     <ClCompile Include="HealthPotion.cpp" />
     <ClCompile Include="RotatingPlatform.cpp" />
     <ClCompile Include="Landmine.cpp" />
+    <ClCompile Include="meteor.cpp" />
+    <ClCompile Include="PK_Fire.cpp">
+      <Filter>Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="Hunter_SpecialS.cpp">
+      <Filter>Skills</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack_Component.h" />
@@ -142,9 +146,6 @@
     <ClInclude Include="Hunter_NormalS.h">
       <Filter>Skills</Filter>
     </ClInclude>
-    <ClInclude Include="Hunter_SpecialS.h">
-      <Filter>Skills</Filter>
-    </ClInclude>
     <ClInclude Include="Melee_Hitbox.h">
       <Filter>Hitboxes</Filter>
     </ClInclude>
@@ -163,6 +164,13 @@
     <ClInclude Include="HealthPotion.h" />
     <ClInclude Include="RotatingPlatform.h" />
     <ClInclude Include="Landmine.h" />
+    <ClInclude Include="meteor.h" />
+    <ClInclude Include="PK_Fire.h">
+      <Filter>Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="Hunter_SpecialS.h">
+      <Filter>Skills</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Skills">

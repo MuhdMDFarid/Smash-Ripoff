@@ -45,10 +45,9 @@ void PK_Thunder::execute(Player& player)
 	// initialize all the hitboxes and adds to the vector
 
 	// FIRST HITBOX
-	newhitbox = new Controlled_Projectile_Hitbox(300);
-	newhitbox->setAcceleration(500);
-	//(Controlled_Projectile_Hitbox)newhitbox
-	newhitbox->setY_Velocity(-300);
+	newhitbox = new Controlled_Projectile_Hitbox(SkillNS::PK_THUNDER_MAX_VEL);
+	newhitbox->setAcceleration(SkillNS::PK_THUNDER_ACC);
+	newhitbox->setY_Velocity(SkillNS::PK_THUNDER_VEL);
 
 	// create hitbox
 	if (!newhitbox->initialize(player.game, 32, 32, PlayerNS::TEXTURE_COLS, player.getTextureManager()))
@@ -66,29 +65,24 @@ void PK_Thunder::execute(Player& player)
 	hitarea->left = -newhitbox->getSpriteDataRect().right/2;
 	hitarea->right = newhitbox->getSpriteDataRect().right/2;
 	newhitbox->setEdge(*hitarea);
-	//hitarea = nullptr;
+
 	delete hitarea;
-	newhitbox->setScale(0.75);
-	newhitbox->setDamage(69);
 
-	//alpha = 35;
-
-	newhitbox->setKnockbackAngle(finalangle(60, player.playerface));
-
-	newhitbox->setKnockbackForce(420);
-	newhitbox->setHitStun(2);
-	newhitbox->setLifetime(10);
+	newhitbox->setScale(SkillNS::PK_THUNDER_SCA);
+	newhitbox->setKnockbackAngle(finalangle(SkillNS::PK_THUNDER_ANG, player.playerface));
+	newhitbox->setDamage(SkillNS::PK_THUNDER_DMG);
+	newhitbox->setKnockbackForce(SkillNS::PK_THUNDER_KNB);
+	newhitbox->setHitStun(SkillNS::PK_THUNDER_STN);
+	newhitbox->setLifetime(SkillNS::PK_THUNDER_LIF);
 
 	// How to push the spawn delay and the hitbox into vector
 	SkillHitbox* newskillhitbox = new SkillHitbox();
 	newskillhitbox->hitbox = newhitbox;
 	newskillhitbox->spawndelay = 0.2;
 	Hitboxlist.push_back(newskillhitbox);
-	//mciSendString("play sounds/PK_THUNDER.mp3 repeat", NULL, 0, NULL);
+
 	mciSendString("play sounds/PK_THUNDER.mp3", NULL, 0, NULL);
-	//mciSendString("play sounds/PK_THUNDER.mp3 from 0", NULL, 0, NULL);
-	//PlaySound("sounds\\PK_THUNDER.mp3", NULL, SND_ASYNC);
-	//pictures\\background\\menuBack.png
+
 }
 
 void PK_Thunder::cancel()

@@ -10,6 +10,11 @@
 #include <string>
 #include <ctime>
 
+#include "Hunter_NormalS.h"
+#include "Hunter_SpecialS.h"
+#include "PK_Fire.h"
+#include "PK_Thunder.h"
+
 //=============================================================================
 // Constructor
 //=============================================================================
@@ -162,6 +167,11 @@ void SmashRipoff::initialize(HWND hwnd)
 	Hinput->bindSpecial(T_KEY);
 	hunter.setPK(Hinput);
 
+	std::vector<Skill*> skillset;
+	skillset.push_back(new Hunter_NormalS());
+	skillset.push_back(new Hunter_SpecialS());
+	hunter.setSkillSet(skillset);
+
 	// -- Priestess --
 	// Initializes all the necessary assets
 	if (!priestess.initialize(this, 32, 32, PlayerNS::TEXTURE_COLS, &priestessTexture))
@@ -176,6 +186,11 @@ void SmashRipoff::initialize(HWND hwnd)
 	Pinput->bindSpecial(COMMA_KEY);
 	priestess.setPK(Pinput);
 	
+	skillset.clear();
+	skillset.push_back(new PK_Fire());
+	skillset.push_back(new PK_Thunder());
+	priestess.setSkillSet(skillset);
+
 	resetPlayersPosition();
 
 	// projectile texture
@@ -270,6 +285,19 @@ void SmashRipoff::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 	landmine.setX(rand() % (int(platform1.getWidth())) + platform1.getX());
 	landmine.setY(platform1.getY() - LANDMINE_SIZE);
+
+
+	//meteor texture
+	// Meteor texture
+	if (!meteorTexture.initialize(graphics, METEOR_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing meteor texture"));
+	if (!meteor.initialize(this, meteorNS::WIDTH, meteorNS::HEIGHT, 1, &meteorTexture))    // 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing meteor"));
+	//meteor.setScale(1);
+	meteor.setDegrees(0);
+	meteor.setX(GAME_WIDTH);
+	meteor.setY(0);
+	meteor.setVelocity(VECTOR2(-meteorNS::SPEED, meteorNS::SPEED));
 
 	// --Menu-- (Game has to start off with this state)
 	this->pushState(new MenuState(this));
