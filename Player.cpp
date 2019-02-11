@@ -199,6 +199,8 @@ void Player::update(float frameTime)
 
 void Player::death()
 {
+	setX_Velocity(0);
+	setY_Velocity(0);
 	kbMultiplier = 0;
 	setCenterX(GAME_WIDTH / 2);
 	setCenterY(GAME_HEIGHT / 2);

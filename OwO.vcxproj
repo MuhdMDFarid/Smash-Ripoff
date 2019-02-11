@@ -157,6 +157,7 @@
     <ClCompile Include="Attack_Component.cpp" />
     <ClCompile Include="Controlled_Projectile_Hitbox.cpp" />
     <ClCompile Include="Hitbox.cpp" />
+    <ClCompile Include="Landmine.cpp" />
     <ClCompile Include="Melee_Hitbox.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="PriestessDeathState.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Projectile_Hitbox.cpp" />
+    <ClCompile Include="RotatingPlatform.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="SmashRipoff.cpp" />
@@ -204,6 +206,7 @@
     <ClInclude Include="Attack_Component.h" />
     <ClInclude Include="Controlled_Projectile_Hitbox.h" />
     <ClInclude Include="Hitbox.h" />
+    <ClInclude Include="Landmine.h" />
     <ClInclude Include="Melee_Hitbox.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Component.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="PriestessDeathState.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="Projectile_Hitbox.h" />
+    <ClInclude Include="RotatingPlatform.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillState.h" />
     <ClInclude Include="SmashRipoff.h" />

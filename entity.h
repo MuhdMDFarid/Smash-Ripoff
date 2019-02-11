@@ -58,7 +58,6 @@ class Entity : public Image
     // Separating axis collision detection between boxes
     // Pre: &ent = Other entity
     // Post: &collisionVector contains collision vector
-    virtual bool collideRotatedBox(Entity &ent, VECTOR2 &collisionVector);
     // Separating axis collision detection between box and circle
     // Pre: &ent = Other entity
     // Post: &collisionVector contains collision vector
@@ -188,6 +187,7 @@ class Entity : public Image
     // Adds the gravitational force to the velocity vector of this entity
     void gravityForce(Entity *other, float frameTime);
 
+	virtual bool collideRotatedBox(Entity &ent, VECTOR2 &collisionVector);
 };
 
 #endif // _ENTITY_H

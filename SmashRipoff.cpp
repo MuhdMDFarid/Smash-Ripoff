@@ -262,6 +262,15 @@ void SmashRipoff::initialize(HWND hwnd)
 	healthpotion.setX(randomx2 - healthpotion.getScale()*healthpotion.getWidth());
 	healthpotion.setY(randomy2 - healthpotion.getScale()*healthpotion.getWidth());
 
+	// landmine textures
+	if (!landmineTexture.initialize(graphics, LANDMINE_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
+
+	if (!landmine.initialize(this, 60, 30, 1, &landmineTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+	landmine.setX(rand() % (int(platform1.getWidth())) + platform1.getX());
+	landmine.setY(platform1.getY() - LANDMINE_SIZE);
+
 	// --Menu-- (Game has to start off with this state)
 	this->pushState(new MenuState(this));
 

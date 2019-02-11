@@ -14,6 +14,7 @@
 #include "Potion.h"
 #include "SpeedPotion.h"
 #include "HealthPotion.h"
+#include "Landmine.h"
 
 PlayState::PlayState(SmashRipoff* game)
 {
@@ -37,6 +38,7 @@ void PlayState::draw()
 	game->platform1.draw();
 	game->healthpotion.draw();
 	game->speedpotion.draw();
+	game->landmine.draw();
 
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
@@ -388,7 +390,49 @@ void PlayState::playercollision(Player* p)
 	VECTOR2 collisionVector;
 	bool platformcollided = false;
 
+	if (p->collideRotatedBox(game->platform, collisionVector))
+	{
+		// PROTOTYPE COLLISION Detection
+		if (p->getX() > game->platform.getCenterX()) // check if p-> is at the right side of the game->platform
+		{
+			if (p->getY() > game->platform.getCenterY()) // check if p-> is at the bottom right side of the game->platform
+			{
+				p->setX(p->getX() +2/*+ game->platform.getCenterX()*/); // move away from the center of game->platform
+				p->setY(p->getY() -2/*- game->platform.getCenterY()*/);
+			}
+			else if (p->getY() < game->platform.getCenterY()) // check if the p-> is at the top right side of the game->platform
+			{
+				p->setX(p->getX() -2/*- game->platform.getCenterX()*/); // move towards the center of the game->platform since the game->platform will be like /
+				p->setY(p->getY() +2/*+ game->platform.getCenterY()*/);
+				//p->bounce(collisionVector, game->platform);
+			}
+		}
+		else if (p->getX() < game->platform.getCenterX()) // check if p-> is the left side of the game->platform
+		{
+			if (p->getY() > game->platform.getCenterY())  // check if the p-> is at the bottom left side of the game->platform
+			{
+				p->setX(p->getX() + 2/*+ game->platform.getCenterX()*/); // move towards the right
+				p->setY(p->getY() + 2/*+ game->platform.getCenterY()*/);
+				//p->bounce(collisionVector, game->platform);
+			}
+			else if (p->getY() < game->platform.getCenterY()) // check if the p-> is at the top left side of the game->platform
+			{
+				p->setX(p->getX() -2/*- game->platform.getCenterX()*/); // move towards the  left
+				p->setY(p->getY() -2/*- game->platform.getCenterY()*/);
+				//p->bounce(collisionVector, game->platform);
+			}
+		}
 
+		if (p->airEnum != STATE_GROUNDED)
+		{
+			p->landed();
+		}
+		// end of PROTOTYPE COLLISION DETECTION
+		else if (p->airEnum != STATE_AIRBORNE)		// If not colliding with game->platform1s 
+		{
+			p->fall();
+		}
+	}
 
 	if (p->collidesWith(game->platform1, collisionVector))
 	{
@@ -584,5 +628,14 @@ void PlayState::playercollision(Player* p)
 			// WHY DOES player keep running fall() even when on platform
 			p->fall();
 		}
+	}
+
+	//landmine collision
+	if (p->collidesWith(game->landmine, collisionVector))
+	{
+		p->getMovementComponent()->setY_Velocity(-p->getMovementComponent()->getY_Velocity() * 2);
+		p->getMovementComponent()->setX_Velocity(-p->getMovementComponent()->getX_Velocity() * 2);
+		game->landmine.setScale(0);
+		game->landmine.setActive(false);
 	}
 }

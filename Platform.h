@@ -11,6 +11,11 @@
 #include "constants.h"
 #include <vector>		// maybe for the multiple collision boxes for weird shaped obstacles
 
+namespace platformNS
+{
+	const float ROTATION_RATE = (float)PI / 2; // radians per second
+}
+
 class Platform:public Entity
 {
 private:
@@ -28,7 +33,7 @@ public:
 	// ======================
 	bool initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM);
 	virtual void draw();
-	void update(float frameTime);
+	virtual void update(float frameTime);
 	void updateUp(float frameTime);
 	void updateDown(float frameTime);
 };

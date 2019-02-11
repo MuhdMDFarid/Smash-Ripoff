@@ -58,6 +58,7 @@ const float MASS_SHIP = 5.0f;
 const float GRAVITY = 1000;							// gravitational constant
 
 const int TILE_SIZE = 32;
+const int LANDMINE_SIZE = 30;
 // const int GRID_WIDTH = GAME_WIDTH / TILE_SIZE;
 // const int GRID_HEIGHT = GAME_HEIGHT / TILE_SIZE;
 
@@ -71,6 +72,9 @@ const char PAUSE_IMAGE[]		= "pictures\\background\\defaultBack.png";
 const char OPTION_IMAGE[]		= "pictures\\background\\defaultBack.png";
 const char HUNTER_IMAGE[]		= "pictures\\background\\hunterBack.png";
 const char PRIESTESS_IMAGE[]	= "pictures\\background\\priestessBack.png";
+
+// Landmine
+const char LANDMINE_TEXTURE[]		= "pictures\\landmine.png";
 
 // --GUI--
 // Buttons

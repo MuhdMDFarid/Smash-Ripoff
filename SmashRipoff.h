@@ -15,6 +15,8 @@
 #include "Player.h"
 #include "Projectile_Hitbox.h"
 #include "Platform.h"
+#include "RotatingPlatform.h"
+#include "Landmine.h"
 #include "SpeedPotion.h"
 #include "HealthPotion.h"
 #include "heart.h"
@@ -49,6 +51,8 @@ private:
 	TextureManager speedpotionTexture;
 	TextureManager healthpotionTexture;
 	
+	//landmine
+	TextureManager landmineTexture;
 	//bool shootable = true;
 
 	// --Hearts--
@@ -137,10 +141,11 @@ public:
 	HealthPotion healthpotion;
 
 	Planet planet;
-	Platform platform;
+	RotatingPlatform platform;
 	Platform platform1;
 	Platform platformUpList[NO_PLATFORMS];
 	Platform platformDownList[NO_PLATFORMS];
+	Landmine landmine;
 	Image heart;
 	// Players' Health
 	bool hunterDeath = false;
