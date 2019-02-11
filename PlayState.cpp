@@ -80,8 +80,8 @@ void PlayState::update(float frameTime)
 	}
 	//update every bullet in player ithink
 	//
-	if(game->getInput()->isKeyDown(VK_SPACE))
-		game->hunter.shoot(game, game->hunter.getCenterX() + 10*game->hunter.playerface, game->hunter.getCenterY(), game->hunter.getTextureManager());
+	//if(game->getInput()->isKeyDown(VK_SPACE))
+	//	game->hunter.shoot(game, game->hunter.getCenterX() + 10*game->hunter.playerface, game->hunter.getCenterY(), game->hunter.getTextureManager());
 	//if (player.airEnum != STATE_AIRBORNE)
 	//{
 	//	player.fall();
