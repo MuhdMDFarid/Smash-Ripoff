@@ -16,6 +16,11 @@ Landmine::Landmine() :Entity()
 	spriteData.width = LANDMINE_SIZE;
 	spriteData.height = LANDMINE_SIZE;
 	mass = 1000;
+	damageC = new Damage_Component();
+	damageC->setDamage(60);
+	damageC->setAngle(45);
+	damageC->setForce(100);
+	damageC->setStun(0);
 }
 
 

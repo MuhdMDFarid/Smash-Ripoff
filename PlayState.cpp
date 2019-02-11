@@ -635,6 +635,7 @@ void PlayState::playercollision(Player* p)
 	{
 		p->getMovementComponent()->setY_Velocity(-p->getMovementComponent()->getY_Velocity() * 2);
 		p->getMovementComponent()->setX_Velocity(-p->getMovementComponent()->getX_Velocity() * 2);
+		p->hitted(game->landmine.getDamageC());
 		game->landmine.setScale(0);
 		game->landmine.setActive(false);
 	}
