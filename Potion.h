@@ -2,16 +2,18 @@
 //  Assignment2:        One Without the Other (OWO)
 //  Student Name:       Lim Wei, Jourdan | Muhammed Bin md Farid | Tsang Hong Kang | Benedict Yee Jian Hui
 //  Student Number:     S10166869D | S10172457K | S10172695F | S10173071G
-
+#pragma once
 #include "Player.h"
 #include "entity.h"
 #include "constants.h"
+#include "heart.h"
+#include "Player.h"
 
 namespace PotionNS
 {
-	const int WIDTH = 30;
-	const int HEIGHT = 30;
-	const int COLLISION_RADIUS = 30 / 2;
+	const int WIDTH = 67;
+	const int HEIGHT = 67;
+	const int COLLISION_RADIUS = 67 / 2;
 	const float MASS = 50;
 
 }

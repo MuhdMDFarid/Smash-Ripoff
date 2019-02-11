@@ -38,6 +38,27 @@
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="winmain.cpp" />
+    <ClCompile Include="AirborneState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundedState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillState.cpp">
+      <Filter>States\SkillStates</Filter>
+    </ClCompile>
+    <ClCompile Include="HunterDeathState.cpp" />
+    <ClCompile Include="PriestessDeathState.cpp" />
+    <ClCompile Include="HealthPotion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirborneState.h" />
@@ -79,5 +100,34 @@
     <ClInclude Include="SpeedPotion.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
+    <ClInclude Include="AirborneState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundedState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillState.h">
+      <Filter>States\SkillStates</Filter>
+    </ClInclude>
+    <ClInclude Include="HunterDeathState.h" />
+    <ClInclude Include="PriestessDeathState.h" />
+    <ClInclude Include="HealthPotion.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="States">
+      <UniqueIdentifier>{c9aebb43-7c3f-4f22-b353-3624784dc21c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\SkillStates">
+      <UniqueIdentifier>{03c9c85a-9846-4eff-885f-d7fa37d41092}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

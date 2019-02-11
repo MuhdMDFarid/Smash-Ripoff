@@ -17,6 +17,7 @@
 #include "Movement_Component.h"
 //#include "Hitbox.h"
 #include "PlayerInput_Component.h"
+#include "heart.h"
 
 class Hitbox;
 
@@ -31,7 +32,7 @@ enum State
 
 class PlayerState;		// forward declaration
 class Skill;
-//class SkillHitbox;
+
 
 namespace PlayerNS
 {
@@ -42,6 +43,8 @@ namespace PlayerNS
 
 	const float JUMP_CD = 0.5f;
 	const int JUMP_VELOCITY = 500;
+
+	const float BASE_KNOCKBACK_MULTIPLIER = 15;
 
 	//// Player 1 (Bounty Hunter)
 	//const UCHAR P1_UP = W_KEY;
@@ -91,8 +94,9 @@ private:
 	
 	Movement_Component * movement_component;	// Movement component to control the forces of movement
 	PlayerInput_Component* pk_bind;				// Player Key Bindings
-	//std::vector<Projectile*> projectilelist;
-	
+
+	float kbMultiplier;
+
 public:
 	//bool grounded;		// replaced to a state in future
 	void landed();
@@ -137,9 +141,19 @@ public:
 	//Skill* specials;
 	//std::vector<SkillHitbox*> getskillhitbox() { return skill->Hitboxlist; }
 
-	// TEMP potion effect
-	float speedmultiplier = 1;
-	float agilityduration = 0;
+	// Speed potion effect
+	float speedmultiplier = 1; // set base speed
+	float agilityduration = 0; // set inactive
+
+	// TEMP HP potion effect
+	static const int MAX_HEALTH = 3;
+	// Players' Health
+	Heart Health[MAX_HEALTH];
+	// List starts from 0
+	//int hunterHP = 2;
+	//int priestessHP = 2;
+
+	int HP = 2;
 
 	Player();
 
@@ -155,6 +169,7 @@ public:
 	virtual void draw();
 	void drawProjectiles();
 	void update(float frameTime);
+	void death();
 
 	//void setCollisionType(entityNS::COLLISION_TYPE coltype);
 

@@ -34,6 +34,7 @@ Player::Player() : Entity()
 	//
 	speed = 1000;
 	playerface = 1;
+	kbMultiplier = 0;
 	
 	//	TEMP code for component implementation
 	movement_component = new Movement_Component();
@@ -113,11 +114,11 @@ void Player::update(float frameTime)
 	// TEMP AGILITY POTION THINGY
 	if (agilityduration > 0)
 	{
-		agilityduration -= frameTime;
+		agilityduration -= frameTime; // -1 second off the duration per frametime
 	}
 	else
 	{
-		speedmultiplier = 1;
+		speedmultiplier = 1; // base speed multiplier without potion
 	}
 
 	//	Handling the movement
@@ -148,27 +149,22 @@ void Player::update(float frameTime)
 
 	///////////////////////////////
 	//  to make the player loop back on screen may not need in future cos they die
-	if (getX() > GAME_WIDTH)
+	if (getX() > GAME_WIDTH-getWidth()*getScale()+ (int)GAME_BORDER)
 	{
-		setX(-getWidth()*getScale());
+		death();
 	}
-	else if (getX() < -getWidth()*getScale())
+	else if (getX() < -(int)GAME_BORDER)
 	{
-		setX(GAME_WIDTH);
+		death();
 	}
 
-	if (getY() > GAME_HEIGHT - getHeight()*getScale())
+	if (getY() > GAME_HEIGHT - getHeight()*getScale()+(int)GAME_BORDER)
 	{
-		setY(GAME_HEIGHT - getHeight()*getScale() + 1);
-		setY_Velocity(0);
-		//airJump = true;		// reset the jump to enable jump
-		landed();
+		death();
 	}
-	else if (getY() < -(int)GAME_HEIGHT/5)
+	else if (getY() < -(int)GAME_BORDER)
 	{
-		setY(-(int)GAME_HEIGHT/5);
-	//	setY(0-GAME_HEIGHT*0);
-		setY_Velocity(0);
+		death();
 	}
 	//////////////////////////
 
@@ -199,6 +195,16 @@ void Player::update(float frameTime)
 	{
 		setActive(false);
 	}
+}
+
+void Player::death()
+{
+	kbMultiplier = 0;
+	setCenterX(GAME_WIDTH / 2);
+	setCenterY(GAME_HEIGHT / 2);
+	Health[HP].setActive(false);
+	HP--;
+
 }
 
 void Player::move(int x_force,int y_force)		// change the force on the char for movement
@@ -415,19 +421,19 @@ void Player::interrupt(float stunduration)
 
 void Player::knockback(float xV,float yV)		// get x/y forces or the hitbox itself
 {
-	setX_Velocity(xV);
-	setY_Velocity(yV);
+	setX_Velocity(xV*(PlayerNS::BASE_KNOCKBACK_MULTIPLIER+kbMultiplier)/100);
+	setY_Velocity(yV*(PlayerNS::BASE_KNOCKBACK_MULTIPLIER+kbMultiplier)/100);
 
 	//getMovementComponent()->setY_Velocity((*it)->hitbox->getKnockback().y);
 }
 
 void Player::hitted(Damage_Component* damageC)		// when player got
 {
-	float xV = damageC->calculateVector().x/**damage*/;
-	float yV = damageC->calculateVector().y/**damage*/;
+	float xV = damageC->calculateVector().x;
+	float yV = damageC->calculateVector().y;
 	
 	interrupt(damageC->getStun());
 	knockback(xV, yV);
 	//damage code to receive damage
-	//damagemeter+=damageC->getDamage()
+	kbMultiplier += damageC->getDamage();
 }

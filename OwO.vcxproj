@@ -22,7 +22,7 @@
     <ProjectName>SmashRipoff</ProjectName>
     <ProjectGuid>{0259B800-2046-467E-94A2-D13B6F5210BC}</ProjectGuid>
     <RootNamespace>Destroyer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -165,6 +165,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="GroundedState.cpp" />
+    <ClCompile Include="HealthPotion.cpp" />
     <ClCompile Include="heart.cpp" />
     <ClCompile Include="HunterDeathState.cpp" />
     <ClCompile Include="Hunter_SpecialS.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="GroundedState.h" />
+    <ClInclude Include="HealthPotion.h" />
     <ClInclude Include="heart.h" />
     <ClInclude Include="HunterDeathState.h" />
     <ClInclude Include="Hunter_SpecialS.h" />

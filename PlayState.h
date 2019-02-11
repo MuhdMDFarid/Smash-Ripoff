@@ -9,6 +9,10 @@
 
 #include "GameState.h"
 
+#include "Potion.h"
+#include "SpeedPotion.h"
+#include "HealthPotion.h"
+
 // Makes it public so that we can derive the functions from this class
 class PlayState : public GameState
 {

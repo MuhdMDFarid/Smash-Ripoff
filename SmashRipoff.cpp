@@ -7,6 +7,8 @@
 #include "MenuState.h"
 #include "HunterDeathState.h"
 #include "PriestessDeathState.h"
+#include <string>
+#include <ctime>
 
 //=============================================================================
 // Constructor
@@ -30,8 +32,17 @@ SmashRipoff::~SmashRipoff()
 //=============================================================================
 void SmashRipoff::initialize(HWND hwnd)
 {
-	// throws GameError
-    Game::initialize(hwnd);
+
+    Game::initialize(hwnd); // throws GameError
+	int randomx1;
+	int randomx2;
+	int randomy1;
+	int randomy2;
+	srand(time(NULL));
+	randomx1 = rand() % (GAME_WIDTH);
+	randomx2 = rand() % (GAME_WIDTH);
+	randomy1 = rand() % (GAME_HEIGHT);
+	randomy2 = rand() % (GAME_HEIGHT);
 
 	// --Menu Assets--
 	// Initializes all the necessary assets
@@ -164,7 +175,8 @@ void SmashRipoff::initialize(HWND hwnd)
 	Pinput->bindNormal(PERIOD_KEY);
 	Pinput->bindSpecial(COMMA_KEY);
 	priestess.setPK(Pinput);
-	priestess.setX(GAME_WIDTH / 2);
+	
+	resetPlayersPosition();
 
 	// projectile texture
 	if (!projectileTexture.initialize(graphics, PROJECTILE_TEXTURE))
@@ -174,10 +186,16 @@ void SmashRipoff::initialize(HWND hwnd)
 	if (!platformTexture.initialize(graphics, PLATFORM_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform texture"));
 
-	if (!platform1.initialize(this, GAME_WIDTH, 32, 1, &platformTexture))	// 1 since texture has only one image
+	if (!platform.initialize(this, 320, 32, 1, &platformTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
-	platform1.setX(0);
-	platform1.setY(GAME_HEIGHT-platform1.getHeight()-200);
+	platform.setX(GAME_WIDTH * 1 / 3);
+	platform.setY(GAME_HEIGHT * 1 / 2);
+
+	if (!platform1.initialize(this, GAME_WIDTH * 4 / 6.5, 32, 1, &platformTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
+	platform1.setX(GAME_WIDTH * 1 / 5);
+	platform1.setY(GAME_HEIGHT * 2 / 3 - platform1.getHeight());
+
 
 	// Hearts
 	if (!heartTexture.initialize(graphics, HEART_IMAGE))
@@ -185,26 +203,26 @@ void SmashRipoff::initialize(HWND hwnd)
 
 	for (int i = 0; i < MAX_HEALTH; i++)
 	{
-		if (!hunterHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+		if (!hunter.Health[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
 		// Makes the image bigger
-		hunterHealth[i].setScale(2);
+		hunter.Health[i].setScale(2);
 		// Sets it to the left of the screen (player 1)
-		hunterHealth[i].setX(heartNS::WIDTH * i);			
+		hunter.Health[i].setX(heartNS::WIDTH * i);			
 		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
-		hunterHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * hunterHealth[i].getScale()));
+		hunter.Health[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * hunter.Health[i].getScale()));
 	}
 
 	for (int i = 0; i < MAX_HEALTH; i++)
 	{
-		if (!priestessHealth[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
+		if (!priestess.Health[i].initialize(this, heartNS::WIDTH, heartNS::HEIGHT, 0, &heartTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts"));
 		// Makes the image bigger
-		priestessHealth[i].setScale(2);
+		priestess.Health[i].setScale(2);
 		// Sets it to the right of the screen (player 2)
-		priestessHealth[i].setX(GAME_WIDTH - ((heartNS::WIDTH * (i + 1)) + heartNS::WIDTH));
+		priestess.Health[i].setX(GAME_WIDTH - ((heartNS::WIDTH * (i + 1)) + heartNS::WIDTH));
 		// Sets it to the bottom of the screen (ensures that it doesn't go below the screen)
-		priestessHealth[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * priestessHealth[i].getScale()));
+		priestess.Health[i].setY(GAME_HEIGHT - (heartNS::HEIGHT * priestess.Health[i].getScale()));
 	}
 
 	//hk
@@ -214,27 +232,35 @@ void SmashRipoff::initialize(HWND hwnd)
 		if (!platformUpList[i].initialize(this, 160, 32, 1, &platformTexture))	// 1 since texture has only one image
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 		platformUpList[i].setDegrees(0);
-		platformUpList[i].setX(3 * GAME_WIDTH / 5);
+		platformUpList[i].setX(8 * GAME_WIDTH / 10);
 		platformUpList[i].setY(GAME_HEIGHT / 2 * (NO_PLATFORMS - i));
 		platformUpList[i].setVelocity(VECTOR2(0, -TILE_SIZE * 4));
 
 		if (!platformDownList[i].initialize(this, 160, 32, 1, &platformTexture))	// 1 since texture has only one image
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing platform"));
 		platformDownList[i].setDegrees(0);
-		platformDownList[i].setX(GAME_WIDTH / 5);
+		platformDownList[i].setX(1 * GAME_WIDTH / 10);
 		platformDownList[i].setY(GAME_HEIGHT / 2 * (NO_PLATFORMS - i));
 		platformDownList[i].setVelocity(VECTOR2(0, TILE_SIZE * 4));
 	}
-
 	// TEMP POTION texture
-	if (!potionTexture.initialize(graphics, SPEEDPOTION_TEXTURE))
+	if (!speedpotionTexture.initialize(graphics, SPEEDPOTION_TEXTURE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SPD POT textures"));
 
-	if (!potion.initialize(this, 113, 113, 1, &potionTexture))	// 1 since texture has only one image
+	if (!healthpotionTexture.initialize(graphics, HEALTHPOTION_TEXTURE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HP POT textures"));
+
+	if (!speedpotion.initialize(this, 113, 113, 1, &speedpotionTexture))	// 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
-	potion.setScale(0.5);
-	potion.setX(GAME_WIDTH/2 - potion.getScale()*potion.getWidth());
-	potion.setY(GAME_HEIGHT/2 - potion.getScale()*potion.getWidth());
+
+	if (!healthpotion.initialize(this, 113, 113, 1, &healthpotionTexture))	// 1 since texture has only one image
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing potion"));
+	speedpotion.setScale(0.5);
+	speedpotion.setX(randomx1 - speedpotion.getScale()*speedpotion.getWidth());
+	speedpotion.setY(randomy1 - speedpotion.getScale()*speedpotion.getWidth());
+	healthpotion.setScale(0.5);
+	healthpotion.setX(randomx2 - healthpotion.getScale()*healthpotion.getWidth());
+	healthpotion.setY(randomy2 - healthpotion.getScale()*healthpotion.getWidth());
 
 	// --Menu-- (Game has to start off with this state)
 	this->pushState(new MenuState(this));
@@ -563,6 +589,20 @@ void SmashRipoff::resetAll()
     return;
 }
 
+void SmashRipoff::resetPlayersPosition()	// reset player position
+{
+	// Player position
+	hunter.setX(GAME_WIDTH / 4 - hunter.getWidth() * hunter.getScale());
+	hunter.setY(0);
+	hunter.setX_Velocity(0);
+	hunter.setY_Velocity(0);
+
+	priestess.setX(3 * GAME_WIDTH / 4 - priestess.getWidth() * priestess.getScale());
+	priestess.setY(0);
+	priestess.setX_Velocity(0);
+	priestess.setY_Velocity(0);
+}
+
 //=============================================================================
 // Adds the current state to the top of the vector (game loop goes to that state)
 //=============================================================================
@@ -612,13 +652,13 @@ void SmashRipoff::deleteState()
 void SmashRipoff::resetGame()
 {
 	// Health
-	hunterHP = 2;
-	priestessHP = 2;
+	hunter.HP = 2;
+	priestess.HP = 2;
 
 	for (int i = 0; i < MAX_HEALTH; i++)
 	{
-		priestessHealth[i].setActive(true);
-		hunterHealth[i].setActive(true);
+		priestess.Health[i].setActive(true);
+		hunter.Health[i].setActive(true);
 	}
 
 	// Potions
@@ -627,10 +667,5 @@ void SmashRipoff::resetGame()
 	priestess.speedmultiplier = 1;
 	priestess.agilityduration = 0;
 
-	// Player position
-	hunter.setX(0);
-	hunter.setY(0);
-
-	priestess.setX(GAME_WIDTH-priestess.getWidth() * priestess.getScale());
-	priestess.setY(0);
+	resetPlayersPosition();		// Player position
 }

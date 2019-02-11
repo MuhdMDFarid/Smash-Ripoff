@@ -7,10 +7,9 @@
 
 
 
-SpeedPotion::SpeedPotion()
+SpeedPotion::SpeedPotion():Potion()
 {
-	spriteData.width = PotionNS::WIDTH;
-	spriteData.height = PotionNS::HEIGHT;
+
 }
 
 void SpeedPotion::apply(Player * player)
@@ -18,7 +17,8 @@ void SpeedPotion::apply(Player * player)
 	//stuff
 	player->speedmultiplier=1.5;
 	player->agilityduration = 10;
-	//this->setActive(false);
+	this->setScale(0);
+	this->setActive(false);
 }
 
 void SpeedPotion::draw()

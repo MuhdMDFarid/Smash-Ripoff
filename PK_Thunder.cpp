@@ -69,14 +69,14 @@ void PK_Thunder::execute(Player& player)
 	//hitarea = nullptr;
 	delete hitarea;
 	newhitbox->setScale(0.75);
-	newhitbox->setDamage(50);
+	newhitbox->setDamage(69);
 
 	//alpha = 35;
 
 	newhitbox->setKnockbackAngle(finalangle(60, player.playerface));
 
 	newhitbox->setKnockbackForce(420);
-	newhitbox->setHitStun(1);
+	newhitbox->setHitStun(2);
 	newhitbox->setLifetime(10);
 
 	// How to push the spawn delay and the hitbox into vector

@@ -43,6 +43,7 @@ const char GAME_TITLE[] = "SmashRipoff";
 const bool FULLSCREEN = false;					// windowed or fullscreen
 const UINT GAME_WIDTH =  1024;					// width of game in pixels
 const UINT GAME_HEIGHT = 768;					// height of game in pixels
+const UINT GAME_BORDER = 169;
 const float ROTATION_SPEED = 50.0f;
 
 // Game
@@ -89,6 +90,7 @@ const char PRIESTESS_TEXTURE[] = "pictures\\Square2.png";
 const char PROJECTILE_TEXTURE[] = "pictures\\testprojectile.png";
 const char PLATFORM_TEXTURE[] = "pictures\\platform.png";
 const char SPEEDPOTION_TEXTURE[] = "pictures\\speedpotion.png";
+const char HEALTHPOTION_TEXTURE[] = "pictures\\healthpotion.png";
 
 // Key mappings
 // In this game simple constants are used for key mappings. If variables were used

@@ -16,6 +16,7 @@
 #include "Projectile_Hitbox.h"
 #include "Platform.h"
 #include "SpeedPotion.h"
+#include "HealthPotion.h"
 #include "heart.h"
 #include "button.h"
 #include "Skill.h"
@@ -45,11 +46,9 @@ private:
 	TextureManager projectileTexture;
 	TextureManager platformTexture;
 	//Platform platform;
-	//Platform platform1;
-	//Platform platformUpList[NO_PLATFORMS];
-	//Platform platformDownList[NO_PLATFORMS];
-	TextureManager potionTexture;
-	//SpeedPotion potion;
+	TextureManager speedpotionTexture;
+	TextureManager healthpotionTexture;
+	
 	//bool shootable = true;
 
 	// --Hearts--
@@ -100,6 +99,8 @@ public:
     void resetAll();
 	float YVelocity = -TILE_SIZE * 4;
 
+	void resetPlayersPosition();
+
 	// --States--
 	// Functions for game states
 	void pushState(GameState* state);
@@ -131,18 +132,17 @@ public:
 	Image   nebula;
 	Player  hunter;
 	Player priestess;
+
+	SpeedPotion speedpotion;
+	HealthPotion healthpotion;
+
 	Planet planet;
+	Platform platform;
 	Platform platform1;
 	Platform platformUpList[NO_PLATFORMS];
 	Platform platformDownList[NO_PLATFORMS];
 	Image heart;
-	SpeedPotion potion;
 	// Players' Health
-	Heart hunterHealth[MAX_HEALTH];
-	Heart priestessHealth[MAX_HEALTH];
-	// List starts from 0
-	int hunterHP = 2;
-	int priestessHP = 2;
 	bool hunterDeath = false;
 	bool priestessDeath = false;
 

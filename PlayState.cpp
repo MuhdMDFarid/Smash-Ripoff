@@ -9,6 +9,12 @@
 #include "HunterDeathState.h"
 #include "PriestessDeathState.h"
 
+#include "Player.h"
+
+#include "Potion.h"
+#include "SpeedPotion.h"
+#include "HealthPotion.h"
+
 PlayState::PlayState(SmashRipoff* game)
 {
 	// Gets the instance of the game as a pointer
@@ -27,8 +33,10 @@ void PlayState::draw()
 	game->planet.draw();
 	game->hunter.draw();
 	game->priestess.draw();
+	game->platform.draw();
 	game->platform1.draw();
-	game->potion.draw();
+	game->healthpotion.draw();
+	game->speedpotion.draw();
 
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
@@ -39,14 +47,14 @@ void PlayState::draw()
 
 	for (int i = 0; i < MAX_HEALTH; i++)	// Add Players' Health
 	{
-		if (game->hunterHealth[i].getActive())	// Checks to see if the heart is active (if it isn't, don't draw it)
+		if (game->hunter.Health[i].getActive())	// Checks to see if the heart is active (if it isn't, don't draw it)
 		{
-			game->hunterHealth[i].draw();
+			game->hunter.Health[i].draw();
 		}
 
-		if (game->priestessHealth[i].getActive())
+		if (game->priestess.Health[i].getActive())
 		{
-			game->priestessHealth[i].draw();
+			game->priestess.Health[i].draw();
 		}
 	}
 
@@ -69,8 +77,20 @@ void PlayState::update(float frameTime)
 	game->priestess.update(frameTime);
 	game->planet.update(frameTime);
 	//platform.update(frameTime);	// should this even have update since platforms dont really move
+	game->platform.update(frameTime);
 	game->platform1.update(frameTime);
-	game->potion.update(frameTime);
+	game->speedpotion.update(frameTime);
+	game->healthpotion.update(frameTime);
+
+	if (game->hunter.HP < 0)
+	{
+		game->hunterDeath = true;
+	}
+
+	if (game->priestess.HP < 0)
+	{
+		game->priestessDeath = true;
+	}
 
 	//hk
 	for (int i = 0; i < NO_PLATFORMS; i++)
@@ -323,34 +343,38 @@ void PlayState::handleInput(Input* input)
 	{
 		input->keyUp(O_KEY);
 
-		if (game->hunterHP > 0)
+		if (game->hunter.HP > 0)
 		{
-			game->hunterHealth[game->hunterHP].setActive(false);
-			game->hunterHP--;
-		}
-
-		else
-		{
-			game->hunterDeath = true;
+			game->hunter.Health[game->hunter.HP].setActive(false);
+			game->hunter.HP--;
 		}
 	}
-
-	// Priestess
-	if (input->isKeyDown(P_KEY))
+	if (input->isKeyDown(O_KEY))
 	{
-		input->keyUp(P_KEY);
+		input->keyUp(O_KEY);
 
-		if (game->priestessHP > 0)
+		if (game->priestess.HP > 0)
 		{
-			game->priestessHealth[game->priestessHP].setActive(false);
-			game->priestessHP--;
-		}
-
-		else
-		{
-			game->priestessDeath = true;
+			game->priestess.Health[game->priestess.HP].setActive(false);
+			game->priestess.HP--;
 		}
 	}
+	// Priestess
+	//if (input->isKeyDown(P_KEY))
+	//{
+	//	input->keyUp(P_KEY);
+
+	//	if (game->hunter.HP > 0)
+	//	{
+	//		game->priestessHealth[game->priestessHP].setActive(false);
+	//		game->priestessHP--;
+	//	}
+
+	//	else
+	//	{
+	//		game->priestessDeath = true;
+	//	}
+	//}
 
 	game->hunter.handleInput(input);
 	game->priestess.handleInput(input);
@@ -358,17 +382,13 @@ void PlayState::handleInput(Input* input)
 	//{
 	//	//player.deleteHitbox();
 	//}
-
-	
-	if (input->getMouseLButton())
-	{
-		// game->player.shoot(game, input->getMouseX(), input->getMouseY(), &projectileTexture);
-	}
 }
 void PlayState::playercollision(Player* p)
 {
 	VECTOR2 collisionVector;
 	bool platformcollided = false;
+
+
 
 	if (p->collidesWith(game->platform1, collisionVector))
 	{
@@ -539,9 +559,15 @@ void PlayState::playercollision(Player* p)
 			// end of PROTOTYPE COLLISION DETECTION
 		}
 	}
-	if (p->collidesWith(game->potion, collisionVector))
+	// ben speed potion apply
+	if (p->collidesWith(game->speedpotion, collisionVector))
 	{
-		game->potion.apply(p);
+		game->speedpotion.apply(p);
+	}
+
+	if (p->collidesWith(game->healthpotion, collisionVector))
+	{
+		game->healthpotion.apply(p);
 	}
 
 	if (platformcollided)
