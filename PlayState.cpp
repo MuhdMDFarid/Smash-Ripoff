@@ -80,7 +80,6 @@ void PlayState::update(float frameTime)
 	game->hunter.update(frameTime);
 	game->priestess.update(frameTime);
 	game->planet.update(frameTime);
-	//platform.update(frameTime);	// should this even have update since platforms dont really move
 	game->platform.update(frameTime);
 	game->platform1.update(frameTime);
 	game->speedpotion.update(frameTime);
@@ -100,8 +99,8 @@ void PlayState::update(float frameTime)
 	//hk
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
-		game->platformUpList[i].updateUp(frameTime);
-		game->platformDownList[i].updateDown(frameTime);
+		game->platformUpList[i].updateUpDown(frameTime);
+		game->platformDownList[i].updateUpDown(frameTime);
 	}
 	//update every bullet in player ithink
 	//
@@ -247,7 +246,7 @@ void PlayState::playercollision(Player* p)
 			{
 				p->setX(p->getX() -2/*- game->platform.getCenterX()*/); // move towards the center of the game->platform since the game->platform will be like /
 				p->setY(p->getY() +2/*+ game->platform.getCenterY()*/);
-				//p->bounce(collisionVector, game->platform);
+				p->setY(p->getY() +2/*+ game->platform.getCenterY()*/);
 			}
 		}
 		else if (p->getX() < game->platform.getCenterX()) // check if p-> is the left side of the game->platform
@@ -256,13 +255,11 @@ void PlayState::playercollision(Player* p)
 			{
 				p->setX(p->getX() + 2/*+ game->platform.getCenterX()*/); // move towards the right
 				p->setY(p->getY() + 2/*+ game->platform.getCenterY()*/);
-				//p->bounce(collisionVector, game->platform);
 			}
 			else if (p->getY() < game->platform.getCenterY()) // check if the p-> is at the top left side of the game->platform
 			{
 				p->setX(p->getX() -2/*- game->platform.getCenterX()*/); // move towards the  left
 				p->setY(p->getY() -2/*- game->platform.getCenterY()*/);
-				//p->bounce(collisionVector, game->platform);
 			}
 		}
 
@@ -271,7 +268,7 @@ void PlayState::playercollision(Player* p)
 			p->landed();
 		}
 		// end of PROTOTYPE COLLISION DETECTION
-		else if (p->airEnum != STATE_AIRBORNE)		// If not colliding with game->platform1s 
+		else if (p->airEnum != STATE_AIRBORNE)		// If not colliding with game->platform1
 		{
 			p->fall();
 		}
@@ -294,23 +291,6 @@ void PlayState::playercollision(Player* p)
 				p->getMovementComponent()->setY_Velocity(0);
 			}
 			platformcollided = true;
-			//player.setJump(true);
-			//player.grounded = true;
-			//if (platformcollided) 
-			//{
-			//	if (p->airEnum != STATE_GROUNDED)
-			//	{
-			//		p->landed();
-			//	}
-			//}
-			//else
-			//{
-			//	if (p->airEnum != STATE_AIRBORNE)
-			//	{
-			//		// WHY DOES player keep running fall() even when on platform
-			//		p->fall();
-			//	}
-			//}
 		}
 
 		else if (p->getCenterX() + p->getEdge().right * p->getScale() >= game->platform1.getCenterX() + game->platform1.getEdge().left * game->platform1.getScale()
@@ -349,47 +329,8 @@ void PlayState::playercollision(Player* p)
 				p->getMovementComponent()->setY_Velocity(0);
 			}
 		}
-		// end of PROTOTYPE COLLISION DETECTION
-
-
-		////platform.bounce(collisionVector*-1, player);
-		//player.bounce(VECTOR2(0,10), platform);
-		//player.setJump(true);
-		////player.getMovementComponent()->setY_Force(-player.getMovementComponent()->getY_Velocity());
-		//player.getMovementComponent()->setY_Velocity(0);
-
-
-
-		//LOOK AT BOUNCE TO SEE HOW TO STOP VIBRATIONS AND HOW TO HANDLE COLLISIONS
-		// doesn't test which if statement is for which side of collision
-		/*if(player.getCenterX() + player.getEdge().right*player.getScale() < platform.getCenterX() + platform.getEdge().left*platform.getScale())
-		{
-			// player collides from the left side of platform
-			player.setX(player.getX() - 100);
-		}
-		else if(player.getCenterX() + player.getEdge().left*player.getScale() > platform.getCenterX() + platform.getEdge().right*platform.getScale())
-		{
-			// player collides from right side of platform
-			player.setX(player.getX() + 100);
-		}
-		else if(player.getCenterY() + player.getEdge().bottom*player.getScale() < platform.getCenterY() + platform.getEdge().top*platform.getScale())
-		{
-			// player collides from the top of the platform
-			//player.setY(player.getY() - 100);
-			player.getMovementComponent()->setY_Velocity(0);
-			player.setJump(true);
-
-		}
-		else if	(player.getCenterY() + player.getEdge().top*player.getScale() > platform.getCenterY() + platform.getEdge().bottom*platform.getScale())
-		{
-			// player collides from the bottom of the platform
-		}*/
 	}
-	//else			// If not colliding with platforms 
-	//{
 
-
-	//}
 	for (int i = 0; i < NO_PLATFORMS; i++)
 	{
 		if (p->collidesWith(game->platformUpList[i], collisionVector))
@@ -403,19 +344,50 @@ void PlayState::playercollision(Player* p)
 
 				if (p->getMovementComponent()->getY_Velocity() >= 0)		// if player is moving downwards it sets velocity to 0...
 				{	// this is to prevent reseting velocity when player is jumping from the side up wards
-					p->getMovementComponent()->setY_Velocity(0);
+					p->getMovementComponent()->setY_Velocity(-game->YVelocity);
 					// player collides from the top of the platformUpList[i]
 					p->setY(game->platformUpList[i].getCenterY() + game->platformUpList[i].getEdge().top * game->platformUpList[i].getScale()
 						- p->getHeight());		// prevents player from moving past the left side of platformUpList[i]
 				}
 				platformcollided = true;
-
-				//if (p->airEnum != STATE_GROUNDED)
-				//{
-				//	p->landed();
-				//}
 			}
 			// end of PROTOTYPE COLLISION DETECTION
+			/*else if (p->getCenterX() + p->getEdge().right * p->getScale() >= game->platformUpList[i].getCenterX() + game->platformUpList[i].getEdge().left * game->platformUpList[i].getScale()
+				&& p->getCenterX() + p->getEdge().left * p->getScale() < game->platformUpList[i].getCenterX() + game->platformUpList[i].getEdge().left * game->platformUpList[i].getScale())
+			{
+				// player collides from the left side of platform1
+				p->setX(game->platformUpList[i].getCenterX() + game->platformUpList[i].getEdge().left * game->platformUpList[i].getScale()
+					- p->getWidth());		// prevents player from moving past the right side of platform1
+
+				if (p->getMovementComponent()->getX_Velocity() > 0)		// if player is moving towards right it sets velocity to 0
+				{
+					p->getMovementComponent()->setX_Velocity(0);
+				}
+			}
+
+			else if (p->getCenterX() + p->getEdge().left * p->getScale() <= game->platformUpList[i].getCenterX() + game->platformUpList[i].getEdge().right * game->platformUpList[i].getScale()
+				&& p->getCenterX() + p->getEdge().right * p->getScale() > game->platformUpList[i].getCenterX() + game->platformUpList[i].getEdge().right * game->platformUpList[i].getScale())
+			{
+				// player collides from right side of platform1
+				p->setX(game->platformUpList[i].getCenterX() + game->platformUpList[i].getEdge().right * game->platformUpList[i].getScale());		// prevents player from moving past the left side of platform1
+
+				if (p->getMovementComponent()->getX_Velocity() < 0)		// if player is moving towards left it sets velocity to 0
+				{
+					p->getMovementComponent()->setX_Velocity(0);
+				}
+			}
+
+			else if (p->getCenterY() + p->getEdge().top * p->getScale() <= game->platformUpList[i].getCenterY() + game->platformUpList[i].getEdge().bottom * game->platformUpList[i].getScale()
+				&& p->getCenterY() + p->getEdge().bottom * p->getScale() > game->platformUpList[i].getCenterY() + game->platformUpList[i].getEdge().bottom * game->platformUpList[i].getScale())
+			{
+				// player collides from the bottom of the platform1
+				p->setY(game->platformUpList[i].getCenterY() + game->platformUpList[i].getEdge().bottom * game->platformUpList[i].getScale());
+
+				if (p->getMovementComponent()->getY_Velocity() < 0)		// if player is moving upwards it sets velocity to 0...
+				{	// this is to prevent player from keeping upwards velocity when hitting the bottom of plat
+					p->getMovementComponent()->setY_Velocity(0);
+				}
+			}*/
 		}
 	}
 	for (int i = 0; i < NO_PLATFORMS; i++)
@@ -429,7 +401,7 @@ void PlayState::playercollision(Player* p)
 				&& p->getCenterY() + p->getEdge().top * p->getScale() < game->platformDownList[i].getCenterY() + game->platformDownList[i].getEdge().top * game->platformDownList[i].getScale())
 				//&& player.getCenterY() + player.getEdge().top*player.getScale() < platformDownList[i].getCenterY() + platformDownList[i].getEdge().top*platformDownList[i].getScale())
 			{
-				if (p->getMovementComponent()->getY_Velocity() > 0)		// if player is moving downwards it sets velocity to 0...
+				if (p->getMovementComponent()->getY_Velocity() >= 0)		// if player is moving downwards it sets velocity to 0...
 				{	// this is to prevent reseting velocity when player is jumping from the side Down wards
 					p->getMovementComponent()->setY_Velocity(-game->YVelocity);
 					// player collides from the top of the platformDownList[i]
@@ -437,13 +409,44 @@ void PlayState::playercollision(Player* p)
 						- p->getHeight());		// prevents player from moving past the left side of platformDownList[i]
 				}
 				platformcollided = true;
-/*
-				if (p->airEnum != STATE_GROUNDED)
-				{
-					p->landed();
-				}*/
 			}
 			// end of PROTOTYPE COLLISION DETECTION
+			/*else if (p->getCenterX() + p->getEdge().right * p->getScale() >= game->platformDownList[i].getCenterX() + game->platformDownList[i].getEdge().left * game->platformDownList[i].getScale()
+				&& p->getCenterX() + p->getEdge().left * p->getScale() < game->platformDownList[i].getCenterX() + game->platformDownList[i].getEdge().left * game->platformDownList[i].getScale())
+			{
+				// player collides from the left side of platform1
+				p->setX(game->platformDownList[i].getCenterX() + game->platformDownList[i].getEdge().left * game->platformDownList[i].getScale()
+					- p->getWidth());		// prevents player from moving past the right side of platform1
+
+				if (p->getMovementComponent()->getX_Velocity() > 0)		// if player is moving towards right it sets velocity to 0
+				{
+					p->getMovementComponent()->setX_Velocity(0);
+				}
+			}
+
+			else if (p->getCenterX() + p->getEdge().left * p->getScale() <= game->platformDownList[i].getCenterX() + game->platformDownList[i].getEdge().right * game->platformDownList[i].getScale()
+				&& p->getCenterX() + p->getEdge().right * p->getScale() > game->platformDownList[i].getCenterX() + game->platformDownList[i].getEdge().right * game->platformDownList[i].getScale())
+			{
+				// player collides from right side of platform1
+				p->setX(game->platformDownList[i].getCenterX() + game->platformDownList[i].getEdge().right * game->platformDownList[i].getScale());		// prevents player from moving past the left side of platform1
+
+				if (p->getMovementComponent()->getX_Velocity() < 0)		// if player is moving towards left it sets velocity to 0
+				{
+					p->getMovementComponent()->setX_Velocity(0);
+				}
+			}
+
+			else if (p->getCenterY() + p->getEdge().top * p->getScale() <= game->platformDownList[i].getCenterY() + game->platformDownList[i].getEdge().bottom * game->platformDownList[i].getScale()
+				&& p->getCenterY() + p->getEdge().bottom * p->getScale() > game->platformDownList[i].getCenterY() + game->platformDownList[i].getEdge().bottom * game->platformDownList[i].getScale())
+			{
+				// player collides from the bottom of the platform1
+				p->setY(game->platformDownList[i].getCenterY() + game->platformDownList[i].getEdge().bottom * game->platformDownList[i].getScale());
+
+				if (p->getMovementComponent()->getY_Velocity() < 0)		// if player is moving Downwards it sets velocity to 0...
+				{	// this is to prevent player from keeping Downwards velocity when hitting the bottom of plat
+					p->getMovementComponent()->setY_Velocity(0);
+				}
+			}*/
 		}
 	}
 	// ben speed potion apply

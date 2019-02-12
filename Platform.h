@@ -19,6 +19,7 @@ namespace platformNS
 class Platform:public Entity
 {
 private:
+	float elapsedTime = 0;
 	//std::vector<Hitbox*> hitboxlist;		// for multiple collisionboxes
 public:
 
@@ -34,8 +35,7 @@ public:
 	bool initialize(Game*gamePtr, int width, int height, int ncols, TextureManager*textureM);
 	virtual void draw();
 	virtual void update(float frameTime);
-	void updateUp(float frameTime);
-	void updateDown(float frameTime);
+	void updateUpDown(float frameTime);
 };
 
 #endif // _PLATFORM_H

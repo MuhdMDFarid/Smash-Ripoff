@@ -18,6 +18,7 @@ Platform::Platform():Entity()
 	spriteData.width = TILE_SIZE;
 	spriteData.height = TILE_SIZE;
 	mass=1000;
+	elapsedTime = 30;
 }
 
 
@@ -55,28 +56,26 @@ void Platform::update(float frameTime)
 	Entity::update(frameTime);
 }
 
-void Platform::updateUp(float frameTime)
-{
-	Entity::update(frameTime);
-
-	//hk
-	spriteData.y += frameTime * velocity.y*0;
-	spriteData.x += frameTime * velocity.x;
-	if (spriteData.y + TILE_SIZE < 0)
-	{
-		spriteData.y = GAME_HEIGHT;
-	}
-}
-
-void Platform::updateDown(float frameTime)
+void Platform::updateUpDown(float frameTime)
 {
 	Entity::update(frameTime);
 
 	//hk
 	spriteData.y += frameTime * velocity.y;
 	spriteData.x += frameTime * velocity.x;
+	if (spriteData.y + TILE_SIZE < 0)
+	{
+		spriteData.y = GAME_HEIGHT;
+	}
 	if (spriteData.y > GAME_HEIGHT)
 	{
 		spriteData.y = -TILE_SIZE;
 	}
+
+	if (elapsedTime <= 0)
+	{
+		velocity.y = -velocity.y;
+		elapsedTime = 30;
+	}
+	elapsedTime -= frameTime;
 }
