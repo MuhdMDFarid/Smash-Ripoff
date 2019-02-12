@@ -4,8 +4,8 @@
 
 Meteor::Meteor() : Entity()
 {
-	//spriteData.width = meteorNS::WIDTH;
-	//spriteData.height = meteorNS::HEIGHT;
+	spriteData.width = meteorNS::WIDTH;
+	spriteData.height = meteorNS::HEIGHT;
 	//spriteData.x = meteorNS::X;
 	//spriteData.y = meteorNS::Y;
 	//spriteData.rect.bottom = getHeight()*getScale();
@@ -20,7 +20,7 @@ Meteor::Meteor() : Entity()
 
 	damageC = new Damage_Component();
 	damageC->setDamage(60);
-	damageC->setAngle(45);
+	damageC->setAngle(135);
 	damageC->setForce(169);
 	damageC->setStun(0);
 }
@@ -40,7 +40,7 @@ void Meteor::draw()
 void Meteor::update(float frameTime)
 {
 	Entity::update(frameTime);
-	spriteData.angle += frameTime * meteorNS::ROTATION_RATE;  // rotate the meteor
+	//spriteData.angle += frameTime * meteorNS::ROTATION_RATE;  // rotate the meteor
 	spriteData.x += frameTime * velocity.x;         // move meteor along X 
 	spriteData.y += frameTime * velocity.y;         // move meteor along Y
 

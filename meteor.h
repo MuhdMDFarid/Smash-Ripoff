@@ -6,8 +6,8 @@
 
 namespace meteorNS
 {
-	const int WIDTH = 221;
-	const int HEIGHT = 221;
+	const int WIDTH = 552;
+	const int HEIGHT = 552;
 	const int X = GAME_WIDTH / 2 - WIDTH / 2;   // location on screen
 	const int Y = GAME_HEIGHT / 2 - HEIGHT / 2;
 	const float ROTATION_RATE = 0; // radians per second

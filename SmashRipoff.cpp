@@ -293,7 +293,7 @@ void SmashRipoff::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing meteor texture"));
 	if (!meteor.initialize(this, meteorNS::WIDTH, meteorNS::HEIGHT, 1, &meteorTexture))    // 1 since texture has only one image
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing meteor"));
-	//meteor.setScale(1);
+	meteor.setScale(0.5);
 	meteor.setDegrees(0);
 	meteor.setX(GAME_WIDTH);
 	meteor.setY(0);
